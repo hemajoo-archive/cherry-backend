@@ -36,3 +36,7 @@ Several frontend applications are provided to manage and access to the platform.
 
 `bla bla bla...`
 
+## 2. Tests
+
+<hr>
+
