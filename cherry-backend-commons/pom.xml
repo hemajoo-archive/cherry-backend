@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>cherry-backend-parent</artifactId>
+        <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../cherry-backend-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>cherry-backend-commons</artifactId>
+
+    <name>Cherry Backend - Commons</name>
+    <description>Hemajoo's Commerce - Cherry Backend Commons module.</description>
+
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+
+    <dependencies>
+
+        <!-- Spring Boot dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${version.swagger}</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- ResseC Generic Avocado -->
+        <dependency>
+            <groupId>org.ressec</groupId>
+            <artifactId>avocado-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>
