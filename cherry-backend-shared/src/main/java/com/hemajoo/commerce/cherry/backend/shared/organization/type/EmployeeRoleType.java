@@ -12,14 +12,57 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.organization.type;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible <b>employee role</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum EmployeeRoleType
 {
-    // Marker interface.
+    /**
+     * <b>Unspecified</b> employee role.
+     */
+    UNSPECIFIED,
+
+    /**
+     * Employee is a <b>manager</b>.
+     */
+    MANAGER,
+
+    /**
+     * Employee is a <b>crafter</b>.
+     */
+    CRAFTER,
+
+    /**
+     * Employee is a <b>cashier</b>.
+     */
+    CASHIER,
+
+    /**
+     * Employee is a <b>vendor</b>.
+     */
+    VENDOR,
+
+    /**
+     * Employee is a <b>delivery man</b>.
+     */
+    DELIVERY_MAN,
+
+    /**
+     * Employee is a <b>service agent</b>.
+     */
+    MAINTENANCE,
+
+    /**
+     * Employee is a <b>security agent</b>.
+     */
+    SECURITY,
+
+    /**
+     * <b>Other</b> employee role.
+     */
+    OTHER
 }

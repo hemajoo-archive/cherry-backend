@@ -12,14 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible <b>phone number category</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum PhoneNumberCategoryType
 {
-    // Marker interface.
+    /**
+     * <b>Fix</b> phone number.
+     */
+    FIX,
+
+    /**
+     * <b>Mobile</b> phone number.
+     */
+    MOBILE,
+
+    /**
+     * <b>Fax</b> phone number.
+     */
+    FAX
 }

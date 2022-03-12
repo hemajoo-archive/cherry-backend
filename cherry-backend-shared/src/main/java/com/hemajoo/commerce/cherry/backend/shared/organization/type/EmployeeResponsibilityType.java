@@ -12,14 +12,37 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.organization.type;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible <b>employee responsibility</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum EmployeeResponsibilityType
 {
-    // Marker interface.
+    /**
+     * <b>Unspecified</b> employee responsibility type.
+     */
+    UNSPECIFIED,
+
+    /**
+     * Employee is a <b>Manager</b>.
+     */
+    MANAGER,
+
+    /**
+     * Employee is a <b>Leader</b>.
+     */
+    LEADER,
+
+    /**
+     * Employee is a <b>Collaborator</b>.
+     */
+    COLLABORATOR,
+
+    /**
+     * <b>Other</b> employee responsibility type.
+     */
+    OTHER
 }

@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.entity.IdentityAware;
 
 /**
- * Implementing this interface provides the behavior of a <b>base</b> entity.
+ * Defines the behavior of a <b>base entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @since Cherry 0.1.0
  * @version 1.0.0

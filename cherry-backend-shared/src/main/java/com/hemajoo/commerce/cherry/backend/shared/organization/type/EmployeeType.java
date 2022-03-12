@@ -12,14 +12,37 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.organization.type;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible <b>employee</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum EmployeeType
 {
-    // Marker interface.
+    /**
+     * <b>Unspecified</b> employee type.
+     */
+    UNSPECIFIED,
+
+    /**
+     * Employee is a <b>regular</b> employee.
+     */
+    REGULAR,
+
+    /**
+     * Employee is a <b>contractor</b> employee.
+     */
+    CONTRACTOR,
+
+    /**
+     * Employee is a <b>temporary</b> employee.
+     */
+    TEMPORARY,
+
+    /**
+     * <b>Other</b> employee type.
+     */
+    OTHER
 }

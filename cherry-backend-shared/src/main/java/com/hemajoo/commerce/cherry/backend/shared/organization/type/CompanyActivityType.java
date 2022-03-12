@@ -12,40 +12,67 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
-
-import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-
-import java.util.Date;
+package com.hemajoo.commerce.cherry.backend.shared.organization.type;
 
 /**
- * Defines the behavior of a <b>status</b> entity.
+ * Enumeration representing the several possible <b>company activity</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface StatusEntity extends AuditEntity
+public enum CompanyActivityType
 {
     /**
-     * Returns the status type.
-     * @return Status type.
+     * <b>Unspecified</b> company activity.
      */
-    StatusType getStatusType();
+    UNSPECIFIED,
 
     /**
-     * Sets the status type date.
-     * @param type Status type.
+     * <b>Food</b> company activity.
      */
-    void setStatusType(final StatusType type);
+    FOOD,
 
     /**
-     * Returns the inactivation date.
-     * @return Inactivation since date.
+     * <b>Beverage</b> company activity.
      */
-    Date getSince();
+    BEVERAGE,
 
     /**
-     * Sets the since (inactivation) date.
-     * @param date Inactivation date.
+     * <b>Electronic</b> company activity.
      */
-    void setSince(final Date date);
+    ELECTRONIC,
+
+    /**
+     * <b>Fashion</b> company activity.
+     */
+    FASHION,
+
+    /**
+     * <b>Textile</b> company activity.
+     */
+    TEXTILE,
+
+    /**
+     * <b>Art</b> company activity.
+     */
+    ART,
+
+    /**
+     * <b>Furniture</b> company activity.
+     */
+    FURNITURE,
+
+    /**
+     * <b>Jewelry</b> company activity.
+     */
+    JEWELRY,
+
+    /**
+     * <b>Supermarket</b> company activity.
+     */
+    SUPERMARKET,
+
+    /**
+     * <b>Other</b> company activity.
+     */
+    OTHER
 }

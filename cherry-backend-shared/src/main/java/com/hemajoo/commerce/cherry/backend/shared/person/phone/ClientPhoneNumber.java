@@ -12,14 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person.phone;
+
+import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Defines the behavior of a <b>client phone number</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public interface ClientPhoneNumber extends PhoneNumber, ClientEntity
 {
-    // Marker interface.
+    /**
+     * Returns the entity identity owning this phone number.
+     * @return Entity identity.
+     */
+    Identity getOwner();
+
+    /**
+     * Sets the entity identity owning this phone number.
+     * @param owner Entity identity.
+     */
+    void setOwner(final Identity owner);
 }

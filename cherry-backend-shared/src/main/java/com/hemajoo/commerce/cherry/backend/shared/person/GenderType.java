@@ -12,14 +12,22 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible person <b>gender</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum GenderType
 {
-    // Marker interface.
+    /**
+     * <b>Male</b>.
+     */
+    MALE,
+
+    /**
+     * <b>Female</b>.
+     */
+    FEMALE
 }

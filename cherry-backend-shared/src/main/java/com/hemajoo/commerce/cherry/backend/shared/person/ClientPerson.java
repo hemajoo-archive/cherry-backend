@@ -12,14 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person;
+
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Defines the behavior of a <b>client person</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public interface ClientPerson extends Person, ClientEntity
 {
     // Marker interface.
 }

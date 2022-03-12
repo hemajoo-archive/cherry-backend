@@ -12,14 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible <b>person</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum PersonType
 {
-    // Marker interface.
+    /**
+     * <b>Physical</b> person.
+     */
+    PHYSICAL,
+
+    /**
+     * <b>Agent</b> person.
+     */
+    AGENT,
+
+    /**
+     * <b>Virtual</b> person (such as a company).
+     */
+    VIRTUAL
 }

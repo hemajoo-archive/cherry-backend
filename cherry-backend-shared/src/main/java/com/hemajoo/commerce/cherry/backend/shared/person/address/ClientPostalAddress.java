@@ -12,14 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person.address;
+
+import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Defines the behavior of a <b>client postal address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public interface ClientPostalAddress extends PostalAddress, ClientEntity
 {
-    // Marker interface.
+    /**
+     * Returns the entity identity owning this postal address.
+     * @return Entity identity.
+     */
+    Identity getOwner();
+
+    /**
+     * Sets the entity identity owning this postal address.
+     * @param owner Entity identity.
+     */
+    void setOwner(final Identity owner);
 }

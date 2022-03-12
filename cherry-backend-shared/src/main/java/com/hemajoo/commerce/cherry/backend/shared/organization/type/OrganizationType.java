@@ -12,14 +12,32 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.organization.type;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Enumeration representing the several possible <b>organization</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public enum OrganizationType
 {
-    // Marker interface.
+    /**
+     * <b>Unspecified</b> organization type.
+     */
+    UNSPECIFIED,
+
+    /**
+     * <b>Local</b> organization.
+     */
+    LOCAL,
+
+    /**
+     * <b>National</b> organization.
+     */
+    NATIONAL,
+
+    /**
+     * <b>Multinational</b> organization.
+     */
+    MULTINATIONAL
 }
