@@ -12,49 +12,33 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddress;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Behavior of a server postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public interface ServerPostalAddress extends PostalAddress, ServerEntity
 {
-    /**
-     * Criteria key.
-     */
-    @Getter
-    private final String key;
+//    /**
+//     * Returns the owner of this entity.
+//     * @param <T> Type of the owner entity.
+//     * @return Owner entity.
+//     */
+//    <T extends ServerEntity & Person> T getPerson();
+//
+//    /**
+//     * Sets the owner of this entity.
+//     * @param owner Owner entity.
+//     * @param <T> Type of the owner entity.
+//     */
+//    <T extends ServerEntity & Person> void setPerson(final T owner);
 
-    /**
-     * Criteria value.
-     */
-    @Getter
-    @Setter
-    private Object value;
+    ServerPersonEntity getPerson();
 
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
-    {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
-    }
+    void setPerson(final ServerPersonEntity owner);
 }

@@ -12,49 +12,19 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import org.springframework.content.fs.store.FilesystemContentStore;
+import org.springframework.content.rest.StoreRestResource;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Content store repository with {@code FileSystem} support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+@StoreRestResource
+public interface FileSystemDocumentStore extends FilesystemContentStore<ServerDocumentEntity, String>
 {
-    /**
-     * Criteria key.
-     */
-    @Getter
-    private final String key;
-
-    /**
-     * Criteria value.
-     */
-    @Getter
-    @Setter
-    private Object value;
-
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
-    {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
-    }
+    // Empty.
 }

@@ -12,49 +12,26 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
- * Represents a <b>search criteria</b>.
+ * {@code JPA} repository for the document entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public interface DocumentRepository extends JpaRepository<ServerDocumentEntity, UUID>
 {
     /**
-     * Criteria key.
+     * Returns a list of documents belonging to the given owner identifier.
+     * @param id Owner identifier.
+     * @return List of documents.
      */
-    @Getter
-    private final String key;
-
-    /**
-     * Criteria value.
-     */
-    @Getter
-    @Setter
-    private Object value;
-
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
-    {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
-    }
+    List<ServerDocumentEntity> findByOwnerId(UUID id);
 }

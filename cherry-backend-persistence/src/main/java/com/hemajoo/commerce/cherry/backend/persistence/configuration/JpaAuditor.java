@@ -12,49 +12,29 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.persistence.configuration;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.AuditorAware;
+
+import java.util.Optional;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Provides a <b>Java Persistence API</b> auditor information.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public class JpaAuditor implements AuditorAware<String>
 {
-    /**
-     * Criteria key.
-     */
     @Getter
-    private final String key;
+    @Value("${hemajoo.commerce.cherry.auditor.name}")
+    private String auditorName = "default";
 
-    /**
-     * Criteria value.
-     */
-    @Getter
-    @Setter
-    private Object value;
 
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
+    @Override
+    public Optional<String> getCurrentAuditor()
     {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
+        return Optional.of(auditorName);
     }
 }

@@ -40,3 +40,8 @@ Several frontend applications are provided to manage and access to the platform.
 
 <hr>
 
+### 2.1 Run the unit tests from the IDE
+
+#### 2.1.1 Persistence unit tests
+
+You can run an individual test class by running it.
