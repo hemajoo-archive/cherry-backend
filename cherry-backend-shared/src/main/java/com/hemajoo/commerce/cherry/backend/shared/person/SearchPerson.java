@@ -48,7 +48,7 @@ public class SearchPerson extends BaseSearch
     private String firstName;
 
     /**
-     * Person birth date.
+     * Person birthdate.
      */
     @ApiModelProperty(value = "Birth date", notes = "(YYYY-MM-DD)", allowEmptyValue = true)
     private LocalDate birthDate;
