@@ -12,49 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+package com.hemajoo.commerce.cherry.backend.persistence.base.validation;
 
 /**
- * Represents a <b>search criteria</b>.
+ * A group sequence used to order the validation of constraints.
+ * <br><br>
+ * This group contains extended validations that must be executed after the basic validations.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public interface ExtendedValidation
 {
-    /**
-     * Criteria key.
-     */
-    @Getter
-    private final String key;
-
-    /**
-     * Criteria value.
-     */
-    @Getter
-    @Setter
-    private Object value;
-
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
-    {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
-    }
+    // Empty.
 }

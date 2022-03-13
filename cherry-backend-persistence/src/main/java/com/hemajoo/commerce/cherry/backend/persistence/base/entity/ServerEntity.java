@@ -12,49 +12,17 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Defines the behavior of a <b>server entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public final class SearchCriteria
+public interface ServerEntity extends BaseEntity
 {
-    /**
-     * Criteria key.
-     */
-    @Getter
-    private final String key;
-
-    /**
-     * Criteria value.
-     */
-    @Getter
-    @Setter
-    private Object value;
-
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
-    {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
-    }
+    // Marker interface.
 }

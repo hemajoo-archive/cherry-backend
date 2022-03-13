@@ -12,49 +12,40 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.persistence.base.validation;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import javax.validation.ConstraintValidatorContext;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Abstract base constraint validator for constraint annotations used on types allowing to redefine the error message
+ * dynamically.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public abstract class BaseConstraintValidator
 {
     /**
-     * Criteria key.
+     * Error message template.
      */
-    @Getter
-    private final String key;
+    protected String errorMessage = "Default message template";
 
     /**
-     * Criteria value.
+     * Creates a new base constraint validator instance.
+     * @param message Error message.
      */
-    @Getter
-    @Setter
-    private Object value;
-
-    /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
+    protected BaseConstraintValidator(final String message)
     {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
+        errorMessage = message;
+    }
+
+    /**
+     * Sets the validation error message.
+     * @param context Constraint validator context.
+     * @param template Message template.
+     */
+    protected final void setValidationErrorMessage(ConstraintValidatorContext context, String template)
+    {
+        context.disableDefaultConstraintViolation();
+        context.buildConstraintViolationWithTemplate(template).addConstraintViolation();
     }
 }

@@ -12,49 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Enumeration representing the several possible <b>content store</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public enum ContentStoreType
 {
     /**
-     * Criteria key.
+     * Content store is on the <b>file system</b>.
      */
-    @Getter
-    private final String key;
+    FILESYSTEM,
 
     /**
-     * Criteria value.
+     * Content store is on <b>Amazon AWS S3</b>.
      */
-    @Getter
-    @Setter
-    private Object value;
+    S3,
 
     /**
-     * Criteria search operator.
-     */
-    @Getter
-    private final SearchOperation operation;
-
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
-    @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
-    {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
-    }
+     * <b>Unknown</b> content store.
+      */
+    UNKNOWN,
 }
