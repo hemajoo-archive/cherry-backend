@@ -54,39 +54,44 @@
         <test.pattern.unit>**/*UnitTest.java</test.pattern.unit>
         <test.pattern.integration>**/*IntegrationTest.java</test.pattern.integration>
 
-        <!-- Maven plugins version properties -->
-        <version.maven.plugin.compiler>3.8.1</version.maven.plugin.compiler>
-        <version.maven.plugin.jar>3.1.2</version.maven.plugin.jar>
-        <version.maven.plugin.javadoc>3.3.1</version.maven.plugin.javadoc>
-        <version.maven.plugin.source>3.1.0</version.maven.plugin.source>
-        <version.maven.plugin.scm>1.11.2</version.maven.plugin.scm>
-        <version.maven.plugin.release>2.5.3</version.maven.plugin.release>
-        <version.maven.plugin.site>3.7.1</version.maven.plugin.site>
-        <version.maven.plugin.project.info.reports>3.0.0</version.maven.plugin.project.info.reports>
+        <!-- Spring overriding properties -->
+        <log4j2.version>2.17.1</log4j2.version> <!-- Forces Spring to use log4j2 version 2.17.1 -->
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+
+        <!-- Maven plugins version properties. Last update on 2022/03/13 -->
+        <version.maven.plugin.compiler>3.10.1</version.maven.plugin.compiler>
+        <version.maven.plugin.jar>3.2.2</version.maven.plugin.jar>
+        <version.maven.plugin.javadoc>3.3.2</version.maven.plugin.javadoc>
+        <version.maven.plugin.source>3.2.1</version.maven.plugin.source>
+        <version.maven.plugin.scm>2.0.0-M1</version.maven.plugin.scm>
+        <version.maven.plugin.release>3.0.0-M5</version.maven.plugin.release>
+        <version.maven.plugin.site>3.11.0</version.maven.plugin.site>
+        <version.maven.plugin.project.info.reports>3.2.2</version.maven.plugin.project.info.reports>
         <version.maven.plugin.surefire>3.0.0-M5</version.maven.plugin.surefire>
         <version.maven.plugin.failsafe>3.0.0-M5</version.maven.plugin.failsafe>
-        <version.maven.plugin.flyway>8.0.3</version.maven.plugin.flyway>
+        <version.maven.plugin.flyway>8.5.2</version.maven.plugin.flyway>
         <version.plugin.maven.docker>0.37.0</version.plugin.maven.docker>
-        <version.plugin.maven.sonarscource.scanner>3.9.0.2155</version.plugin.maven.sonarscource.scanner>
+        <version.plugin.maven.sonarscource.scanner>3.9.1.2184</version.plugin.maven.sonarscource.scanner>
         <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
 
-        <!-- Spring properties -->
-        <version.spring.boot>2.6.1</version.spring.boot>
+        <!-- Spring Boot properties -->
+        <version.spring.boot>2.6.4</version.spring.boot>
 
         <!-- Dependencies version properties -->
         <version.ressec.avocado>0.1.0</version.ressec.avocado>
 
         <version.swagger>3.0.0</version.swagger> <!-- Upgrade to OpenAPI -->
-        <version.google.gson>2.8.6</version.google.gson> <!-- Remove / use only jackson-->
-        <version.gson-fire>1.8.4</version.gson-fire> <!-- Remove / use only jackson-->
-        <version.google.guava>30.0-jre</version.google.guava>
+<!--        <version.google.gson>2.8.6</version.google.gson> &lt;!&ndash; Remove / use only jackson&ndash;&gt;-->
+<!--        <version.gson-fire>1.8.4</version.gson-fire> &lt;!&ndash; Remove / use only jackson&ndash;&gt;-->
+        <version.google.guava>31.1-jre</version.google.guava>
         <version.junit.jupiter>5.8.2</version.junit.jupiter>
+        <version.junit.platform.launcher>1.6.2</version.junit.platform.launcher>
         <version.javafaker>1.0.1</version.javafaker>
-        <version.apache.log4j>2.16.0</version.apache.log4j> <!-- Upgrade to 2.17.x -->
+        <version.apache.log4j>2.17.2</version.apache.log4j> <!-- Upgrade to 2.17.x -->
         <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
         <version.apache.commons.io>2.11.0</version.apache.commons.io>
         <version.apache.commons.validator>1.7</version.apache.commons.validator>
-        <version.lombok>1.18.20</version.lombok>
+        <version.lombok>1.18.22</version.lombok>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
         <version.flyway>8.1.0</version.flyway>
@@ -177,6 +182,44 @@
                 <type>maven-plugin</type>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${version.spring.boot}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>2.17.1</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+            <!-- Provides everything you need to write JUnit 5 Jupiter tests. -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.junit.jupiter}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <version>${version.junit.platform.launcher}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.9.1</version>
+                <scope>test</scope>
+            </dependency>
+
             <!-- Project Lombok: https://projectlombok.org/ -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -218,35 +261,19 @@
                 <version>${version.spring.content}</version>
             </dependency>
 
-            <!-- Google Gson: https://github.com/google/gson -->
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>${version.google.gson}</version>
-            </dependency>
+<!--            &lt;!&ndash; Google Gson: https://github.com/google/gson &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.google.code.gson</groupId>-->
+<!--                <artifactId>gson</artifactId>-->
+<!--                <version>${version.google.gson}</version>-->
+<!--            </dependency>-->
 
-            <!-- Gson Fire: https://github.com/julman99/gson-fire -->
-            <dependency>
-                <groupId>io.gsonfire</groupId>
-                <artifactId>gson-fire</artifactId>
-                <version>${version.gson-fire}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
-            <!-- Provides everything you need to write JUnit 5 Jupiter tests. -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
-                <version>${version.junit.jupiter}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>3.9.1</version>
-                <scope>test</scope>
-            </dependency>
+<!--            &lt;!&ndash; Gson Fire: https://github.com/julman99/gson-fire &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.gsonfire</groupId>-->
+<!--                <artifactId>gson-fire</artifactId>-->
+<!--                <version>${version.gson-fire}</version>-->
+<!--            </dependency>-->
 
             <!-- Swagger -->
             <dependency>

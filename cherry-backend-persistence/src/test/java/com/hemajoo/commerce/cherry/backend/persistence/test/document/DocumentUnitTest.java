@@ -30,7 +30,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for the document server class.
+ * Unit tests for the <b>document</b> server class.
+ * <br>
+ * The <b>persistence</b> module unit tests are all executed against a <b>PostgresSQL</b> database contained in a <b>Docker container</b>, so the database instance is
+ * container in the <b>Docker image</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
