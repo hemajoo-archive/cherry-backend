@@ -58,7 +58,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        run: mvn -B clean package -f cherry-backend-parent/pom.xml -P java-${{ matrix.Java }}
+        run: mvn -B clean package -f cherry-backend-parent/pom.xml -P java-${{ matrix.Java }}, cherry-postgres-dev
         env:
           GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
           GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
