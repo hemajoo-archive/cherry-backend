@@ -14,6 +14,8 @@
 name: Cherry CI/CD
 
 on:
+  push:
+    branches: [ integrate, develop, main ]
   pull_request:
     branches: [ integrate, develop, main ]
 
@@ -158,6 +160,8 @@ jobs:
         env:
           GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
           GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy:
 
