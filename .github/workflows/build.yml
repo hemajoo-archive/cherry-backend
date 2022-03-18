@@ -21,8 +21,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    permissions:
-      packages: read
 
     strategy:
       matrix:
@@ -42,6 +40,11 @@ jobs:
         with:
           java-version: ${{ matrix.Java }}
           distribution: adopt
+
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v20
+        with:
+          servers: '[{ "id": "github-ressec-maven", "username": "${GH_RESSEC_USERNAME}", "password": "${GH_RESSEC_TOKEN}" }]'
 
       - name: Cache Maven packages
         uses: actions/cache@v1

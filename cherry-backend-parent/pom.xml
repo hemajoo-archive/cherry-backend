@@ -142,7 +142,7 @@
 
         <!-- GitHub ResseC Maven repository -->
         <repository>
-            <id>github-public</id>
+            <id>github-ressec-maven</id>
             <url>https://maven.pkg.github.com/ressec/maven-repo</url>
             <releases>
                 <enabled>true</enabled>
