@@ -50,5 +50,6 @@ jobs:
 
       - name: Build with Maven
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          USER_NAME: ${{ secrets.CI_USER }}
+          ACCESS_TOKEN: ${{ secrets.CI_TOKEN }}
         run: mvn -B clean package -f cherry-backend-parent/pom.xml -P java-${{ matrix.Java }}
