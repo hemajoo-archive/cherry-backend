@@ -54,11 +54,11 @@ public interface EmailAddressRepository extends JpaRepository<ServerEmailAddress
     List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
-     * Returns the list of email addresses belonging to the given person identifier.
-     * @param personId Person identifier.
+     * Returns the list of email addresses belonging to the given parent identifier.
+     * @param parentId Parent identifier.
      * @return List of email addresses.
      */
-    List<ServerEmailAddressEntity> findByPersonId(UUID personId);
+    List<ServerEmailAddressEntity> findByParentId(UUID parentId);
 
     /**
      * Returns the list of email addresses matching the given specification.

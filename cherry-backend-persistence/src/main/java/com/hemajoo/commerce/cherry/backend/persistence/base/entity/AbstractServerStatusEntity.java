@@ -23,7 +23,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Represents the base status part of a persistence entity of the {@code Cherry} data model.
+ * Represents an abstract implementation of the base <b>status</b> part of a server entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

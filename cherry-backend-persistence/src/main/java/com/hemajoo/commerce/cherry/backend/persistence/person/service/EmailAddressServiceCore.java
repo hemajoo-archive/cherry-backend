@@ -155,9 +155,9 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public List<ServerEmailAddressEntity> findByPersonId(final UUID personId)
+    public List<ServerEmailAddressEntity> findByParentId(final UUID parentId)
     {
-        return emailAddressRepository.findByPersonId(personId);
+        return emailAddressRepository.findByParentId(parentId);
     }
 
     @Override
@@ -221,21 +221,21 @@ public class EmailAddressServiceCore implements EmailAddressService
                     SearchOperation.MATCH));
         }
 
-        if (search.getPersonId() != null)
-        {
-            specification.add(new SearchCriteria(
-                    ServerEmailAddressEntity.FIELD_PERSON,
-                    search.getPersonId(),
-                    SearchOperation.EQUAL_OBJECT_UUID));
-        }
+//        if (search.getPersonId() != null)
+//        {
+//            specification.add(new SearchCriteria(
+//                    ServerEmailAddressEntity.FIELD_PERSON,
+//                    search.getPersonId(),
+//                    SearchOperation.EQUAL_OBJECT_UUID));
+//        }
 
-        if (specification.count() == 0)
-        {
-            specification.add(new SearchCriteria(
-                    ServerEmailAddressEntity.FIELD_PERSON,
-                    "00000000-0000-0000-0000-000000000000",
-                    SearchOperation.EQUAL_OBJECT_UUID));
-        }
+//        if (specification.count() == 0)
+//        {
+//            specification.add(new SearchCriteria(
+//                    ServerEmailAddressEntity.FIELD_PERSON,
+//                    "00000000-0000-0000-0000-000000000000",
+//                    SearchOperation.EQUAL_OBJECT_UUID));
+//        }
 
         return emailAddressRepository.findAll(specification);
     }
@@ -309,9 +309,9 @@ public class EmailAddressServiceCore implements EmailAddressService
         {
             switch (change.getPropertyName())
             {
-                case ServerEmailAddressEntity.FIELD_PERSON:
-                    target.setPerson(source.getPerson());
-                    break;
+//                case ServerEmailAddressEntity.FIELD_PERSON:
+//                    target.setPerson(source.getPerson());
+//                    break;
 
                 default:
                     LOGGER.warn(String.format("Property name: %s not handled!", change.getPropertyName()));

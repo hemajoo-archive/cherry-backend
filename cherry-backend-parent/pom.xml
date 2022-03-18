@@ -94,12 +94,12 @@
         <version.lombok>1.18.22</version.lombok>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
-        <version.flyway>8.1.0</version.flyway>
+        <version.flyway>8.5.2</version.flyway>
         <version.apache.tika>1.0.18</version.apache.tika>
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
         <version.javers>3.1.0</version.javers>
         <version.testcontainers>1.16.2</version.testcontainers>
-        <version.db.h2>2.0.202</version.db.h2>
+        <version.db.h2>2.1.210</version.db.h2>
         <version.db.postgresql>42.3.1</version.db.postgresql>
         <version.spring.content>1.2.7</version.spring.content>
         <version.amazon.awssdk>2.17.100</version.amazon.awssdk>
@@ -260,20 +260,6 @@
                 <artifactId>spring-content-s3</artifactId>
                 <version>${version.spring.content}</version>
             </dependency>
-
-<!--            &lt;!&ndash; Google Gson: https://github.com/google/gson &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.google.code.gson</groupId>-->
-<!--                <artifactId>gson</artifactId>-->
-<!--                <version>${version.google.gson}</version>-->
-<!--            </dependency>-->
-
-<!--            &lt;!&ndash; Gson Fire: https://github.com/julman99/gson-fire &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>io.gsonfire</groupId>-->
-<!--                <artifactId>gson-fire</artifactId>-->
-<!--                <version>${version.gson-fire}</version>-->
-<!--            </dependency>-->
 
             <!-- Swagger -->
             <dependency>
@@ -652,7 +638,7 @@
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                     <version>${version.db.h2}</version>
-                    <scope>runtime</scope>
+<!--                    <scope>runtime</scope>-->
                 </dependency>
             </dependencies>
             <build>

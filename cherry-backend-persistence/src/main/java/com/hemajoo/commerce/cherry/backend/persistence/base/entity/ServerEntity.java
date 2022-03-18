@@ -24,5 +24,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
  */
 public interface ServerEntity extends BaseEntity
 {
-    // Marker interface.
+    ServerBaseEntity getParent();
+
+    void setParent(final ServerBaseEntity parent);
 }

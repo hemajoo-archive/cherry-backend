@@ -14,16 +14,18 @@
  */
 package com.hemajoo.commerce.cherry.backend.rest.controller.person;
 
+import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactoryException;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.EmailAddressConverter;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressServiceCore;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressForCreation;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressId;
-import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
 import com.hemajoo.commerce.cherry.backend.shared.base.converter.GenericEntityConverter;
@@ -76,6 +78,9 @@ public class EmailAddressController
     @Autowired
     private EmailAddressValidationEngine validationEmailAddress;
 
+    @Autowired
+    private EntityFactory factory;
+
     /**
      * Service to count the number of email addresses.
      * @return Number of email addresses.
@@ -124,20 +129,24 @@ public class EmailAddressController
 
     /**
      * Service to create a random email address.
-     * @param personId Person identifier being the owner of the email address to create.
+     * @param parentId Entity identifier being the owner of the email address to create.
+     * @param parentType Entity type being the owner of the email address to create.
      * @return Randomly generated email address.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to create a random email address.
+     * @throws EntityException Thrown to indicate an error occurred while trying to set person as the parent entity.
      */
     @ApiOperation(value = "Create a new random email address")
     @PostMapping("/random")
     public ResponseEntity<ClientEmailAddressEntity> random(
-            @ApiParam(value = "Person identifier (UUID) being the owner of the new random email address", name = "personId", required = true)
-            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws EmailAddressException
+            @ApiParam(value = "Parent entity type", name = "parentType", required = true)
+            @NotNull @RequestParam EntityType parentType,
+            @ApiParam(value = "Entity identifier (UUID) being the owner of the new random email address", name = "parentId", required = true)
+            /*@Valid @ValidPersonId*/ @NotNull @RequestParam String parentId) throws EmailAddressException, EntityFactoryException
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
-        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(personId));
-        serverEmail.setPerson(person);
+        ServerBaseEntity parent = factory.from(parentType, parentId);
+        serverEmail.setParent(parent);
         serverEmail = servicePerson.getEmailAddressService().save(serverEmail);
 
         return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmail));
@@ -147,12 +156,13 @@ public class EmailAddressController
      * Service to update an email address.
      * @param email Email address to update.
      * @return Updated email address.
+     * @throws EmailAddressException Thrown to indicate an error occurred while trying to update the email address.
      */
     @ApiOperation(value = "Update an email address"/*, notes = "Update an email address given the new values."*/)
     @PutMapping("/update")
     //@Transactional
     public ResponseEntity<ClientEmailAddressEntity> update(
-            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email) throws EntityException, EmailAddressException
+            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email) throws EmailAddressException
     {
         //emailAddressRuleEngine.validateEmailAddressId(email);
         validationEmailAddress.validateEmailForUpdate(email);

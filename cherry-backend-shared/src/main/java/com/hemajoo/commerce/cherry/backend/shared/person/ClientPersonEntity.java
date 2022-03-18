@@ -93,7 +93,6 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    //@JsonIgnore
     @ApiModelProperty(hidden = true)
     private List<ClientPostalAddressEntity> postalAddresses = new ArrayList<>();
 
@@ -102,7 +101,6 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    //@JsonIgnore
     @ApiModelProperty(hidden = true)
     private List<ClientPhoneNumberEntity> phoneNumbers = new ArrayList<>();
 
@@ -111,7 +109,6 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    //@JsonIgnore
     @ApiModelProperty(hidden = true)
     private List<ClientEmailAddressEntity> emailAddresses = new ArrayList<>();
 

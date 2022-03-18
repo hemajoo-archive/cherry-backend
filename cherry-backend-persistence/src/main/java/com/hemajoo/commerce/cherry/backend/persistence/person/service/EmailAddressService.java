@@ -69,6 +69,7 @@ public interface EmailAddressService
      * Saves and flush a email address.
      * @param emailAddress Email address.
      * @return Email address.
+     * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
     ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
 
@@ -106,11 +107,11 @@ public interface EmailAddressService
     List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
-     * Returns the list of email addresses belonging to a person.
-     * @param personId Person identifier.
+     * Returns the list of email addresses belonging to a given parent identifier.
+     * @param parentId Parent identifier.
      * @return List of matching email addresses.
      */
-    List<ServerEmailAddressEntity> findByPersonId(UUID personId);
+    List<ServerEmailAddressEntity> findByParentId(UUID parentId);
 
     /**
      * Returns the email addresses matching the given set of predicates.

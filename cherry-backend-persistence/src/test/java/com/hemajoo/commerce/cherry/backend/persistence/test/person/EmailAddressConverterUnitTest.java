@@ -91,7 +91,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
         ServerPersonEntity owner = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
         ServerEmailAddressEntity reference = EmailAddressRandomizer.generateServerEntity(false);
-        reference.setPerson(owner);
+        reference.setParent(owner);
         reference = servicePerson.getEmailAddressService().save(reference);
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
@@ -131,7 +131,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerEmailAddressWithNonExistentOwner()
     {
         ClientEmailAddressEntity client = EmailAddressRandomizer.generateClientEntity(true);
-        client.setPerson(new EntityIdentity(EntityType.EMAIL_ADDRESS,UUID.randomUUID()));
+        client.setParent(new EntityIdentity(EntityType.EMAIL_ADDRESS,UUID.randomUUID()));
 
         // If the owner of the client email address to convert does not exist, ensure an exception is thrown!
         assertThatThrownBy(() -> converterEmailAddress.fromClientToServer(client))
@@ -232,7 +232,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
         for (int i = 0; i < LIST_COUNT; i++)
         {
             email = EmailAddressRandomizer.generateServerEntity(false);
-            email.setPerson(owner);
+            email.setParent(owner);
             emails.add(servicePerson.getEmailAddressService().save(email));
         }
 

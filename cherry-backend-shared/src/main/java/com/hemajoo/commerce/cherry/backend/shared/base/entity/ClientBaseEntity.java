@@ -91,6 +91,15 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     private List<EntityIdentity> documents = new ArrayList<>();
 
     /**
+     * The entity (parent) this entity (child) belongs to.
+     */
+    @Getter
+    @Setter
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private EntityIdentity parent;
+
+    /**
      * Creates a new base client entity.
      * @param type Entity type.
      */

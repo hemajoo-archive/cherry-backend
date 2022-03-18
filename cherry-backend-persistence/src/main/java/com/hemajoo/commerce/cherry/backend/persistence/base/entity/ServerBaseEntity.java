@@ -14,11 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import lombok.*;
+import lombok.extern.log4j.Log4j2;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -32,19 +35,32 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@Log4j2
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ServerBaseEntity extends AbstractServerStatusEntity implements BaseEntity, ServerEntity
+public class ServerBaseEntity extends AbstractServerStatusEntity implements ServerEntity
 {
     public static final String FIELD_ID             = "id";
     public static final String FIELD_ENTITY_TYPE    = "entityType";
     public static final String FIELD_NAME           = "name";
     public static final String FIELD_DESCRIPTION    = "description";
     public static final String FIELD_REFERENCE      = "reference";
+    public static final String FIELD_PARENT         = "parent";
+    public static final String FIELD_PARENT_TYPE    = "parentType";
+
+//    /**
+//     * Entity identifier.
+//     */
+//    @Getter
+//    @Setter
+//    @Id
+//    @Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
+//    @GeneratedValue
+//    private UUID id;
 
     /**
      * Entity identifier.
@@ -53,7 +69,8 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Base
     @Setter
     @Id
     @Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
-    @GeneratedValue
+    @GenericGenerator(name = "cherry-uuid-gen", strategy = "com.hemajoo.commerce.cherry.backend.persistence.base.entity.UuidGenerator")
+    @GeneratedValue(generator = "cherry-uuid-gen")
     private UUID id;
 
     /**
@@ -98,6 +115,25 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Base
     private List<ServerDocumentEntity> documents = null;
 
     /**
+     * The entity (parent) this entity (child) belongs to.
+     */
+    @Getter
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties
+    @ManyToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
+    private ServerBaseEntity parent;
+
+    /**
+     * Parent type.
+     */
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PARENT_TYPE", length = 50)
+    private EntityType parentType;
+
+    /**
      * Creates a new base entity.
      * @param type Entity type.
      */
@@ -139,5 +175,20 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Base
     public final EntityIdentity getIdentity()
     {
         return new EntityIdentity(id, entityType);
+    }
+
+    /**
+     * Sets the parent entity this entity belongs to.
+     * @param parent Parent entity.
+     */
+    public void setParent(final ServerBaseEntity parent)
+    {
+        if (parent.getId() == this.getId())
+        {
+            throw new EntityException(parent.getEntityType(), "Cannot set itself as parent!");
+        }
+
+        this.parent = parent;
+        this.parentType = parent != null ? parent.getEntityType() : null;
     }
 }
