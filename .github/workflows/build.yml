@@ -41,11 +41,14 @@ jobs:
         with:
           java-version: ${{ matrix.Java }}
           distribution: adopt
+          server-id: github-ressec-maven
+          server-username: GH_RESSEC_USERNAME
+          server-password: GH_RESSEC_TOKEN
 
-      - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v20
-        with:
-          servers: '[{ "id": "github-ressec-maven", "username": "${GH_RESSEC_USERNAME}", "password": "${GH_RESSEC_TOKEN}" }]'
+#      - name: maven-settings-xml-action
+#        uses: whelk-io/maven-settings-xml-action@v20
+#        with:
+#          servers: '[{ "id": "github-ressec-maven", "username": "${GH_RESSEC_USERNAME}", "password": "${GH_RESSEC_TOKEN}" }]'
 
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -56,4 +59,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B clean package -f cherry-backend-parent/pom.xml -P java-${{ matrix.Java }}
+        env:
+          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
+          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
 
