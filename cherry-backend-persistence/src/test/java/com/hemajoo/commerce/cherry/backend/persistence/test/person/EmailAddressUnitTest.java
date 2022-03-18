@@ -199,6 +199,10 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
 
+        servicePerson.getPersonService().save(person); // Save it to get its UUID
+        servicePerson.getDocumentService().save(document); // Save it to get its UUID
+        servicePerson.getEmailAddressService().save(email); // Save it to get its UUID
+
         email.addDocument(document);
         person.addEmailAddress(email);
         servicePerson.getPersonService().save(person);
@@ -269,8 +273,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerEmailAddressEntity other = EmailAddressRandomizer.generateServerEntity(false);
 
-        email.setParent(other);
         other = servicePerson.getEmailAddressService().save(other); // Must be saved first!
+        email = servicePerson.getEmailAddressService().save(email);
+        email.setParent(other);
         email = servicePerson.getEmailAddressService().save(email);
 
         ServerEmailAddressEntity object = servicePerson.getEmailAddressService().findById(email.getId());
@@ -292,8 +297,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
 
-        email.setParent(person);
         person = servicePerson.getPersonService().save(person); // Must be saved first!
+        email = servicePerson.getEmailAddressService().save(email);
+        email.setParent(person);
         email = servicePerson.getEmailAddressService().save(email);
 
         ServerEmailAddressEntity object = servicePerson.getEmailAddressService().findById(email.getId());

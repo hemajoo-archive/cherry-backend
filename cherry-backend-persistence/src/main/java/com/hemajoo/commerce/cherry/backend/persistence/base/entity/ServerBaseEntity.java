@@ -183,7 +183,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Serv
      */
     public void setParent(final ServerBaseEntity parent)
     {
-        if (parent.getId() == this.getId())
+        if (parent != null && parent.getId() == this.getId())
         {
             throw new EntityException(parent.getEntityType(), "Cannot set itself as parent!");
         }
