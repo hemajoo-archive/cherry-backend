@@ -49,4 +49,4 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        run: mvn -B clean package -f cherry-backen-parent/pom.xml -P java-${{ matrix.Java }}
+        run: mvn -B clean package -f cherry-backend-parent/pom.xml -P java-${{ matrix.Java }}
