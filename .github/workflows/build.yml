@@ -166,6 +166,7 @@ jobs:
   deploy:
 
     name: Deploy artifacts
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
