@@ -20,6 +20,11 @@ import lombok.experimental.UtilityClass;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 
+/**
+ * Provides an entity comparator able to detect objects' changes.
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 @UtilityClass
 public class EntityComparator
 {

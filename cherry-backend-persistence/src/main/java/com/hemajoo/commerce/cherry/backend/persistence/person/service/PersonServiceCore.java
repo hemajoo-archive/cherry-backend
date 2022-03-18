@@ -248,7 +248,7 @@ public class PersonServiceCore implements PersonService
     @Override
     public List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person)
     {
-        return emailAddressRepository.findByPersonId(person.getId());
+        return emailAddressRepository.findByParentId(person.getId());
     }
 
 //    @Override

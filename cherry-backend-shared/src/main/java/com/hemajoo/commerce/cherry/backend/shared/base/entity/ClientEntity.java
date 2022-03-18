@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
+
 /**
  * Defines the behavior of a <b>client entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
@@ -21,5 +23,7 @@ package com.hemajoo.commerce.cherry.backend.shared.base.entity;
  */
 public interface ClientEntity extends BaseEntity
 {
-    // Marker interface.
+    EntityIdentity getParent();
+
+    void setParent(final EntityIdentity parent);
 }

@@ -32,7 +32,7 @@ public enum AddressType
     PROFESSIONAL,
 
     /**
-     * <b></b> address type.
+     * <b>Other</b> address type.
      */
     OTHER
 }

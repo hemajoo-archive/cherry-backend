@@ -15,7 +15,6 @@
 package com.hemajoo.commerce.cherry.backend.shared.person.address;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
 import io.swagger.annotations.ApiModelProperty;
@@ -61,15 +60,15 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
-    /**
-     * The person identifier this email address belongs to.
-     */
-    @JsonProperty("person")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    //@JsonIgnoreProperties("emailAddresses")
-    @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
-    private EntityIdentity person; // TODO Could it be moved to base entity?
+//    /**
+//     * The person identifier this email address belongs to.
+//     */
+//    @JsonProperty("person")
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    //@JsonIgnoreProperties("emailAddresses")
+//    @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
+//    private EntityIdentity person; // TODO Could it be moved to base entity?
 
     /**
      * Creates a new client email address entity.

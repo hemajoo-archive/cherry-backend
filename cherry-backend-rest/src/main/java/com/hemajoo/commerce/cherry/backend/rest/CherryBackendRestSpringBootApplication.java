@@ -33,19 +33,19 @@ import java.util.logging.Logger;
  */
 @Import({ PersistenceConfiguration.class })
 @SpringBootApplication(exclude = { S3ContentAutoConfiguration.class })
-public class SpringApplicationRest implements CommandLineRunner
+public class CherryBackendRestSpringBootApplication implements CommandLineRunner
 {
     /**
      * Logger.
      */
-    private static final Logger LOG = Logger.getLogger(SpringApplicationRest.class.getName());
+    private static final Logger LOG = Logger.getLogger(CherryBackendRestSpringBootApplication.class.getName());
 
     @Autowired
     private ApplicationContext appContext;
 
     public static void main(String[] args)
     {
-        SpringApplication.run(SpringApplicationRest.class, args);
+        SpringApplication.run(CherryBackendRestSpringBootApplication.class, args);
     }
 
     @Override

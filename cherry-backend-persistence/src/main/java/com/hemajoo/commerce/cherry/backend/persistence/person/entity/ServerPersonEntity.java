@@ -132,7 +132,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("owner")
-    @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServerEmailAddressEntity> emailAddresses = new ArrayList<>();
 
     /**
@@ -247,16 +248,18 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     public final void addEmailAddress(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         // An email address cannot be shared!
-        if (emailAddress.getPerson() != null)
+        if (emailAddress.getParent() != null)
         {
             throw new EmailAddressException(String.format(
-                    "Cannot add email address: <%s> to person: <%s> because it already belongs to person: <%s>!",
+                    "Cannot add email address: '%s' to entity type: '%s', with id: '%s' because it already belongs to entity type: '%s', with id: '%s'!",
                     emailAddress.getEmail(),
-                    emailAddress.getPerson().getName(),
-                    getName()));
+                    this.getEntityType(),
+                    this.getId(),
+                    emailAddress.getParent().getEntityType(),
+                    emailAddress.getParent().getId()));
         }
 
-        emailAddress.setPerson(this);
+        emailAddress.setParent(this);
         emailAddresses.add(emailAddress);
     }
 
@@ -404,7 +407,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public final void removeEmailAddress(final @NonNull ServerEmailAddressEntity email)
     {
-        email.setPerson(null);
+        email.setParent(null);
         emailAddresses.remove(email);
     }
 }

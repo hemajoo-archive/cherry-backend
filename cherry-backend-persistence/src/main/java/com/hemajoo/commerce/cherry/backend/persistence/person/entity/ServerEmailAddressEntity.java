@@ -14,7 +14,6 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
@@ -49,7 +48,7 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     public static final String FIELD_IS_DEFAULT     = "isDefaultEmail";
     public static final String FIELD_ADDRESS_TYPE   = "addressType";
 
-    public static final String FIELD_PERSON         = "person";
+    //public static final String FIELD_PERSON         = "person";
 
     /**
      * Email address.
@@ -78,16 +77,16 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     @Column(name = "ADDRESS_TYPE")
     private AddressType addressType;
 
-    /**
-     * The person identifier this email address belongs to.
-     */
-    @Getter
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties
-    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "PERSON_ID", nullable = false)
-    private ServerPersonEntity person;
+//    /**
+//     * The person identifier this email address belongs to.
+//     */
+//    @Getter
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @JsonIgnoreProperties
+//    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "PERSON_ID", nullable = true)
+//    private ServerPersonEntity person;
 
     /**
      * Creates a new persistent email address.
@@ -97,14 +96,14 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
         super(EntityType.EMAIL_ADDRESS);
     }
 
-    /**
-     * Sets the owner person.
-     * <hr>
-     * <b>NOTE:</b> Never invoke directly this service to add an email address to a person. For that, you need to call {@link ServerPersonEntity#addEmailAddress(ServerEmailAddressEntity)}!.
-     * @param person Person being the owner of the email address.
-     */
-    public void setPerson(final ServerPersonEntity person)
-    {
-        this.person = person;
-    }
+//    /**
+//     * Sets the owner person.
+//     * <hr>
+//     * <b>NOTE:</b> Never invoke directly this service to add an email address to a person. For that, you need to call {@link ServerPersonEntity#addEmailAddress(ServerEmailAddressEntity)}!.
+//     * @param person Person being the owner of the email address.
+//     */
+//    public void setPerson(final ServerPersonEntity person)
+//    {
+//        this.person = person;
+//    }
 }
