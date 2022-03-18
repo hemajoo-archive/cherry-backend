@@ -49,4 +49,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
+        with:
+          repo-token: $ {{ secrets.GITHUB_TOKEN }}
         run: mvn -B clean package -f cherry-backend-parent/pom.xml -P java-${{ matrix.Java }}
