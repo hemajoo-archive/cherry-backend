@@ -81,8 +81,6 @@
         <version.ressec.avocado>0.1.0</version.ressec.avocado>
 
         <version.swagger>3.0.0</version.swagger> <!-- Upgrade to OpenAPI -->
-<!--        <version.google.gson>2.8.6</version.google.gson> &lt;!&ndash; Remove / use only jackson&ndash;&gt;-->
-<!--        <version.gson-fire>1.8.4</version.gson-fire> &lt;!&ndash; Remove / use only jackson&ndash;&gt;-->
         <version.google.guava>31.1-jre</version.google.guava>
         <version.junit.jupiter>5.8.2</version.junit.jupiter>
         <version.junit.platform.launcher>1.6.2</version.junit.platform.launcher>
@@ -111,12 +109,11 @@
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.language>java</sonar.language>
-        <sonar.projectKey>ressec_cherry</sonar.projectKey>
+        <sonar.projectKey>ressec_cherry-backend</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
-        <sonar.projectName>Cherry</sonar.projectName>
+        <sonar.projectName>Cherry Backend</sonar.projectName>
         <sonar.organization>ressec-github</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
     </properties>
 
     <distributionManagement>
