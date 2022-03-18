@@ -140,14 +140,6 @@
             </snapshots>
         </repository>
 
-<!--        <repository>-->
-<!--            <id>github-public</id>-->
-<!--            <url>https://public:&#103;hp_ZjQoiEsk9V7KOndlYj1nR7AC2a3jd701HtoB@maven.pkg.github.com/ressec/*</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-
         <!-- GitHub ResseC Maven repository -->
         <repository>
             <id>github-public</id>
