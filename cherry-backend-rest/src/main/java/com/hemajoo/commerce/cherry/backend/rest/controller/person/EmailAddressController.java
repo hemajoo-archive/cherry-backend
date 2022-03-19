@@ -145,7 +145,7 @@ public class EmailAddressController
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
-        ServerBaseEntity parent = factory.from(parentType, parentId);
+        ServerBaseEntity parent = (ServerBaseEntity) factory.from(parentType, UUID.fromString(parentId));
         serverEmail.setParent(parent);
         serverEmail = servicePerson.getEmailAddressService().save(serverEmail);
 

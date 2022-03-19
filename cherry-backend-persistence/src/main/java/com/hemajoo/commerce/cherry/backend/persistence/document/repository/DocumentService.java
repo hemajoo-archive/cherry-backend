@@ -18,6 +18,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,12 @@ import java.util.UUID;
  */
 public interface DocumentService
 {
+    /**
+     * Returns the entity manager.
+     * @return Entity manager.
+     */
+    EntityManager getEntityManager();
+
     /**
      * Returns the underlying repository.
      * @return Document repository.
