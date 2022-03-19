@@ -11,7 +11,7 @@
 # is strictly forbidden unless prior written permission is obtained from
 # Resse Christophe (christophe.resse@gmail.com).
 # -----------------------------------------------------------------------------------------------
-name: Cherry CI/CD
+name: Cherry Continuous Integration
 
 on:
   push:
