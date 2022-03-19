@@ -85,11 +85,12 @@
         <version.junit.jupiter>5.8.2</version.junit.jupiter>
         <version.junit.platform.launcher>1.6.2</version.junit.platform.launcher>
         <version.javafaker>1.0.1</version.javafaker>
-        <version.apache.log4j>2.17.2</version.apache.log4j> <!-- Upgrade to 2.17.x -->
+        <version.apache.log4j>2.17.2</version.apache.log4j>
         <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
         <version.apache.commons.io>2.11.0</version.apache.commons.io>
         <version.apache.commons.validator>1.7</version.apache.commons.validator>
         <version.lombok>1.18.22</version.lombok>
+        <version.assertj>3.22.0</version.assertj>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
         <version.flyway>8.5.2</version.flyway>
@@ -155,6 +156,15 @@
 
         <dependencies>
 
+            <!-- Log4J2 -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j2.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- Project Spring Framework -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -162,6 +172,12 @@
                 <version>${version.spring.boot}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${version.spring.boot}</version>
             </dependency>
 
             <dependency>
@@ -176,14 +192,6 @@
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${version.spring.boot}</version>
                 <optional>true</optional>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-bom</artifactId>
-                <version>2.17.1</version>
-                <scope>import</scope>
-                <type>pom</type>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
@@ -205,7 +213,7 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.9.1</version>
+                <version>${version.assertj}</version>
                 <scope>test</scope>
             </dependency>
 
@@ -336,18 +344,6 @@
                 <version>${version.google.guava}</version>
             </dependency>
 
-            <!-- Log4j 2: http://logging.apache.org/log4j/2.x/index.html -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>${version.apache.log4j}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${version.apache.log4j}</version>
-            </dependency>
-
             <!-- Flyway: https://flywaydb.org/documentation/usage/api/ -->
             <dependency>
                 <groupId>org.flywaydb</groupId>
@@ -367,6 +363,7 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${version.db.h2}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -409,8 +406,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.maven.plugin.compiler}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <release>${maven.compiler.release}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -627,7 +623,7 @@
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                     <version>${version.db.h2}</version>
-<!--                    <scope>runtime</scope>-->
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
             <build>
@@ -807,8 +803,7 @@
                 <jdk>8</jdk>
             </activation>
             <properties>
-                <maven.compiler.source>8</maven.compiler.source>
-                <maven.compiler.target>8</maven.compiler.target>
+                <maven.compiler.release>8</maven.compiler.release>
             </properties>
         </profile>
 

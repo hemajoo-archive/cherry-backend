@@ -15,6 +15,8 @@
 package com.hemajoo.commerce.cherry.backend.persistence.test.person;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactoryException;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
@@ -54,6 +56,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class EmailAddressUnitTest extends AbstractPostgresUnitTest
 {
     /**
+     * Entity factory.
+     */
+    @Autowired
+    private EntityFactory factory;
+
+    /**
      * Person services.
      */
     @Autowired
@@ -68,6 +76,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
         emailAddress.setParent(person);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
+
+        LOGGER.info(String.format("Person id generated: '%s'", person.getId()));
+        LOGGER.info(String.format("Email address id generated: '%s'", emailAddress.getId()));
 
         assertThat(emailAddress)
                 .as("Email address should not be null!")
@@ -315,7 +326,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Ensure an entity cannot be set as its parent.")
+    @DisplayName("Ensures an entity cannot be set as its parent.")
     final void testCannotSetEmailAddressAsOwnParent()
     {
         final ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
@@ -323,5 +334,21 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         assertThrows(EntityException.class, () -> {
             email.setParent(email);
         });
+    }
+
+    @Test
+    @DisplayName("Retrieves an email address using the entity factory.")
+    final void testRetrieveEmailAddressUsingEntityFactory() throws EmailAddressException, EntityFactoryException
+    {
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        email = servicePerson.getEmailAddressService().save(email);
+
+        ServerEmailAddressEntity other = (ServerEmailAddressEntity) factory.from(EntityType.EMAIL_ADDRESS, email.getId());
+        assertThat(other)
+                .as("Entity should not be null!")
+                .isNotNull();
+        assertThat(other.getEmail())
+                .as("Entity emails should match!")
+                .isEqualTo(email.getEmail());
     }
 }

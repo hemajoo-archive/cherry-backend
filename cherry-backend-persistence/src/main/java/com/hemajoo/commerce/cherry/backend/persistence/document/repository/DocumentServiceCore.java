@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +44,10 @@ public class DocumentServiceCore implements DocumentService
 
     @Autowired
     private ProxyContentStore proxyStore;
+
+    @Getter
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public DocumentRepository getRepository()

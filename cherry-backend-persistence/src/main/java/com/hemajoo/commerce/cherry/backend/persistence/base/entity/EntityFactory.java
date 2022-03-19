@@ -15,18 +15,18 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentRepository;
-import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
-import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
-import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PhoneNumberRepository;
-import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PostalAddressRepository;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import javax.persistence.EntityManager;
 import java.util.UUID;
 
 /**
@@ -39,78 +39,41 @@ import java.util.UUID;
 public class EntityFactory
 {
     /**
-     * Person repository.
-     */
-    @Autowired
-    private PersonRepository personRepository;
-
-    /**
      * Document repository.
      */
     @Autowired
-    private DocumentRepository documentRepository;
-
-    /**
-     * Email address repository.
-     */
-    @Autowired
-    private EmailAddressRepository emailAddressRepository;
-
-    /**
-     * Postal address repository.
-     */
-    @Autowired
-    private PostalAddressRepository postalAddressRepository;
-
-    /**
-     * Phone number repository.
-     */
-    @Autowired
-    private PhoneNumberRepository phoneNumberRepository;
+    private DocumentService documentService;
 
     /**
      * Creates a server entity given its entity type and its identifier.
      * @param type Entity type.
      * @param uuid Entity identifier.
-     * @param <T> Object type.
      * @return Server entity object.
      * @throws EntityFactoryException Thrown to indicate an error occurred when trying to create the server entity object.
      */
-    public <T extends ServerBaseEntity> T from(final EntityType type, final @NonNull String uuid) throws EntityFactoryException
+    public final ServerEntity from(final EntityType type, final @NonNull UUID uuid) throws EntityFactoryException
     {
-        Optional<T> object;
+        EntityManager entityManager = documentService.getEntityManager();
 
         switch (type)
         {
             case PERSON:
-                object = (Optional<T>) personRepository.findById(UUID.fromString(uuid));
-                break;
+                return entityManager.find(ServerPersonEntity.class, uuid);
 
             case DOCUMENT:
-                object = (Optional<T>) documentRepository.findById(UUID.fromString(uuid));
-                break;
+                return entityManager.find(ServerDocumentEntity.class, uuid);
 
             case EMAIL_ADDRESS:
-                object = (Optional<T>) emailAddressRepository.findById(UUID.fromString(uuid));
-                break;
+                return entityManager.find(ServerEmailAddressEntity.class, uuid);
 
             case POSTAL_ADDRESS:
-                object = (Optional<T>) postalAddressRepository.findById(UUID.fromString(uuid));
-                break;
+                return entityManager.find(ServerPostalAddressEntity.class, uuid);
 
             case PHONE_NUMBER:
-                object = (Optional<T>) phoneNumberRepository.findById(UUID.fromString(uuid));
-                break;
+                return entityManager.find(ServerPhoneNumberEntity.class, uuid);
 
             default:
                 throw new EntityFactoryException(String.format("Entity type: '%s' is not handled!", type));
         }
-
-        if (object.isEmpty())
-        {
-            throw new EntityException(type, String.format("Cannot find entity for type: '%s', with id: '%s'", type, uuid));
-        }
-
-        return object.get();
     }
 }
