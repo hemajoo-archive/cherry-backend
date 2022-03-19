@@ -79,8 +79,7 @@
 
         <!-- Dependencies version properties -->
         <version.ressec.avocado>0.1.0</version.ressec.avocado>
-
-        <version.swagger>3.0.0</version.swagger> <!-- Upgrade to OpenAPI -->
+        <version.springdoc.openapi>1.6.6</version.springdoc.openapi>
         <version.google.guava>31.1-jre</version.google.guava>
         <version.junit.jupiter>5.8.2</version.junit.jupiter>
         <version.junit.platform.launcher>1.6.2</version.junit.platform.launcher>
@@ -258,17 +257,11 @@
                 <version>${version.spring.content}</version>
             </dependency>
 
-            <!-- Swagger -->
+            <!-- Automate generation of API documentation using Spring -->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${version.swagger}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${version.swagger}</version>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${version.springdoc.openapi}</version>
             </dependency>
 
             <!-- Bean mapper: MapStruct -->

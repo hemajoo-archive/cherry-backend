@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientPostalAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumberEntity;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -59,32 +59,32 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
     /**
      * Person last name.
      */
-    @ApiModelProperty(name = "lastName", notes = "Person last name", example = "Eastwood", value = "Eastwood", required = true)
+    @Schema(name = "lastName", description = "Person last name", example = "Eastwood", required = true)
     private String lastName;
 
     /**
      * Person first name.
      */
-    @ApiModelProperty(name = "firstName", notes = "Person first name", example = "Clint", value = "Clint", required = true)
+    @Schema(name = "firstName", description = "Person first name", example = "Clint", required = true)
     private String firstName;
 
     /**
      * Person birthdate.
      */
-    @ApiModelProperty(name = "birthDate", notes = "Person birth date (YYYY-MM-DD)", example = "1930-05-31", required = true)
+    @Schema(name = "birthDate", description = "Person birth date (YYYY-MM-DD)", example = "1930-05-31", required = true)
     private Date birthDate;
 
     /**
      * Person gender type.
      */
-    @ApiModelProperty(name = "genderType", notes = "Person gender", value = "MALE", required = true)
+    @Schema(name = "genderType", description = "Person gender", example = "MALE", required = true)
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
 
     /**
      * Person type.
      */
-    @ApiModelProperty(name = "personType", notes = "Person type", value = "PHYSICAL", required = true)
+    @Schema(name = "personType", description = "Person type", example = "PHYSICAL", required = true)
     @Enumerated(EnumType.STRING)
     private PersonType personType;
 
@@ -93,7 +93,7 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private List<ClientPostalAddressEntity> postalAddresses = new ArrayList<>();
 
     /**
@@ -101,7 +101,7 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private List<ClientPhoneNumberEntity> phoneNumbers = new ArrayList<>();
 
     /**
@@ -109,7 +109,7 @@ public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private List<ClientEmailAddressEntity> emailAddresses = new ArrayList<>();
 
     /**

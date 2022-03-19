@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -38,33 +38,33 @@ public class ClientPhoneNumberEntity extends ClientBaseEntity implements ClientP
     /**
      * Phone number.
      */
-    @ApiModelProperty(name = "number", notes = "Phone number", value = "0652897412")
+    @Schema(name = "number", description = "Phone number", example = "0652897412")
     private String number;
 
     /**
      * Phone number country code (ISO Alpha-3 code).
      */
-    @ApiModelProperty(name = "countryCode", notes = "Phone number country code (ISO Alpha-3)", value = "FRA")
+    @Schema(name = "countryCode", description = "Phone number country code (ISO Alpha-3)", example = "FRA")
     private String countryCode;
 
     /**
      * Phone number type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(name = "phoneType", notes = "Phone number type", value = "PRIVATE")
+    @Schema(name = "phoneType", description = "Phone number type", example = "PRIVATE")
     private PhoneNumberType phoneType;
 
     /**
      * Phone number category type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(name = "categoryType", notes = "Phone number category type", value = "MOBILE")
+    @Schema(name = "categoryType", description = "Phone number category type", example = "MOBILE")
     private PhoneNumberCategoryType categoryType;
 
     /**
      * Is it a default phone number?
      */
-    @ApiModelProperty(name = "isDefault", notes = "Is it the default phone number?", value = "true")
+    @Schema(name = "isDefault", description = "Is it the default phone number?", example = "true")
     private Boolean isDefault;
 
     /**
@@ -73,7 +73,7 @@ public class ClientPhoneNumberEntity extends ClientBaseEntity implements ClientP
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("phoneNumbers")
-    @ApiModelProperty(name = "owner", notes = "Entity identity this phone number belongs to", value = "1")
+    @Schema(name = "owner", description = "Entity identity this phone number belongs to", example = "1")
     private Identity owner;
 
     /**

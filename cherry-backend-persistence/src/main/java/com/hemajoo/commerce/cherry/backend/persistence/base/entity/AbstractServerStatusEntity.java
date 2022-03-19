@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.StatusEntity;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,7 +49,7 @@ public abstract class AbstractServerStatusEntity extends AbstractServerAuditEnti
      */
     @Getter
     @Setter
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "SINCE", length = 26)
     private Date since;

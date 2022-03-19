@@ -16,8 +16,7 @@ package com.hemajoo.commerce.cherry.backend.shared.person;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.BaseSearch;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,7 +29,7 @@ import java.time.LocalDate;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@ApiModel(value = "PersonSearch", description = "Specification object used to search for persons.")
+@Schema(name = "PersonSearch", description = "Specification object used to search for persons.")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SearchPerson extends BaseSearch
@@ -38,33 +37,33 @@ public class SearchPerson extends BaseSearch
     /**
      * Person last name.
      */
-    @ApiModelProperty(value = "Last name", allowEmptyValue = true)
+    @Schema(description = "Last name"/*, allowEmptyValue = true*/)
     private String lastName;
 
     /**
      * Person first name.
      */
-    @ApiModelProperty(value = "First name", allowEmptyValue = true)
+    @Schema(description = "First name"/*, allowEmptyValue = true*/)
     private String firstName;
 
     /**
      * Person birthdate.
      */
-    @ApiModelProperty(value = "Birth date", notes = "(YYYY-MM-DD)", allowEmptyValue = true)
+    @Schema(description = "Birth date", format = "YYYY-MM-DD"/*, allowEmptyValue = true*/)
     private LocalDate birthDate;
 
     /**
      * Person gender type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "genderType", notes = "Gender type", allowEmptyValue = true)
+    @Schema(name = "genderType", description = "Gender type"/*, allowEmptyValue = true*/)
     private GenderType genderType;
 
     /**
      * Person type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "personType", notes = "Person type", allowEmptyValue = true)
+    @Schema(name = "personType", description = "Person type"/*, allowEmptyValue = true*/)
     private PersonType personType;
 
     /**

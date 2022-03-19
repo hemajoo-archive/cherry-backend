@@ -22,9 +22,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constra
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
 import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +39,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Api(tags = "Persons")
+@Tag(name = "Person", description = "REST APIs to manage the persons.")
 //@ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressServiceCore.class })
 @Validated
 @RestController
@@ -68,7 +68,7 @@ public class PersonController
      * Service to count the number of persons.
      * @return Number of persons.
      */
-    @ApiOperation(value = "Count the number of persons")
+    @Operation(summary = "Count the number of persons")
     @GetMapping("/count")
     public long count()
     {
@@ -80,10 +80,10 @@ public class PersonController
      * @param id Email address identifier.
      * @return Email address matching the given identifier.
      */
-    @ApiOperation(value = "Retrieve an email address")
+    @Operation(summary = "Retrieve an email address")
     @GetMapping("/get/{id}")
     public ResponseEntity<ClientPersonEntity> get(
-            @ApiParam(value = "Person identifier", required = true)
+            @Parameter(description = "Person identifier", required = true)
             @Valid @ValidPersonId // Handles person id validation automatically, need both annotations!
             @NotNull
             @PathVariable String id)
@@ -115,7 +115,7 @@ public class PersonController
      * @return Randomly generated person.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to create a random email address.
      */
-    @ApiOperation(value = "Create a new random person")
+    @Operation(summary = "Create a new random person")
     @PostMapping("/random")
     public ResponseEntity<ClientPersonEntity> random() throws EmailAddressException
     {
@@ -148,10 +148,10 @@ public class PersonController
      * @param id Person identifier.
      * @return Confirmation message.
      */
-    @ApiOperation(value = "Delete a person")
+    @Operation(summary = "Delete a person")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(
-            @ApiParam(value = "Person identifier (UUID)", required = true)
+            @Parameter(description = "Person identifier (UUID)", required = true)
             @NotNull @Valid @ValidPersonId @PathVariable String id)
     {
         servicePerson.getPersonService().deleteById(UUID.fromString(id));

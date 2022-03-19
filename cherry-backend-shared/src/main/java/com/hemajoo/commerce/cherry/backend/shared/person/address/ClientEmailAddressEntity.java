@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.shared.person.address;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -41,7 +41,7 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
      * Email address.
      */
     @JsonProperty("email")
-    @ApiModelProperty(name = "email", notes = "Email address", value = "joe.doe@gmail.com")
+    @Schema(name = "email", description = "Email address", example = "joe.doe@gmail.com")
     //@Email(message = "email: '${validatedValue}' is not a valid email!")
     private String email;
 
@@ -49,14 +49,14 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
      * Is it the default email address?
      */
     @JsonProperty("isDefault")
-    @ApiModelProperty(name = "defaultEmail", notes = "Is it the default email address", value = "true")
+    @Schema(name = "defaultEmail", description = "Is it the default email address", example = "true")
     private Boolean isDefaultEmail;
 
     /**
      * Email address type.
      */
     @JsonProperty("addressType")
-    @ApiModelProperty(name = "addressType", notes = "Address type", value = "PRIVATE")
+    @Schema(name = "addressType", description = "Address type", example = "PRIVATE")
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 

@@ -21,9 +21,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Api(tags = "Document")
+@Tag(name = "Document")
 @Validated
 @RestController
 @RequestMapping("/api/v1/document")
@@ -65,7 +65,7 @@ public class DocumentController
      * Service to count the number of documents.
      * @return Number of documents.
      */
-    @ApiOperation(value = "Count the total number of documents")
+    @Operation(summary = "Count the total number of documents")
     @GetMapping("/count")
     public long count()
     {
@@ -78,10 +78,10 @@ public class DocumentController
      * @return Message.
      * @throws DocumentContentException Thrown to indicate an error occurred while trying to create a random document.
      */
-    @ApiOperation(value = "Create a new random document")
+    @Operation(summary = "Create a new random document")
     @PostMapping("/random")
     public ResponseEntity<String> random(
-            @ApiParam(value = "Person identifier (UUID) being the parent of the new document", name = "personId", required = true)
+            @Parameter(name = "personId", description = "Person identifier (UUID) being the parent of the new document", required = true)
             @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentContentException
     {
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
@@ -103,18 +103,18 @@ public class DocumentController
      * @param personId Person identifier being the owner of the uploaded document.
      * @return Message of the result of the upload.
      */
-    @ApiOperation(value = "Upload a document")
+    @Operation(summary = "Upload a document")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> upload(@RequestPart("file") MultipartFile file,
-                                         @ApiParam(value = "Name", name = "name", required = false)
+                                         @Parameter(description = "Name", name = "name", required = false)
                                          @RequestParam String name,
-                                         @ApiParam(value = "Description", name = "description", required = false)
+                                         @Parameter(description = "Description", name = "description", required = false)
                                          @RequestParam String description,
-                                         @ApiParam(value = "Reference", name = "reference", required = false)
+                                         @Parameter(description = "Reference", name = "reference", required = false)
                                          @RequestParam String reference,
-                                         @ApiParam(value = "Tags", name = "tags", required = false)
+                                         @Parameter(description = "Tags", name = "tags", required = false)
                                          @RequestParam String tags,
-                                         @ApiParam(value = "Person identifier (UUID) being the parent of the new document", name = "personId", required = true)
+                                         @Parameter(description = "Person identifier (UUID) being the parent of the new document", name = "personId", required = true)
                                          @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
         ServerDocumentEntity document;
