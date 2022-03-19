@@ -20,24 +20,12 @@
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../code-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
-    <!--    <properties>-->
-
-    <!--        &lt;!&ndash; FlyWay properties &ndash;&gt;-->
-    <!--        <flyway.user></flyway.user>-->
-    <!--        <flyway.password></flyway.password>-->
-    <!--        <flyway.schemas>DEV</flyway.schemas>-->
-    <!--        <flyway.url>jdbc:h2:tcp://localhost:9092/cherry;DB_CLOSE_ON_EXIT=FALSE</flyway.url>-->
-    <!--        <flyway.locations>filesystem:../cherry-persistence/src/main/resources/db/migration/h2</flyway.locations>-->
-
-    <!--    </properties>-->
-
     <dependencies>
 
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
         </dependency>
 
         <dependency>
@@ -66,41 +54,23 @@
             <artifactId>s3</artifactId>
         </dependency>
 
-        <!-- H2 database driver -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.0.202</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- PostgresSQL database driver -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <!-- Hemajoo's Cherry Backend dependencies -->
         <dependency>
             <groupId>com.hemajoo.commerce.cherry.backend</groupId>
             <artifactId>cherry-backend-commons</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.hemajoo.commerce.cherry.backend</groupId>
             <artifactId>cherry-backend-shared</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.hemajoo.commerce.cherry.backend</groupId>
             <artifactId>cherry-backend-persistence</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <!-- ResseC dependencies -->
