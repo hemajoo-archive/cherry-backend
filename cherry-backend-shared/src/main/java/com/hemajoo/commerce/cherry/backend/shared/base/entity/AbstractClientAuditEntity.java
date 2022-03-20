@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -36,27 +36,27 @@ public abstract class AbstractClientAuditEntity implements AuditEntity
      * Entity creation date.
      */
     @JsonProperty("createdDate")
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Date createdDate;
 
     /**
      * Entity modification date.
      */
     @JsonProperty("modifiedDate")
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Date modifiedDate;
 
     /**
      * Entity creation author.
      */
     @JsonProperty("createdBy")
-    @ApiModelProperty(name = "createdBy", notes = "Person being the author of this entity.", required = false, example = "Henry.Jacobson@gmail.com")
+    @Schema(name = "createdBy", description = "Person being the author of this entity.", required = false, example = "Henry.Jacobson@gmail.com")
     private String createdBy;
 
     /**
      * Entity modification author.
      */
     @JsonProperty("modifiedBy")
-    @ApiModelProperty(name = "modifiedBy", notes = "Last person having modified this entity.", required = false, example = "Henry.Jacobson@gmail.com")
+    @Schema(name = "modifiedBy", description = "Last person having modified this entity.", required = false, example = "Henry.Jacobson@gmail.com")
     private String modifiedBy;
 }

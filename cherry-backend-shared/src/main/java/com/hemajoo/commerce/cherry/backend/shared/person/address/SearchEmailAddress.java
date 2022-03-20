@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.shared.person.address;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.BaseSearch;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -40,14 +40,13 @@ public final class SearchEmailAddress extends BaseSearch
      * Email address.
      */
     @JsonProperty("email")
-    @ApiModelProperty(value = "Email address", allowEmptyValue = true)
+    @Schema(description = "Email address" /*, allowEmptyValue = true*/)
     private String email;
 
     /**
      * Is it the default email address?
      */
     @JsonProperty("isDefault")
-    //@ApiModelProperty(name = "isDefault", value = "Is default email address?")
     private Boolean isDefaultEmail;
 
     /**
@@ -55,14 +54,14 @@ public final class SearchEmailAddress extends BaseSearch
      */
     @JsonProperty("addressType")
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "Email address type", notes = "Address type", allowEmptyValue = true)
+    @Schema(description = "Email address type"/*, allowEmptyValue = true*/)
     private AddressType addressType;
 
     /**
      * The person identifier this email address belongs to.
      */
     @JsonProperty("personId")
-    @ApiModelProperty(value = "Person identifier (UUID) owning the email address(es)", hidden = false)
+    @Schema(description = "Person identifier (UUID) owning the email address(es)", hidden = false)
     private String personId;
 
     /**

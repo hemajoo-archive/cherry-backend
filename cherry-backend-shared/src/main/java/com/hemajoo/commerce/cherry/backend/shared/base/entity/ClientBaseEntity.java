@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     @Getter
     @Setter
     @JsonProperty("uuid")
-    @ApiModelProperty(name = "id", notes = "Identifier")
+    @Schema(name = "id", description = "Identifier")
     private UUID id;
 
     /**
@@ -50,7 +50,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
      */
     @Setter
     @JsonProperty("type")
-    @ApiModelProperty(name = "entityType", notes = "Entity type", value = "PERSON")
+    @Schema(name = "entityType", description = "Entity type", example = "PERSON")
     private EntityType entityType;
 
     /**
@@ -59,7 +59,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     @Getter
     @Setter
     @JsonProperty("name")
-    @ApiModelProperty(name = "name", notes = "Name")
+    @Schema(name = "name", description = "Name")
     private String name;
 
     /**
@@ -68,7 +68,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     @Getter
     @Setter
     @JsonProperty("description")
-    @ApiModelProperty(name = "description", notes = "Description")
+    @Schema(name = "description", description = "Description")
     private String description;
 
     /**
@@ -77,7 +77,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     @Getter
     @Setter
     @JsonProperty("reference")
-    @ApiModelProperty(name = "reference", notes = "Reference")
+    @Schema(name = "reference", description = "Reference")
     private String reference;
 
     /**
@@ -87,7 +87,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     @JsonProperty("documents")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private List<EntityIdentity> documents = new ArrayList<>();
 
     /**

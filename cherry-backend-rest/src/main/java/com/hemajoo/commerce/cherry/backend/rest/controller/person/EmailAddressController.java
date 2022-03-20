@@ -33,7 +33,11 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
@@ -52,7 +56,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Api(tags = "Email Addresses")
+@Tag(name = "Email Addresses")
 @ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressServiceCore.class })
 //@GroupSequence( { EmailAddressController.class, BasicValidation.class, ExtendedValidation.class } )
 @Validated
@@ -85,7 +89,7 @@ public class EmailAddressController
      * Service to count the number of email addresses.
      * @return Number of email addresses.
      */
-    @ApiOperation(value = "Count email addresses")
+    @Operation(summary = "Count email addresses")
     @GetMapping("/count")
     public long count()
     {
@@ -97,10 +101,10 @@ public class EmailAddressController
      * @param id Email address identifier.
      * @return Email address matching the given identifier.
      */
-    @ApiOperation(value = "Retrieve an email address")
+    @Operation(summary = "Retrieve an email address")
     @GetMapping("/get/{id}")
     public ResponseEntity<ClientEmailAddressEntity> get(
-            @ApiParam(value = "Email address identifier", required = true)
+            @Parameter(description = "Email address identifier", required = true)
             @Valid @ValidEmailAddressId // Handles email id validation automatically, need both annotations!
             @NotNull
             @PathVariable String id)
@@ -115,10 +119,10 @@ public class EmailAddressController
      * @return Newly created email address.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to create the email address.
      */
-    @ApiOperation(value = "Create a new email address")
+    @Operation(summary = "Create a new email address")
     @PostMapping("/create")
     public ResponseEntity<ClientEmailAddressEntity> create(
-            @ApiParam(value = "Email address", required = true)
+            @Parameter(description = "Email address", required = true)
             @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException, EmailAddressException
     {
         ServerEmailAddressEntity serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
@@ -135,12 +139,12 @@ public class EmailAddressController
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to create a random email address.
      * @throws EntityException Thrown to indicate an error occurred while trying to set person as the parent entity.
      */
-    @ApiOperation(value = "Create a new random email address")
+    @Operation(summary = "Create a new random email address")
     @PostMapping("/random")
     public ResponseEntity<ClientEmailAddressEntity> random(
-            @ApiParam(value = "Parent entity type", name = "parentType", required = true)
+            @Parameter(description = "Parent entity type", name = "parentType", required = true)
             @NotNull @RequestParam EntityType parentType,
-            @ApiParam(value = "Entity identifier (UUID) being the owner of the new random email address", name = "parentId", required = true)
+            @Parameter(description = "Entity identifier (UUID) being the owner of the new random email address", name = "parentId", required = true)
             /*@Valid @ValidPersonId*/ @NotNull @RequestParam String parentId) throws EmailAddressException, EntityFactoryException
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
@@ -158,7 +162,7 @@ public class EmailAddressController
      * @return Updated email address.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to update the email address.
      */
-    @ApiOperation(value = "Update an email address"/*, notes = "Update an email address given the new values."*/)
+    @Operation(summary = "Update an email address"/*, notes = "Update an email address given the new values."*/)
     @PutMapping("/update")
     //@Transactional
     public ResponseEntity<ClientEmailAddressEntity> update(
@@ -179,10 +183,10 @@ public class EmailAddressController
      * @param id Email address identifier.
      * @return Confirmation message.
      */
-    @ApiOperation(value = "Delete an email address")
+    @Operation(summary = "Delete an email address")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(
-            @ApiParam(value = "Email address identifier (UUID)", required = true)
+            @Parameter(description = "Email address identifier (UUID)", required = true)
             @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
     {
         servicePerson.getEmailAddressService().deleteById(UUID.fromString(id));
@@ -196,12 +200,12 @@ public class EmailAddressController
      * @return List of matching email addresses.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to search for email addresses.
      */
-    @ApiOperation(value = "Search for email addresses", notes = "Search for email addresses matching the given predicates. Fill only the fields to be taken into account.")
+    @Operation(summary = "Search for email addresses", description = "Search for email addresses matching the given predicates. Fill only the fields to be taken into account.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful operation"),
-            @ApiResponse(code = 404, message = "No email address found matching the given criteria"),
-            @ApiResponse(code = 400, message = "Missing or invalid request"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "No email address found matching the given criteria"),
+            @ApiResponse(responseCode = "400", description = "Missing or invalid request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
     public ResponseEntity<List<ClientEmailAddressEntity>> search(final @RequestBody @NotNull SearchEmailAddress search) throws EmailAddressException
     {
@@ -221,12 +225,12 @@ public class EmailAddressController
      * @return List of matching email address identifiers.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to query for email addresses.
      */
-    @ApiOperation(value = "Query email addresses", notes = "Returns a list of email addresses matching the given criteria.")
+    @Operation(summary = "Query email addresses", description = "Returns a list of email addresses matching the given criteria.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful query"),
-            @ApiResponse(code = 404, message = "No email address found matching the given criteria"),
-            @ApiResponse(code = 400, message = "Missing or invalid request"),
-            @ApiResponse(code = 500, message = "Internal server error")})
+            @ApiResponse(responseCode = "200", description = "Successful query"),
+            @ApiResponse(responseCode = "404", description = "No email address found matching the given criteria"),
+            @ApiResponse(responseCode = "400", description = "Missing or invalid request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/query")
     public ResponseEntity<List<String>> query(final @NotNull SearchEmailAddress search) throws EmailAddressException
     {

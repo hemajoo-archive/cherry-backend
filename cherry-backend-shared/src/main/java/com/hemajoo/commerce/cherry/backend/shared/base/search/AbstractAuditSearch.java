@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.shared.base.search;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -37,27 +37,27 @@ public abstract class AbstractAuditSearch implements Serializable
      * Creation date.
      */
     @JsonProperty("createdDate")
-    @ApiModelProperty(value = "Creation date", notes = "(YYYY-MM-DD)", allowEmptyValue = true, hidden = true)
+    @Schema(description = "Creation date", format = "(YYYY-MM-DD)", /*allowEmptyValue = true,*/ hidden = true)
     private Date createdDate;
 
     /**
      * Modification date.
      */
     @JsonProperty("modifiedDate")
-    @ApiModelProperty(value = "Last modification date", notes = "(YYYY-MM-DD)", allowEmptyValue = true, hidden = true)
+    @Schema(description = "Last modification date", format = "(YYYY-MM-DD)", /*allowEmptyValue = true,*/ hidden = true)
     private Date modifiedDate;
 
     /**
      * Creation author.
      */
     @JsonProperty("createdBy")
-    @ApiModelProperty(value = "Created by", allowEmptyValue = true)
+    @Schema(description = "Created by"/*, allowEmptyValue = true*/)
     private String createdBy;
 
     /**
      * Modification author.
      */
     @JsonProperty("modifiedBy")
-    @ApiModelProperty(value = "Modified by", allowEmptyValue = true)
+    @Schema(description = "Modified by"/*, allowEmptyValue = true*/)
     private String modifiedBy;
 }

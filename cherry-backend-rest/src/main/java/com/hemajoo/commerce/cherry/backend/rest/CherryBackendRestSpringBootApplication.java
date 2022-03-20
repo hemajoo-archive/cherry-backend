@@ -16,15 +16,19 @@ package com.hemajoo.commerce.cherry.backend.rest;
 
 import com.hemajoo.commerce.cherry.backend.persistence.configuration.PersistenceConfiguration;
 import internal.org.springframework.content.s3.boot.autoconfigure.S3ContentAutoConfiguration;
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 /**
  * The {@code Cherry}'s REST APIs {@code Spring} (server) application.
@@ -35,13 +39,25 @@ import java.util.logging.Logger;
 @SpringBootApplication(exclude = { S3ContentAutoConfiguration.class })
 public class CherryBackendRestSpringBootApplication implements CommandLineRunner
 {
-    /**
-     * Logger.
-     */
-    private static final Logger LOG = Logger.getLogger(CherryBackendRestSpringBootApplication.class.getName());
-
     @Autowired
     private ApplicationContext appContext;
+
+    /**
+     * Returns the <b>OpenAPI</b> information.
+     * @return <b>OpenAPI</b> information.
+     */
+    @Bean
+    public OpenAPI openApi()
+    {
+        return new OpenAPI()
+                .info(new Info().title("Cherry Backend - REST-APIs")
+                        .description("Hemajoo's Cherry Backend REST-API controllers")
+                        .version("0.1.0")
+                        .license(new License().name("Hemajoo (c) 2022 - All rights reserved").url("https://github.com/ressec/cherry-backend")))
+                .externalDocs(new ExternalDocumentation()
+                        .description("Cherry Backend Wiki Documentation")
+                        .url("https://github.com/ressec/cherry-backend"));
+    }
 
     public static void main(String[] args)
     {

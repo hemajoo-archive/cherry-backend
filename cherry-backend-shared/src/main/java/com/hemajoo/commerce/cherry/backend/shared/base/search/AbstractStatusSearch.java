@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.shared.base.search;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -41,14 +41,14 @@ public abstract class AbstractStatusSearch extends AbstractAuditSearch
      */
     @JsonProperty("statusType")
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "Status type", allowEmptyValue = true)
+    @Schema(example = "Status type"/*, allowEmptyValue = true*/)
     private StatusType statusType;
 
     /**
      * Inactivity time stamp information (server time) that must be filled when the email address becomes inactive.
      */
     @JsonIgnore
-    @ApiModelProperty(hidden = true) // TODO Would be good to have this property integrated to the search!
+    @Schema(hidden = true) // TODO Would be good to have this property integrated to the search!
     private Date since;
 
     /**
@@ -56,7 +56,7 @@ public abstract class AbstractStatusSearch extends AbstractAuditSearch
      * @return {@code True} if the entity is active, {@code false} otherwise.
      */
     @JsonIgnore
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     public final boolean isActive()
     {
         return statusType == StatusType.ACTIVE;

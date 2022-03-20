@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.commons.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.UUID;
@@ -35,7 +35,8 @@ public class EntityIdentity implements Identity
      * Entity type.
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @ApiModelProperty(hidden = true)
+
+    @Schema(hidden = true)
     @Getter
     @Setter
     private EntityType entityType;
@@ -44,7 +45,7 @@ public class EntityIdentity implements Identity
      * Entity unique identifier.
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     @Getter
     @Setter
     private UUID id;

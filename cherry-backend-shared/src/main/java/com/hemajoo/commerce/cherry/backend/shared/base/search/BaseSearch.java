@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.entity.IdentityAware;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -43,28 +43,28 @@ public class BaseSearch extends AbstractStatusSearch implements Identity, Identi
      * Entity identifier.
      */
     @JsonProperty("id")
-    @ApiModelProperty(value = "Email address identifier (UUID)")
+    @Schema(description = "Email address identifier (UUID)")
     private String id;
 
     /**
      * Entity type.
      */
     @JsonIgnore
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private EntityType entityType;
 
     /**
      * Entity name.
      */
     @JsonIgnore
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String name;
 
     /**
      * Entity description.
      */
     @JsonIgnore
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String description;
 
     /**

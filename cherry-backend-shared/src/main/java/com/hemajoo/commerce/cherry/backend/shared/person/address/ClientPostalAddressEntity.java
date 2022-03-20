@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -39,56 +39,56 @@ public class ClientPostalAddressEntity extends ClientBaseEntity implements Clien
     /**
      * Postal address street name.
      */
-    @ApiModelProperty(name = "name", notes = "Postal address street name", value = "Rue de la Libération")
+    @Schema(name = "name", description = "Postal address street name", example = "Rue de la Libération")
     private String streetName;
 
     /**
      * Postal address street number.
      */
-    @ApiModelProperty(name = "number", notes = "Postal address street number", value = "18 bis")
+    @Schema(name = "number", description = "Postal address street number", example = "18 bis")
     private String streetNumber;
 
     /**
      * Postal address locality.
      */
-    @ApiModelProperty(name = "locality", notes = "Postal address locality (city)", value = "Paris")
+    @Schema(name = "locality", description = "Postal address locality (city)", example = "Paris")
     private String locality;
 
     /**
      * Postal address country code (ISO Alpha-3 code).
      */
-    @ApiModelProperty(name = "countryCode", notes = "Postal address country code (ISO Alpha-3)", value = "FRA")
+    @Schema(name = "countryCode", description = "Postal address country code (ISO Alpha-3)", example = "FRA")
     private String countryCode;
 
     /**
      * Postal address zip (postal) code.
      */
-    @ApiModelProperty(name = "zipCode", notes = "Postal address zip code (postal code)", value = "75000")
+    @Schema(name = "zipCode", description = "Postal address zip code (postal code)", example = "75000")
     private String zipCode;
 
     /**
      * Postal address area/region/department depending on the country.
      */
-    @ApiModelProperty(name = "area", notes = "Postal address area (region/state)", value = "Île-de-France")
+    @Schema(name = "area", description = "Postal address area (region/state)", example = "Île-de-France")
     private String area;
 
     /**
      * Is it a default postal address?
      */
-    @ApiModelProperty(name = "isDefault", notes = "Is it a default postal address ?", value = "true")
+    @Schema(name = "isDefault", description = "Is it a default postal address ?", example = "true")
     private Boolean isDefault;
 
     /**
      * Postal address type.
      */
-    @ApiModelProperty(name = "addressType", notes = "Postal address type", value = "PRIVATE")
+    @Schema(name = "addressType", description = "Postal address type", example = "PRIVATE")
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
     /**
      * Postal address category.
      */
-    @ApiModelProperty(name = "categoryType", notes = "Postal address category type", value = "POSTAL")
+    @Schema(name = "categoryType", description = "Postal address category type", example = "POSTAL")
     @Enumerated(EnumType.STRING)
     private PostalAddressCategoryType categoryType;
 
@@ -98,7 +98,7 @@ public class ClientPostalAddressEntity extends ClientBaseEntity implements Clien
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("postalAddresses")
-    @ApiModelProperty(name = "owner", notes = "Entity identity this postal address belongs to", value = "1")
+    @Schema(name = "owner", description = "Entity identity this postal address belongs to", example = "1")
     private Identity owner;
 
     /**

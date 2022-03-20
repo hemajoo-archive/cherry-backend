@@ -16,8 +16,7 @@ package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.BaseSearch;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -30,7 +29,7 @@ import javax.persistence.Enumerated;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@ApiModel(value = "PhoneNumberSearch", description = "Specification object used to search for phone numbers.")
+@Schema(name = "PhoneNumberSearch", description = "Specification object used to search for phone numbers.")
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -39,39 +38,39 @@ public class SearchPhoneNumber extends BaseSearch
     /**
      * Phone number.
      */
-    @ApiModelProperty(value = "Number", allowEmptyValue = true)
+    @Schema(description = "Number"/*, allowEmptyValue = true*/)
     private String number;
 
     /**
      * Phone number country code (ISO Alpha-3 code).
      */
-    @ApiModelProperty(value = "Country code", notes = "Iso Alpha-3 code.", allowEmptyValue = true)
+    @Schema(name = "Country code", description = "Iso Alpha-3 code."/*, allowEmptyValue = true*/)
     private String countryCode;
 
     /**
      * Phone number type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "phoneType", notes = "Phone type", allowEmptyValue = true)
+    @Schema(name = "phoneType", description = "Phone type"/*, allowEmptyValue = true*/)
     private PhoneNumberType phoneType;
 
     /**
      * Phone number category type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "categoryType", notes = "Category type", allowEmptyValue = true)
+    @Schema(name = "categoryType", description = "Category type"/*, allowEmptyValue = true*/)
     private PhoneNumberCategoryType categoryType;
 
     /**
      * Is it a default phone number?
      */
-    @ApiModelProperty(value = "Is default", allowEmptyValue = true)
+    @Schema(description = "Is default"/*, allowEmptyValue = true*/)
     private Boolean isDefault;
 
     /**
      * The person identifier this phone number belongs to.
      */
-    @ApiModelProperty(value = "Person identifier", allowEmptyValue = true)
+    @Schema(description = "Person identifier"/*, allowEmptyValue = true*/)
     private Long personId;
 
     /**
