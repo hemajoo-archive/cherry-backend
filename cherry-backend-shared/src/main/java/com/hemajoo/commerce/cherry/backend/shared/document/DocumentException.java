@@ -14,21 +14,22 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.AbstractEntityUncheckedException;
-import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import org.springframework.http.HttpStatus;
+import org.ressec.avocado.core.exception.checked.AbstractCheckedException;
+
+import java.io.Serial;
 
 /**
- * Unchecked exception thrown to indicate an error occurred with a <b>document</b>.
+ * Exception thrown to indicate an error occurred with a <b>document</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @SuppressWarnings("java:S110")
-public class DocumentException extends AbstractEntityUncheckedException
+public class DocumentException extends AbstractCheckedException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -37,17 +38,7 @@ public class DocumentException extends AbstractEntityUncheckedException
      */
     public DocumentException(final Exception exception)
     {
-        super(EntityType.DOCUMENT, exception, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
-     * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentException(final Exception exception, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT, exception, status);
+        super(exception);
     }
 
     /**
@@ -56,17 +47,7 @@ public class DocumentException extends AbstractEntityUncheckedException
      */
     public DocumentException(final String message)
     {
-        super(EntityType.DOCUMENT, message, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
-     * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentException(final String message, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT, message, status);
+        super(message);
     }
 
     /**
@@ -76,17 +57,6 @@ public class DocumentException extends AbstractEntityUncheckedException
      */
     public DocumentException(final String message, final Exception exception)
     {
-        super(EntityType.DOCUMENT, message, exception, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
-     * @param message Message describing the error being the cause of the raised exception.
-     * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentException(final String message, final Exception exception, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT, message, exception, status);
+        super(message, exception);
     }
 }

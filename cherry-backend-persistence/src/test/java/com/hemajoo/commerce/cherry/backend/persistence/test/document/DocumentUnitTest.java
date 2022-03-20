@@ -19,6 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDoc
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a document")
-    void testCreateDocument() throws DocumentContentException
+    void testCreateDocument() throws DocumentContentException, DocumentException
     {
         ServerDocumentEntity document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
@@ -66,7 +67,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a document being parent of another document")
-    void testCreateDocumentOwningDocument() throws DocumentContentException
+    void testCreateDocumentOwningDocument() throws DocumentException
     {
         ServerDocumentEntity parent = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
         ServerDocumentEntity child = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
@@ -94,7 +95,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Update a document")
-    void testUpdateDocument() throws DocumentContentException
+    void testUpdateDocument() throws DocumentException
     {
         ServerDocumentEntity document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
@@ -123,7 +124,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Delete a document")
-    void testDeleteDocument() throws DocumentContentException
+    void testDeleteDocument() throws DocumentException
     {
         ServerDocumentEntity document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 

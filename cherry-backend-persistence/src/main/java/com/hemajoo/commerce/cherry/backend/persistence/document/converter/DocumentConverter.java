@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDoc
 import com.hemajoo.commerce.cherry.backend.persistence.document.mapper.AbstractDocumentMapper;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -83,8 +84,9 @@ public class DocumentConverter
      * Copy a server document entity.
      * @param server Server document entity.
      * @return Copied server document entity.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
      */
-    public static ServerDocumentEntity copy(ServerDocumentEntity server)
+    public static ServerDocumentEntity copy(ServerDocumentEntity server) throws DocumentException
     {
         return AbstractDocumentMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
     }

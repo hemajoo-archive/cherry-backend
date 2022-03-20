@@ -55,7 +55,7 @@ public interface EmailAddressService
      * @return Updated server email address entity.
      * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
      */
-    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException;
+    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException, DocumentException;
 
     /**
      * Saves the given email address.
@@ -71,7 +71,7 @@ public interface EmailAddressService
      * @return Email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
-    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
+    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
 
     /**
      * Deletes the email address matching the given identifier.
