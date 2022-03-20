@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -82,7 +83,7 @@ public class DocumentController
     @PostMapping("/random")
     public ResponseEntity<String> random(
             @Parameter(name = "personId", description = "Person identifier (UUID) being the parent of the new document", required = true)
-            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentContentException
+            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentException, DocumentContentException
     {
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
 
@@ -137,7 +138,7 @@ public class DocumentController
             document.setOwner(person);
             servicePerson.getDocumentService().save(document);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

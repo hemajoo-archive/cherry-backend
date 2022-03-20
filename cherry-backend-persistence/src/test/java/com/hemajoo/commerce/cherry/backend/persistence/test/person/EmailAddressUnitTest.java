@@ -26,7 +26,6 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAd
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import lombok.extern.log4j.Log4j2;
@@ -69,7 +68,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create an email address")
-    void testCreateEmailAddress() throws EmailAddressException
+    void testCreateEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
@@ -91,7 +90,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create an email address with one document")
-    void testCreateEmailAddressWithOneDocument() throws EmailAddressException, DocumentContentException
+    void testCreateEmailAddressWithOneDocument() throws EmailAddressException, DocumentException
     {
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
@@ -116,7 +115,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create an email address with several documents")
-    void testCreateEmailAddressWithSeveralDocument() throws EmailAddressException, DocumentContentException
+    void testCreateEmailAddressWithSeveralDocument() throws EmailAddressException, DocumentException
     {
         List<ServerDocumentEntity> documents = new ArrayList<>();
         for (int i = 0; i < 5; i++)
@@ -146,7 +145,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Update an email address")
-    void testUpdateEmailAddress() throws EmailAddressException
+    void testUpdateEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
@@ -179,7 +178,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Delete an email address")
-    void testDeleteEmailAddress() throws EmailAddressException
+    void testDeleteEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
@@ -204,7 +203,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Delete email address. Orphan document is to be deleted")
-    final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, DocumentContentException, EmailAddressException
+    final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, EmailAddressException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
@@ -258,7 +257,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Sets a document as being the parent of an email address.")
-    final void testSetDocumentAsParentOfEmailAddress() throws DocumentException, DocumentContentException, EmailAddressException
+    final void testSetDocumentAsParentOfEmailAddress() throws DocumentException, EmailAddressException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
@@ -279,7 +278,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Sets an email address as being the parent of another email address.")
-    final void testSetEmailAddressAsParentOfEmailAddress() throws EmailAddressException
+    final void testSetEmailAddressAsParentOfEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerEmailAddressEntity other = EmailAddressRandomizer.generateServerEntity(false);
@@ -303,7 +302,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Sets a person as being the parent of another email address.")
-    final void testSetPersonAsParentOfEmailAddress() throws EmailAddressException
+    final void testSetPersonAsParentOfEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
@@ -338,7 +337,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Retrieves an email address using the entity factory.")
-    final void testRetrieveEmailAddressUsingEntityFactory() throws EmailAddressException, EntityFactoryException
+    final void testRetrieveEmailAddressUsingEntityFactory() throws EmailAddressException, EntityFactoryException, DocumentException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         email = servicePerson.getEmailAddressService().save(email);

@@ -30,6 +30,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
 import com.hemajoo.commerce.cherry.backend.shared.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
@@ -117,13 +118,15 @@ public class EmailAddressController
      * Service to add a new email address.
      * @param emailAddress Email address.
      * @return Newly created email address.
-     * @throws EmailAddressException Thrown to indicate an error occurred while trying to create the email address.
+     * @throws EmailAddressException Thrown to indicate an error occurred while trying to create an email address.
+     * @throws EntityException Thrown to indicate an error occurred with an entity while trying to create an email address.
+     * @throws DocumentException Thrown to indicate an error occurred with a document while trying to create an email address.
      */
     @Operation(summary = "Create a new email address")
     @PostMapping("/create")
     public ResponseEntity<ClientEmailAddressEntity> create(
             @Parameter(description = "Email address", required = true)
-            @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException, EmailAddressException
+            @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException, EmailAddressException, DocumentException
     {
         ServerEmailAddressEntity serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
         serverEmailAddress = servicePerson.getEmailAddressService().save(serverEmailAddress);
@@ -137,7 +140,8 @@ public class EmailAddressController
      * @param parentType Entity type being the owner of the email address to create.
      * @return Randomly generated email address.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to create a random email address.
-     * @throws EntityException Thrown to indicate an error occurred while trying to set person as the parent entity.
+     * @throws DocumentException Thrown to indicate an error occurred with a document while trying to create a random email address.
+     * @throws EntityException Thrown to indicate an error occurred while trying to set the person as the parent entity.
      */
     @Operation(summary = "Create a new random email address")
     @PostMapping("/random")
@@ -145,7 +149,7 @@ public class EmailAddressController
             @Parameter(description = "Parent entity type", name = "parentType", required = true)
             @NotNull @RequestParam EntityType parentType,
             @Parameter(description = "Entity identifier (UUID) being the owner of the new random email address", name = "parentId", required = true)
-            /*@Valid @ValidPersonId*/ @NotNull @RequestParam String parentId) throws EmailAddressException, EntityFactoryException
+            /*@Valid @ValidPersonId*/ @NotNull @RequestParam String parentId) throws EmailAddressException, EntityFactoryException, DocumentException
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
@@ -160,13 +164,14 @@ public class EmailAddressController
      * Service to update an email address.
      * @param email Email address to update.
      * @return Updated email address.
-     * @throws EmailAddressException Thrown to indicate an error occurred while trying to update the email address.
+     * @throws EmailAddressException Thrown to indicate an error occurred while trying to update an email address.
+     * @throws DocumentException Thrown to indicate an error occurred with a document while trying to update an email address.
      */
     @Operation(summary = "Update an email address"/*, notes = "Update an email address given the new values."*/)
     @PutMapping("/update")
     //@Transactional
     public ResponseEntity<ClientEmailAddressEntity> update(
-            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email) throws EmailAddressException
+            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email) throws EmailAddressException, DocumentException
     {
         //emailAddressRuleEngine.validateEmailAddressId(email);
         validationEmailAddress.validateEmailForUpdate(email);

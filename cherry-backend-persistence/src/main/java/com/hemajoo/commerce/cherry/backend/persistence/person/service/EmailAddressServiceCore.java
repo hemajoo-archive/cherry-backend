@@ -92,7 +92,7 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public ServerEmailAddressEntity update(ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException
+    public ServerEmailAddressEntity update(ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException, DocumentException
     {
         ServerEmailAddressEntity original = findById(emailAddress.getId());
 
@@ -108,14 +108,17 @@ public class EmailAddressServiceCore implements EmailAddressService
         // Save the documents attached to the email address.
         if (emailAddress.getDocuments() != null)
         {
-            emailAddress.getDocuments().forEach(this::saveDocumentContent);
+            for (ServerDocumentEntity document : emailAddress.getDocuments())
+            {
+                saveDocumentContent(document);
+            }
         }
 
         return emailAddress;
     }
 
     @Override
-    public ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException
+    public ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException
     {
         emailAddress = save(emailAddress);
 

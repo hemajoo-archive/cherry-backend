@@ -14,20 +14,19 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.AbstractEntityCheckedException;
-import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import org.springframework.http.HttpStatus;
+import java.io.Serial;
 
 /**
- * Checked exception thrown to indicate an error occurred with a <b>document content</b>.
+ * Exception thrown to indicate an error occurred with a <b>document content</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class DocumentContentException extends AbstractEntityCheckedException
+public class DocumentContentException extends DocumentException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -36,17 +35,7 @@ public class DocumentContentException extends AbstractEntityCheckedException
      */
     public DocumentContentException(final Exception exception)
     {
-        super(EntityType.DOCUMENT_CONTENT, exception, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a <b>document content</b>.
-     * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentContentException(final Exception exception, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT_CONTENT, exception, status);
+        super(exception);
     }
 
     /**
@@ -55,17 +44,7 @@ public class DocumentContentException extends AbstractEntityCheckedException
      */
     public DocumentContentException(final String message)
     {
-        super(EntityType.DOCUMENT_CONTENT, message, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a <b>document content</b>.
-     * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentContentException(final String message, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT_CONTENT, message, status);
+        super(message);
     }
 
     /**
@@ -75,17 +54,6 @@ public class DocumentContentException extends AbstractEntityCheckedException
      */
     public DocumentContentException(final String message, final Exception exception)
     {
-        super(EntityType.DOCUMENT_CONTENT, message, exception, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a <b>document content</b>.
-     * @param message Message describing the error being the cause of the raised exception.
-     * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentContentException(final String message, final Exception exception, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT_CONTENT, message, exception, status);
+        super(message, exception);
     }
 }

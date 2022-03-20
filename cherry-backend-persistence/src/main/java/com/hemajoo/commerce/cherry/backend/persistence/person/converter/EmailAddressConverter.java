@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoiding
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractEmailAddressMapper;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
 import org.springframework.stereotype.Component;
 
@@ -83,8 +84,9 @@ public final class EmailAddressConverter
      * Copy a server email address entity.
      * @param server Server email address entity.
      * @return Copied server email address entity.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to copy a server email address.
      */
-    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity server)
+    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity server) throws DocumentException
     {
         return AbstractEmailAddressMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
     }

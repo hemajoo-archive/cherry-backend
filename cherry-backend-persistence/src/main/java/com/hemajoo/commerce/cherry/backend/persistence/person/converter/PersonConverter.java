@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoiding
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPersonMapper;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
 import org.springframework.stereotype.Component;
 
@@ -83,8 +84,9 @@ public final class PersonConverter
      * Copy a server person entity.
      * @param server Server person entity.
      * @return Copied server person entity.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
      */
-    public static ServerPersonEntity copy(ServerPersonEntity server)
+    public static ServerPersonEntity copy(ServerPersonEntity server) throws DocumentException
     {
         return AbstractPersonMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
     }
