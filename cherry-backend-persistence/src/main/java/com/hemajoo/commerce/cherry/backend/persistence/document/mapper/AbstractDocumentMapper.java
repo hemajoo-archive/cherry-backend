@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -55,7 +55,7 @@ public abstract class AbstractDocumentMapper
      * @return Client document entity.
      * @throws DocumentException Thrown to indicate an error occurred while trying to convert a document entity.
      */
-    public abstract ServerDocumentEntity fromClientToServer(ClientDocumentEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws DocumentException;
+    public abstract ServerDocumentEntity fromClientToServer(ClientDocument document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws DocumentException;
 
     /**
      * Maps from a server document entity to a client document entity.
@@ -63,7 +63,7 @@ public abstract class AbstractDocumentMapper
      * @param context Context object.
      * @return Client document entity.
      */
-    public abstract ClientDocumentEntity fromServerToClient(ServerDocumentEntity document, @Context CycleAvoidingMappingContext context);
+    public abstract ClientDocument fromServerToClient(ServerDocumentEntity document, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a server document entity.
@@ -81,5 +81,5 @@ public abstract class AbstractDocumentMapper
      * @return Copy of the client document entity.
      * @throws DocumentException Thrown to indicate an error occurred while trying to copy a document entity.
      */
-    public abstract ClientDocumentEntity copy(ClientDocumentEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
+    public abstract ClientDocument copy(ClientDocument entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
 }

@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmail
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddress;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
 import lombok.NonNull;
@@ -83,7 +83,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to check.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validateEmailAddressId(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
     {
         validateEmailAddressId(emailAddress.getId());
     }
@@ -110,7 +110,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to check.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateDefaultEmail(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validateDefaultEmail(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
     {
         if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
@@ -132,7 +132,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateNameUniqueness(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validateNameUniqueness(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
     {
         ServerPersonEntity person = servicePerson.findById(emailAddress.getParent().getId());
 
@@ -172,7 +172,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to update.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to validate an email address.
      */
-    public void validateEmailForUpdate(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validateEmailForUpdate(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
     {
         validateEmailAddressId(emailAddress.getId());
         validateEmailEntityType(emailAddress.getEntityType());

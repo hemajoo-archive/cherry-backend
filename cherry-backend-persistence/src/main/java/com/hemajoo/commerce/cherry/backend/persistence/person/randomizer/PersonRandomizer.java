@@ -18,9 +18,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractB
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
@@ -111,9 +111,9 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Random person.
      */
-    public static ClientPersonEntity generateClientEntity(final boolean withRandomId)
+    public static ClientPerson generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientPersonEntity();
+        var entity = new ClientPerson();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
@@ -138,10 +138,10 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPersonEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientPerson generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        ClientDocumentEntity document;
-        ClientPersonEntity entity = new ClientPersonEntity();
+        ClientDocument document;
+        ClientPerson entity = new ClientPerson();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

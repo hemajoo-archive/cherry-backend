@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface EmailAddress extends IBaseEntity
+public interface IEmailAddress extends IBaseEntity
 {
     /**
      * Returns the email address.

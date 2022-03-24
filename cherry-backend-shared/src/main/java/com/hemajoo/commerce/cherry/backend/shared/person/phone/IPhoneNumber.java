@@ -21,7 +21,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PhoneNumber extends IBaseEntity
+public interface IPhoneNumber extends IBaseEntity
 {
     /**
      * Returns the phone number.

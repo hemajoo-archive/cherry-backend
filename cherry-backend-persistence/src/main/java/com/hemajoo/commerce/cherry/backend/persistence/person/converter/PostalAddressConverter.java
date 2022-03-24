@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPostalAddressMapper;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientPostalAddress;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddressException;
 import org.springframework.stereotype.Component;
 
@@ -79,7 +79,7 @@ public final class PostalAddressConverter
      * @return Server postal address entity.
      * @throws PostalAddressException Thrown to indicate an error occurred while trying to convert a postal address entity.
      */
-    public ServerPostalAddressEntity fromClientToServer(ClientPostalAddressEntity client) throws PostalAddressException
+    public ServerPostalAddressEntity fromClientToServer(ClientPostalAddress client) throws PostalAddressException
     {
         return AbstractPostalAddressMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
     }
@@ -89,7 +89,7 @@ public final class PostalAddressConverter
      * @param server Server postal address entity.
      * @return Client postal address entity.
      */
-    public ClientPostalAddressEntity fromServerToClient(ServerPostalAddressEntity server)
+    public ClientPostalAddress fromServerToClient(ServerPostalAddressEntity server)
     {
         return AbstractPostalAddressMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -118,7 +118,7 @@ public final class PostalAddressConverter
      * @return Copied client postal address entity.
      * @throws PostalAddressException Thrown to indicate an error occurred when trying to copy a postal address.
      */
-    public static ClientPostalAddressEntity copy(ClientPostalAddressEntity client) throws PostalAddressException
+    public static ClientPostalAddress copy(ClientPostalAddress client) throws PostalAddressException
     {
         try
         {

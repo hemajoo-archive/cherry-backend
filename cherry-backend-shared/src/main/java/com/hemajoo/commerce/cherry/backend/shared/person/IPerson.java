@@ -23,7 +23,7 @@ import java.util.Date;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface Person extends IBaseEntity
+public interface IPerson extends IBaseEntity
 {
     /**
      * Returns the person last name.

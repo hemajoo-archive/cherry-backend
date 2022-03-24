@@ -26,7 +26,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonR
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddress;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.DisplayName;
@@ -117,7 +117,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a client email address to a server email address")
     final void testConvertClientToServerEmailAddressWithOwner() throws EmailAddressException
     {
-        ClientEmailAddressEntity client = EmailAddressRandomizer.generateClientEntity(true);
+        ClientEmailAddress client = EmailAddressRandomizer.generateClientEntity(true);
         ServerEmailAddressEntity server = converterEmailAddress.fromClientToServer(client);
 
         assertThat(server)
@@ -130,7 +130,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @SuppressWarnings("java:S5977")
     final void testConvertClientToServerEmailAddressWithNonExistentOwner()
     {
-        ClientEmailAddressEntity client = EmailAddressRandomizer.generateClientEntity(true);
+        ClientEmailAddress client = EmailAddressRandomizer.generateClientEntity(true);
         client.setParent(new EntityIdentity(EntityType.EMAIL_ADDRESS,UUID.randomUUID()));
 
         // If the owner of the client email address to convert does not exist, ensure an exception is thrown!
@@ -148,7 +148,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
             emails.add(EmailAddressRandomizer.generateServerEntity(true));
         }
 
-        List<ClientEmailAddressEntity> clients = emails.stream()
+        List<ClientEmailAddress> clients = emails.stream()
                 .map(email -> converterEmailAddress.fromServerToClient(email)).toList();
 
         assertThat(clients.size())
@@ -173,7 +173,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
         }
 
         // Convert from server to client email address list.
-        List<ClientEmailAddressEntity> clients = emails.stream()
+        List<ClientEmailAddress> clients = emails.stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element)).toList();
 
         assertThat(clients.size())
@@ -187,7 +187,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
         // Convert back from client to server email address list.
         List<ServerEmailAddressEntity> servers = new ArrayList<>();
         ServerEmailAddressEntity serverEmailAddressEntity;
-        for (ClientEmailAddressEntity client : clients)
+        for (ClientEmailAddress client : clients)
         {
             serverEmailAddressEntity = converterEmailAddress.fromClientToServer(client);
             servers.add(serverEmailAddressEntity);
@@ -275,8 +275,8 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Compare a client email address and its copy are equal")
     final void testCopyClientEmailAddress() throws EmailAddressException
     {
-        ClientEmailAddressEntity original = EmailAddressRandomizer.generateClientEntity(true);
-        ClientEmailAddressEntity copy = EmailAddressConverter.copy(original);
+        ClientEmailAddress original = EmailAddressRandomizer.generateClientEntity(true);
+        ClientEmailAddress copy = EmailAddressConverter.copy(original);
         assertThat(original)
                 .as("Both client email addresses should be equal!")
                 .isEqualTo(copy);

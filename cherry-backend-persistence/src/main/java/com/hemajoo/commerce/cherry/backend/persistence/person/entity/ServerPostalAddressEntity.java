@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.IPostalAddress;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddressCategoryType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPostalAddressEntity extends ServerBaseEntity implements PostalAddress, ServerEntity
+public class ServerPostalAddressEntity extends ServerBaseEntity implements IPostalAddress, ServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>is default</b> field.

@@ -12,27 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
+package com.hemajoo.commerce.cherry.backend.shared.document;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.IPhoneNumber;
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
- * Behavior of a server phone number entity.
+ * Implementing this entity provides the behavior of a <b>client document entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPhoneNumber extends IPhoneNumber, ServerEntity
+public interface IClientDocument extends IDocument, IClientEntity
 {
-//    /**
-//     * Returns the person owning this phone number.
-//     * @return Person.
-//     */
-//    ServerPerson getPerson();
-//
-//    /**
-//     * Sets the person owning this phone number.
-//     * @param owner Person.
-//     */
-//    void setPerson(final ServerPerson owner);
+    /**
+     * Returns the document owner.
+     * @return Document owner.
+     */
+    EntityIdentity getOwner();
+
+    /**
+     * Sets the document owner.
+     * @param owner Document owner.
+     */
+    void setOwner(final EntityIdentity owner);
 }

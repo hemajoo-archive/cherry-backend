@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPersonMapper;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import org.springframework.stereotype.Component;
 
@@ -71,7 +71,7 @@ public final class PersonConverter
      * @return Server person entity.
      * @throws PersonException Thrown to indicate an error occurred when trying to convert a person.
      */
-    public ServerPersonEntity fromClientToServer(ClientPersonEntity client) throws PersonException
+    public ServerPersonEntity fromClientToServer(ClientPerson client) throws PersonException
     {
         try
         {
@@ -88,7 +88,7 @@ public final class PersonConverter
      * @param server Server person entity.
      * @return Client person entity.
      */
-    public ClientPersonEntity fromServerToClient(ServerPersonEntity server)
+    public ClientPerson fromServerToClient(ServerPersonEntity server)
     {
         return AbstractPersonMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -117,7 +117,7 @@ public final class PersonConverter
      * @return Copied client person entity.
      * @throws PersonException Thrown to indicate an error occurred when trying to copy a person.
      */
-    public static ClientPersonEntity copy(ClientPersonEntity client) throws PersonException
+    public static ClientPerson copy(ClientPerson client) throws PersonException
     {
         try
         {

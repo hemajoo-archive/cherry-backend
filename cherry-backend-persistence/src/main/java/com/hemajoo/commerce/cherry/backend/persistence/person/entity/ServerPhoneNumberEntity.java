@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumber;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.IPhoneNumber;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
 import lombok.EqualsAndHashCode;
@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "PHONE_NUMBER")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
+public class ServerPhoneNumberEntity extends ServerBaseEntity implements IPhoneNumber, ServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>is default</b> field.

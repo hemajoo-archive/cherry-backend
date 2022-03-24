@@ -36,7 +36,7 @@ import java.io.InputStream;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDocument
+public class ClientDocument extends ClientBaseEntity implements IClientDocument
 {
     /**
      * Document type.
@@ -126,7 +126,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDo
     /**
      * Creates a new document.
      */
-    public ClientDocumentEntity()
+    public ClientDocument()
     {
         super(EntityType.DOCUMENT);
 
@@ -138,7 +138,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDo
      * @param owner Document owner identity.
      * @param documentType Document type.
      */
-    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType)
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
@@ -154,7 +154,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDo
      * @param filename File name.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -172,7 +172,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDo
      * @param file File.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -190,7 +190,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDo
      * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
     {
         this(owner, documentType);
 

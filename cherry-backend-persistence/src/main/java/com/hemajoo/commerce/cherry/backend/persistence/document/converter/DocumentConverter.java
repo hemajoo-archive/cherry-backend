@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.mapper.AbstractDocumentMapper;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import org.springframework.stereotype.Component;
 
@@ -71,7 +71,7 @@ public class DocumentConverter
      * @return Server document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to convert a document.
      */
-    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity client) throws DocumentException
+    public ServerDocumentEntity fromClientToServer(ClientDocument client) throws DocumentException
     {
         try
         {
@@ -88,7 +88,7 @@ public class DocumentConverter
      * @param server Server document entity.
      * @return Client document entity.
      */
-    public ClientDocumentEntity fromServerToClient(ServerDocumentEntity server)
+    public ClientDocument fromServerToClient(ServerDocumentEntity server)
     {
         return AbstractDocumentMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -117,7 +117,7 @@ public class DocumentConverter
      * @return Copied client document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
      */
-    public static ClientDocumentEntity copy(ClientDocumentEntity client) throws DocumentException
+    public static ClientDocument copy(ClientDocument client) throws DocumentException
     {
         try
         {

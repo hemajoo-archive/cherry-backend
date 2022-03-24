@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.IEmailAddress;
 
 /**
  * Interface providing the behavior of a server email address entity.
@@ -23,7 +23,7 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddress;
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface ServerEmailAddress extends EmailAddress, ServerEntity
+public interface ServerEmailAddress extends IEmailAddress, ServerEntity
 {
 //    /**
 //     * Returns the person owning this email address.

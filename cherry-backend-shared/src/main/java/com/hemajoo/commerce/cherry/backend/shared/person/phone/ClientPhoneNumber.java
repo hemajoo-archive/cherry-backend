@@ -14,25 +14,73 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
+import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 /**
- * Defines the behavior of a <b>client phone number</b>.
+ * Represents a <b>client phone number entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientPhoneNumber extends PhoneNumber, IClientEntity
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ClientPhoneNumber extends ClientBaseEntity implements IClientPhoneNumber
 {
     /**
-     * Returns the entity identity owning this phone number.
-     * @return Entity identity.
+     * Phone number.
      */
-    Identity getOwner();
+    @Schema(name = "number", description = "Phone number", example = "0652897412")
+    private String number;
 
     /**
-     * Sets the entity identity owning this phone number.
-     * @param owner Entity identity.
+     * Phone number country code (ISO Alpha-3 code).
      */
-    void setOwner(final Identity owner);
+    @Schema(name = "countryCode", description = "Phone number country code (ISO Alpha-3)", example = "FRA")
+    private String countryCode;
+
+    /**
+     * Phone number type.
+     */
+    @Enumerated(EnumType.STRING)
+    @Schema(name = "phoneType", description = "Phone number type", example = "PRIVATE")
+    private PhoneNumberType phoneType;
+
+    /**
+     * Phone number category type.
+     */
+    @Enumerated(EnumType.STRING)
+    @Schema(name = "categoryType", description = "Phone number category type", example = "MOBILE")
+    private PhoneNumberCategoryType categoryType;
+
+    /**
+     * Is it a default phone number?
+     */
+    @Schema(name = "isDefault", description = "Is it the default phone number?", example = "true")
+    private Boolean isDefault;
+
+    /**
+     * The entity identity this phone number belongs to.
+     */
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("phoneNumbers")
+    @Schema(name = "owner", description = "Entity identity this phone number belongs to", example = "1")
+    private Identity owner;
+
+    /**
+     * Creates a new phone number.
+     */
+    public ClientPhoneNumber()
+    {
+        super(EntityType.PHONE_NUMBER);
+    }
 }
