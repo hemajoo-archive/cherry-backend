@@ -18,9 +18,8 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.ClientPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressException;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -45,9 +44,9 @@ public abstract class AbstractPostalAddressMapper
      * @param entity Server postal address entity.
      * @param context Context object.
      * @return Entity identity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws PostalAddressException Thrown to indicate an error occurred while trying to convert a postal address entity.
      */
-    public abstract EntityIdentity fromServerToIdentity(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws EntityException;
+    public abstract EntityIdentity fromServerToIdentity(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws PostalAddressException;
 
     /**
      * Maps from a server postal address entity to a client postal address entity.
@@ -55,9 +54,9 @@ public abstract class AbstractPostalAddressMapper
      * @param context Context object.
      * @param entityManager Entity manager.
      * @return Client postal address entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws PostalAddressException Thrown to indicate an error occurred while trying to convert a postal address entity.
      */
-    public abstract ServerPostalAddressEntity fromClientToServer(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
+    public abstract ServerPostalAddressEntity fromClientToServer(ClientPostalAddress entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws PostalAddressException;
 
     /**
      * Maps from a server postal address entity to a client postal address entity.
@@ -65,22 +64,23 @@ public abstract class AbstractPostalAddressMapper
      * @param context Context object.
      * @return Client postal address entity.
      */
-    public abstract ClientPostalAddressEntity fromServerToClient(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract ClientPostalAddress fromServerToClient(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a server postal address entity.
      * @param entity Server postal address entity.
      * @param context Context object.
      * @return Copy of the server postal address entity.
-     * @throws DocumentException Thrown to indicate an error occurred while trying to copy the server document entity!
+     * @throws PostalAddressException Thrown to indicate an error occurred while trying to copy a postal address entity.
      */
-    public abstract ServerPostalAddressEntity copy(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
+    public abstract ServerPostalAddressEntity copy(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws PostalAddressException;
 
     /**
      * Copy a client postal address entity.
      * @param entity Client postal address entity.
      * @param context Context object.
      * @return Copy of the client postal address entity.
+     * @throws PostalAddressException Thrown to indicate an error occurred while trying to copy a postal address entity.
      */
-    public abstract ClientPostalAddressEntity copy(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract ClientPostalAddress copy(ClientPostalAddress entity, @Context CycleAvoidingMappingContext context) throws PostalAddressException;
 }

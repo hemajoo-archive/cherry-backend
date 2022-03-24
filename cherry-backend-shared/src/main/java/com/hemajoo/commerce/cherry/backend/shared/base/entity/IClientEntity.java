@@ -12,30 +12,26 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
+package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 
 /**
- * Behavior of a server document entity.
+ * Defines the behavior of a <b>client entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends IDocument, ServerEntity
+public interface IClientEntity extends IBaseEntity
 {
     /**
-     * Returns the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @return Owner entity.
+     * Returns the parent entity this entity belongs to.
+     * @return Parent entity identity.
      */
-    <T extends ServerBaseEntity> T getOwner();
+    EntityIdentity getParent();
 
     /**
-     * Sets the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @param owner Owner entity.
+     * Sets the parent entity identity.
+     * @param parent Parent entity identity.
      */
-    <T extends ServerBaseEntity> void setOwner(final T owner);
+    void setParent(final EntityIdentity parent) throws RuntimeException;
 }

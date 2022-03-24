@@ -14,50 +14,68 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.AbstractEntityCheckedException;
-import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import java.io.Serial;
 
 /**
  * Checked exception thrown to indicate an error occurred with a phone number.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class PhoneNumberException extends AbstractEntityCheckedException
+public class PhoneNumberException extends EntityException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
+     * Http status code.
+     */
+    @Getter
+    private HttpStatus status = HttpStatus.BAD_REQUEST;
+
+    /**
      * Thrown to indicate that an error occurred with a phone number.
      * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
      */
-    public PhoneNumberException(final Exception exception, final HttpStatus status)
+    public PhoneNumberException(final Exception exception)
     {
-        super(EntityType.PHONE_NUMBER, exception, status);
+        super(exception);
     }
 
     /**
      * Thrown to indicate that an error occurred with a phone number.
      * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
+     */
+    public PhoneNumberException(final String message)
+    {
+        super(message);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a phone number.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param status Http status code.
      */
     public PhoneNumberException(final String message, final HttpStatus status)
     {
-        super(EntityType.PHONE_NUMBER, message, status);
+        super(message);
+
+        this.status = status;
     }
 
     /**
      * Thrown to indicate that an error occurred with a phone number.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
      */
-    public PhoneNumberException(final String message, final Exception exception, final HttpStatus status)
+    public PhoneNumberException(final String message, final Exception exception)
     {
-        super(EntityType.PHONE_NUMBER, message, exception, status);
+        super(message, exception);
     }
 }

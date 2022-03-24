@@ -19,9 +19,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPersonMapper;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -52,22 +51,36 @@ public final class PersonConverter
      * Converts from an entity identity to a server person entity.
      * @param identity Entity identity.
      * @return Server person entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws PersonException Thrown to indicate an error occurred when trying to convert a person.
      */
-    public ServerPersonEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
+    public ServerPersonEntity fromIdentityToServer(EntityIdentity identity) throws PersonException
     {
-        return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        try
+        {
+            return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new PersonException(e);
+        }
     }
 
     /**
      * Converts from a client person entity to a server person entity.
      * @param client Client person entity.
      * @return Server person entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws PersonException Thrown to indicate an error occurred when trying to convert a person.
      */
-    public ServerPersonEntity fromClientToServer(ClientPersonEntity client) throws EntityException
+    public ServerPersonEntity fromClientToServer(ClientPerson client) throws PersonException
     {
-        return AbstractPersonMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        try
+        {
+            return AbstractPersonMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new PersonException(e);
+        }
     }
 
     /**
@@ -75,7 +88,7 @@ public final class PersonConverter
      * @param server Server person entity.
      * @return Client person entity.
      */
-    public ClientPersonEntity fromServerToClient(ServerPersonEntity server)
+    public ClientPerson fromServerToClient(ServerPersonEntity server)
     {
         return AbstractPersonMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -84,20 +97,35 @@ public final class PersonConverter
      * Copy a server person entity.
      * @param server Server person entity.
      * @return Copied server person entity.
-     * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
+     * @throws PersonException Thrown to indicate an error occurred when trying to copy a person.
      */
-    public static ServerPersonEntity copy(ServerPersonEntity server) throws DocumentException
+    public static ServerPersonEntity copy(ServerPersonEntity server) throws PersonException
     {
-        return AbstractPersonMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractPersonMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new PersonException(e);
+        }
     }
 
     /**
      * Copy a client person entity.
      * @param client Client person entity.
      * @return Copied client person entity.
+     * @throws PersonException Thrown to indicate an error occurred when trying to copy a person.
      */
-    public static ClientPersonEntity copy(ClientPersonEntity client)
+    public static ClientPerson copy(ClientPerson client) throws PersonException
     {
-        return AbstractPersonMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractPersonMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new PersonException(e);
+        }
     }
 }

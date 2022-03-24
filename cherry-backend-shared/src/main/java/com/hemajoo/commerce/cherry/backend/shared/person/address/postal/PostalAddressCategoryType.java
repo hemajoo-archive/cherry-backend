@@ -12,26 +12,32 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address;
-
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.postal;
 
 /**
- * Defines the behavior of a <b>client email address</b>.
+ * Enumeration representing the several possible <b>postal address category</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEmailAddress extends EmailAddress, ClientEntity
+public enum PostalAddressCategoryType
 {
-//    /**
-//     * Returns the entity identity owning this email address.
-//     * @return Entity identity.
-//     */
-//    EntityIdentity getPerson();
-//
-//    /**
-//     * Sets the entity identity owning this email address.
-//     * @param owner Entity identity.
-//     */
-//    void setPerson(final EntityIdentity owner);
+    /**
+     * <b>Default</b> postal address.
+     */
+    DEFAULT,
+
+    /**
+     * <b>Billing</b> postal address.
+     */
+    BILLING,
+
+    /**
+     * <b>Delivery</b> postal address.
+     */
+    DELIVERY,
+
+    /**
+     * <b>Other</b> postal address.
+     */
+    OTHER
 }

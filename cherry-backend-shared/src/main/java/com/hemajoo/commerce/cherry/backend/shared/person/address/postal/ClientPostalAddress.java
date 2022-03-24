@@ -12,12 +12,13 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.postal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,7 +35,7 @@ import javax.persistence.Enumerated;
 @Data
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = false)
-public class ClientPostalAddressEntity extends ClientBaseEntity implements ClientPostalAddress
+public class ClientPostalAddress extends ClientBaseEntity implements IClientPostalAddress
 {
     /**
      * Postal address street name.
@@ -104,7 +105,7 @@ public class ClientPostalAddressEntity extends ClientBaseEntity implements Clien
     /**
      * Creates a new postal address.
      */
-    public ClientPostalAddressEntity()
+    public ClientPostalAddress()
     {
         super(EntityType.POSTAL_ADDRESS);
     }

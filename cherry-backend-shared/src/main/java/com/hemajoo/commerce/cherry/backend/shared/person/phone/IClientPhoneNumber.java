@@ -12,32 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address;
+package com.hemajoo.commerce.cherry.backend.shared.person.phone;
+
+import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
- * Enumeration representing the several possible <b>postal address category</b> types.
+ * Defines the behavior of a <b>client phone number</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum PostalAddressCategoryType
+public interface IClientPhoneNumber extends IPhoneNumber, IClientEntity
 {
     /**
-     * <b>Default</b> postal address.
+     * Returns the entity identity owning this phone number.
+     * @return Entity identity.
      */
-    DEFAULT,
+    Identity getOwner();
 
     /**
-     * <b>Billing</b> postal address.
+     * Sets the entity identity owning this phone number.
+     * @param owner Entity identity.
      */
-    BILLING,
-
-    /**
-     * <b>Delivery</b> postal address.
-     */
-    DELIVERY,
-
-    /**
-     * <b>Other</b> postal address.
-     */
-    OTHER
+    void setOwner(final Identity owner);
 }

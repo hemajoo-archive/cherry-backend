@@ -59,6 +59,10 @@ public class CherryBackendRestSpringBootApplication implements CommandLineRunner
                         .url("https://github.com/ressec/cherry-backend"));
     }
 
+    /**
+     * Main application entry point.
+     * @param args Arguments.
+     */
     public static void main(String[] args)
     {
         SpringApplication.run(CherryBackendRestSpringBootApplication.class, args);

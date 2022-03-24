@@ -12,11 +12,12 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.email;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,7 +36,7 @@ import javax.persistence.Enumerated;
 @ToString(callSuper = true)
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = true)
-public class ClientEmailAddressEntity extends ClientBaseEntity implements ClientEmailAddress
+public class ClientEmailAddress extends ClientBaseEntity implements IClientEmailAddress
 {
     /**
      * Email address.
@@ -73,7 +74,7 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     /**
      * Creates a new client email address entity.
      */
-    public ClientEmailAddressEntity()
+    public ClientEmailAddress()
     {
         super(EntityType.EMAIL_ADDRESS);
     }

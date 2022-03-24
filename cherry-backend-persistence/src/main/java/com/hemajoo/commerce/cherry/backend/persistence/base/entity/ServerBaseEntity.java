@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.GenericGenerator;
@@ -44,13 +43,40 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ServerBaseEntity extends AbstractServerStatusEntity implements ServerEntity
 {
-    public static final String FIELD_ID             = "id";
-    public static final String FIELD_ENTITY_TYPE    = "entityType";
-    public static final String FIELD_NAME           = "name";
-    public static final String FIELD_DESCRIPTION    = "description";
-    public static final String FIELD_REFERENCE      = "reference";
-    public static final String FIELD_PARENT         = "parent";
-    public static final String FIELD_PARENT_TYPE    = "parentType";
+    /**
+     * Property used to set a search criteria for the <b>identifier</b> field.
+     */
+    public static final String FIELD_ID = "id";
+
+    /**
+     * Property used to set a search criteria for the <b>entity type</b> field.
+     */
+    public static final String FIELD_ENTITY_TYPE = "entityType";
+
+    /**
+     * Property used to set a search criteria for the <b>name</b> field.
+     */
+    public static final String FIELD_NAME = "name";
+
+    /**
+     * Property used to set a search criteria for the <b>description</b> field.
+     */
+    public static final String FIELD_DESCRIPTION = "description";
+
+    /**
+     * Property used to set a search criteria for the <b>reference</b> field.
+     */
+    public static final String FIELD_REFERENCE = "reference";
+
+    /**
+     * Property used to set a search criteria for the <b>parent</b> field.
+     */
+    public static final String FIELD_PARENT = "parent";
+
+    /**
+     * Property used to set a search criteria for the <b>parent type</b> field.
+     */
+    public static final String FIELD_PARENT_TYPE = "parentType";
 
 //    /**
 //     * Entity identifier.
@@ -180,12 +206,13 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Serv
     /**
      * Sets the parent entity this entity belongs to.
      * @param parent Parent entity.
+     * @throws RuntimeException Thrown to indicate an error occurred while trying to set the parent entity.
      */
-    public void setParent(final ServerBaseEntity parent)
+    public void setParent(final ServerBaseEntity parent) throws RuntimeException
     {
         if (parent != null && parent.getId() == this.getId())
         {
-            throw new EntityException(parent.getEntityType(), "Cannot set itself as parent!");
+            throw new RuntimeException("Cannot set itself as parent!");
         }
 
         this.parent = parent;

@@ -18,10 +18,10 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractB
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -101,9 +101,9 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static ClientEmailAddressEntity generateClientEntity(final boolean withRandomId)
+    public static ClientEmailAddress generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientEmailAddressEntity();
+        var entity = new ClientEmailAddress();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -126,10 +126,10 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientEmailAddressEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientEmailAddress generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        ClientDocumentEntity document;
-        ClientEmailAddressEntity entity = new ClientEmailAddressEntity();
+        ClientDocument document;
+        ClientEmailAddress entity = new ClientEmailAddress();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

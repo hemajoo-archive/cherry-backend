@@ -15,30 +15,24 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalAddress;
 
 /**
  * Behavior of a server postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPostalAddress extends PostalAddress, ServerEntity
+public interface ServerPostalAddress extends IPostalAddress, ServerEntity
 {
 //    /**
-//     * Returns the owner of this entity.
-//     * @param <T> Type of the owner entity.
-//     * @return Owner entity.
+//     * Returns the person owning this email address.
+//     * @return Person.
 //     */
-//    <T extends ServerEntity & Person> T getPerson();
+//    ServerPerson getPerson();
 //
 //    /**
-//     * Sets the owner of this entity.
-//     * @param owner Owner entity.
-//     * @param <T> Type of the owner entity.
+//     * Sets the person owning this email address.
+//     * @param owner Person.
 //     */
-//    <T extends ServerEntity & Person> void setPerson(final T owner);
-
-    ServerPersonEntity getPerson();
-
-    void setPerson(final ServerPersonEntity owner);
+//    void setPerson(final ServerPerson owner);
 }

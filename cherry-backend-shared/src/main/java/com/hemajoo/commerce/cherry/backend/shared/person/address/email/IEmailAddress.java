@@ -12,9 +12,10 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.email;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 
 /**
  * Defines the behavior of an <b>email address</b>.
@@ -22,7 +23,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface EmailAddress extends BaseEntity
+public interface IEmailAddress extends IBaseEntity
 {
     /**
      * Returns the email address.

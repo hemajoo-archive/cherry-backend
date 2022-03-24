@@ -18,8 +18,8 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddress;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddressCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressCategoryType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,19 +39,57 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPostalAddressEntity extends ServerBaseEntity implements PostalAddress, ServerEntity
+public class ServerPostalAddressEntity extends ServerBaseEntity implements IPostalAddress, ServerEntity
 {
-    public static final String FIELD_IS_DEFAULT     = "isDefault";
-    public static final String FIELD_ADDRESS_TYPE   = "addressType";
-    public static final String FIELD_CATEGORY_TYPE  = "categoryType";
-    public static final String FIELD_STREET_NAME    = "streetName";
-    public static final String FIELD_STREET_NUMBER  = "streetNumber";
-    public static final String FIELD_LOCALITY       = "locality";
-    public static final String FIELD_COUNTRY_CODE   = "countryCode";
-    public static final String FIELD_ZIP_CODE       = "zipCode";
-    public static final String FIELD_AREA           = "area";
+    /**
+     * Property used to set a search criteria for the <b>is default</b> field.
+     */
+    public static final String FIELD_IS_DEFAULT = "isDefault";
 
-    public static final String FIELD_PERSON_ID      = "personId";
+    /**
+     * Property used to set a search criteria for the <b>address type</b> field.
+     */
+    public static final String FIELD_ADDRESS_TYPE = "addressType";
+
+    /**
+     * Property used to set a search criteria for the <b>category type</b> field.
+     */
+    public static final String FIELD_CATEGORY_TYPE = "categoryType";
+
+    /**
+     * Property used to set a search criteria for the <b>street name</b> field.
+     */
+    public static final String FIELD_STREET_NAME = "streetName";
+
+    /**
+     * Property used to set a search criteria for the <b>street number</b> field.
+     */
+    public static final String FIELD_STREET_NUMBER = "streetNumber";
+
+    /**
+     * Property used to set a search criteria for the <b>locality</b> field.
+     */
+    public static final String FIELD_LOCALITY = "locality";
+
+    /**
+     * Property used to set a search criteria for the <b>country code</b> field.
+     */
+    public static final String FIELD_COUNTRY_CODE = "countryCode";
+
+    /**
+     * Property used to set a search criteria for the <b>zip code</b> field.
+     */
+    public static final String FIELD_ZIP_CODE = "zipCode";
+
+    /**
+     * Property used to set a search criteria for the <b>area</b> field.
+     */
+    public static final String FIELD_AREA = "area";
+
+    /**
+     * Property used to set a search criteria for the <b>person identifier</b> field.
+     */
+    public static final String FIELD_PERSON_ID = "personId";
 
     /**
      * Postal address street name.

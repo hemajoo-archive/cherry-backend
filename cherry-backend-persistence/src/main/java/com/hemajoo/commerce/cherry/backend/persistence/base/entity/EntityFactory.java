@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmail
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class EntityFactory
      * @param type Entity type.
      * @param uuid Entity identifier.
      * @return Server entity object.
-     * @throws EntityFactoryException Thrown to indicate an error occurred when trying to create the server entity object.
+     * @throws EntityException Thrown to indicate an error occurred when trying to create the server entity object.
      */
-    public final ServerEntity from(final EntityType type, final @NonNull UUID uuid) throws EntityFactoryException
+    public final ServerEntity from(final EntityType type, final @NonNull UUID uuid) throws EntityException
     {
         EntityManager entityManager = documentService.getEntityManager();
 
@@ -73,7 +74,7 @@ public class EntityFactory
                 return entityManager.find(ServerPhoneNumberEntity.class, uuid);
 
             default:
-                throw new EntityFactoryException(String.format("Entity type: '%s' is not handled!", type));
+                throw new EntityException(String.format("Entity type: '%s' is not handled!", type));
         }
     }
 }

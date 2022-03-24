@@ -30,7 +30,7 @@ import java.util.Date;
 @Data
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public abstract class AbstractClientAuditEntity implements AuditEntity
+public abstract class AbstractClientAuditEntity implements IAuditEntity
 {
     /**
      * Entity creation date.

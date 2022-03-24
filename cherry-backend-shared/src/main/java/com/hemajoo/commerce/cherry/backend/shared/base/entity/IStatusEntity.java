@@ -14,50 +14,38 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.backend.commons.entity.IdentityAware;
+import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
+
+import java.util.Date;
 
 /**
- * Defines the behavior of a <b>base entity</b>.
+ * Defines the behavior of a <b>status</b> entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface BaseEntity extends StatusEntity, Identity, IdentityAware
+public interface IStatusEntity extends IAuditEntity
 {
     /**
-     * Returns the entity name.
-     * @return Entity name.
+     * Returns the status type.
+     * @return Status type.
      */
-    String getName();
+    StatusType getStatusType();
 
     /**
-     * Sets the entity name.
-     * @param name Entity name.
+     * Sets the status type date.
+     * @param type Status type.
      */
-    void setName(final String name);
+    void setStatusType(final StatusType type);
 
     /**
-     * Returns the entity description.
-     * @return Entity description.
+     * Returns the inactivation date.
+     * @return Inactivation since date.
      */
-    String getDescription();
+    Date getSince();
 
     /**
-     * Sets the entity description.
-     * @param description Entity description.
+     * Sets the since (inactivation) date.
+     * @param date Inactivation date.
      */
-    void setDescription(final String description);
-
-    /**
-     * Returns the entity reference.
-     * @return Entity reference.
-     */
-    String getReference();
-
-    /**
-     * Sets the entity reference.
-     * @param reference Entity reference.
-     */
-    void setReference(final String reference);
+    void setSince(final Date date);
 }

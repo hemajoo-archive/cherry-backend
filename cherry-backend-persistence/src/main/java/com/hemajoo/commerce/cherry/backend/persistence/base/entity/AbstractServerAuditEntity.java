@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.AuditEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IAuditEntity;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,12 +37,27 @@ import java.util.Date;
 @EqualsAndHashCode
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractServerAuditEntity implements AuditEntity
+public abstract class AbstractServerAuditEntity implements IAuditEntity
 {
-    public static final String FIELD_CREATED_DATE   = "createdDate";
-    public static final String FIELD_MODIFIED_DATE  = "modifiedDate";
-    public static final String FIELD_CREATED_BY     = "createdBy";
-    public static final String FIELD_MODIFIED_BY    = "modifiedBy";
+    /**
+     * Property used to set a search criteria for the <b>created date</b> field.
+     */
+    public static final String FIELD_CREATED_DATE = "createdDate";
+
+    /**
+     * Property used to set a search criteria for the <b>modified date</b> field.
+     */
+    public static final String FIELD_MODIFIED_DATE = "modifiedDate";
+
+    /**
+     * Property used to set a search criteria for the <b>created by</b> field.
+     */
+    public static final String FIELD_CREATED_BY = "createdBy";
+
+    /**
+     * Property used to set a search criteria for the <b>modified by</b> field.
+     */
+    public static final String FIELD_MODIFIED_BY = "modifiedBy";
 
     /**
      * Entity creation date.

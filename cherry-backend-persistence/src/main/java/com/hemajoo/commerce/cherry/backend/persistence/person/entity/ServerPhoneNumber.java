@@ -15,38 +15,24 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumber;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.IPhoneNumber;
 
 /**
  * Behavior of a server phone number entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPhoneNumber extends PhoneNumber, ServerEntity
+public interface ServerPhoneNumber extends IPhoneNumber, ServerEntity
 {
 //    /**
-//     * Returns the owner of this entity.
-//     * @param <T> Type of the owner entity.
-//     * @return Owner entity.
+//     * Returns the person owning this phone number.
+//     * @return Person.
 //     */
-//    <T extends ServerEntity & Person> T getPerson();
+//    ServerPerson getPerson();
 //
 //    /**
-//     * Sets the owner of this entity.
-//     * @param owner Owner entity.
-//     * @param <T> Type of the owner entity.
+//     * Sets the person owning this phone number.
+//     * @param owner Person.
 //     */
-//    <T extends ServerEntity & Person> void setPerson(final T owner);
-
-    /**
-     * Returns the person owning this phone number.
-     * @return Person.
-     */
-    ServerPerson getPerson();
-
-    /**
-     * Sets the person owning this phone number.
-     * @param owner Person.
-     */
-    void setPerson(final ServerPerson owner);
+//    void setPerson(final ServerPerson owner);
 }

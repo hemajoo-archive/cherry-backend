@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.SearchPostalAddress;
 import lombok.NonNull;
 
 import java.util.List;

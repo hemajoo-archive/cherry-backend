@@ -14,25 +14,327 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import lombok.*;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.tika.Tika;
+import org.ressec.avocado.core.helper.FileHelper;
+import org.springframework.data.annotation.Transient;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
- * Implementing this entity provides the behavior of a <b>client document entity</b>.
+ * Represents a <b>client document entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientDocument extends Document, ClientEntity
+@EqualsAndHashCode(callSuper = true)
+@ToString
+public class ClientDocument extends ClientBaseEntity implements IClientDocument
 {
     /**
-     * Returns the document owner.
-     * @return Document owner.
+     * Document type.
      */
-    EntityIdentity getOwner();
+    @Getter
+    @Setter
+    private transient DocumentType documentType;
 
     /**
-     * Sets the document owner.
-     * @param owner Document owner.
+     * Document file extension.
      */
-    void setOwner(final EntityIdentity owner);
+    @Getter
+    @Setter
+    private String extension;
+
+    /**
+     * Document tags.
+     */
+    @Getter
+    @Setter
+    private String tags;
+
+    /**
+     * Document file name.
+     */
+    @Getter
+    @Setter
+    private String filename;
+
+    /**
+     * File content identifier.
+     * <br>
+     * UUID of the file in the content store.
+     */
+    @Getter
+    @Setter
+    private String contentId;
+
+    /**
+     * File content length.
+     */
+    @Getter
+    @Setter
+    private long contentLength;
+
+    /**
+     * File MIME type.
+     */
+    @Getter
+    @Setter
+    private String mimeType = "text/plain";
+
+    /**
+     * File path (in the content store).
+     */
+    @Getter
+    @Setter
+    private String contentPath;
+
+    /**
+     * Document owner identity.
+     */
+    @Getter
+    private EntityIdentity owner;
+
+    @ToString.Exclude
+    @Getter
+    @JsonIgnore
+    private transient InputStream content;
+
+    /**
+     * Multipart file.
+     */
+    @EqualsAndHashCode.Exclude
+    @Getter
+    @Transient
+    private transient MultipartFile multiPartFile; // Only stored until the content of the file is loaded into the content store.
+
+    /**
+     * Base file name.
+     */
+    @EqualsAndHashCode.Exclude
+    @Getter
+    @Transient
+    private transient String baseFilename; // Only stored until the content of the file is loaded into the content store.
+
+    /**
+     * Creates a new document.
+     */
+    public ClientDocument()
+    {
+        super(EntityType.DOCUMENT);
+
+        setActive();
+    }
+
+    /**
+     * Creates a new document.
+     * @param owner Document owner identity.
+     * @param documentType Document type.
+     */
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType)
+    {
+        super(EntityType.DOCUMENT);
+
+        setActive();
+        this.documentType = documentType;
+        this.owner = owner;
+    }
+
+    /**
+     * Creates a new document given its path name.
+     * @param owner Document owner identity.
+     * @param documentType Document type.
+     * @param filename File name.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
+     */
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    {
+        this(owner, documentType);
+
+        this.filename = filename;
+        setName(FilenameUtils.getName(FilenameUtils.removeExtension(filename)));
+        setExtension(FilenameUtils.getExtension(this.filename));
+
+        detectMimeType(filename);
+    }
+
+    /**
+     * Creates a new document given an associated media file.
+     * @param owner Document owner identity.
+     * @param documentType Document type.
+     * @param file File.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
+     */
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    {
+        this(owner, documentType);
+
+        this.filename = file.getName();
+        setName(FilenameUtils.getName(FilenameUtils.removeExtension(filename)));
+        setExtension(FilenameUtils.getExtension(this.filename));
+
+        detectMimeType(file);
+    }
+
+    /**
+     * Creates a new document given its path name.
+     * @param owner Document owner identity.
+     * @param documentType Document type.
+     * @param multiPartFile Multipart file.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
+     */
+    public ClientDocument(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    {
+        this(owner, documentType);
+
+        this.filename = multiPartFile.getOriginalFilename();
+        this.multiPartFile = multiPartFile;
+        setName(FilenameUtils.getName(FilenameUtils.removeExtension(filename)));
+        setExtension(FilenameUtils.getExtension(filename));
+        detectMimeType(multiPartFile);
+    }
+
+    /**
+     * Sets the content of a document.
+     * @param filename Filename of the content.
+     * @throws DocumentContentException Thrown to indicate an error occurred when trying to set the content of the document.
+     */
+    public final void setContent(final @NonNull String filename) throws DocumentContentException
+    {
+        try
+        {
+            detectMimeType(filename);
+            this.filename = FilenameUtils.getName(filename);
+            this.extension = FilenameUtils.getExtension(filename);
+            content = new FileInputStream(FileHelper.getFile(filename));
+        }
+        catch (Exception e)
+        {
+            throw new DocumentContentException(e);
+        }
+    }
+
+    /**
+     * Sets the content of a document.
+     * @param file File being the content of the document.
+     * @throws DocumentContentException Thrown to indicate an error occurred when trying to set the content of the document.
+     */
+    public final void setContent(final @NonNull File file) throws DocumentContentException
+    {
+        try
+        {
+            detectMimeType(file.getName());
+            this.filename = FilenameUtils.getName(file.getName());
+            this.extension = FilenameUtils.getExtension(file.getName());
+            content = new FileInputStream(FileHelper.getFile(file.getName()));
+        }
+        catch (Exception e)
+        {
+            throw new DocumentContentException(e);
+        }
+    }
+
+    /**
+     * Sets the content of a document.
+     * @param inputStream Input stream representing the content.
+     */
+    public final void setContent(final InputStream inputStream)
+    {
+        this.content = inputStream;
+    }
+
+    /**
+     * Detects the media file {@code Mime} type.
+     * @param filename File name.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the media file.
+     */
+    private void detectMimeType(final @NonNull String filename) throws DocumentContentException
+    {
+        try
+        {
+            mimeType = new Tika().detect(FileHelper.getFile(filename));
+        }
+        catch (Exception e)
+        {
+            throw new DocumentContentException(e.getMessage());
+        }
+    }
+
+    /**
+     * Detects the media file {@code Mime} type.
+     * @param file File.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the media file.
+     */
+    private void detectMimeType(final @NonNull File file) throws DocumentContentException
+    {
+        try
+        {
+            mimeType = new Tika().detect(file);
+        }
+        catch (Exception e)
+        {
+            throw new DocumentContentException(e.getMessage());
+        }
+    }
+
+    /**
+     * Detects the media file {@code Mime} type.
+     * @param inputStream Input Stream.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the media file.
+     */
+    private void detectMimeType(final @NonNull InputStream inputStream) throws DocumentContentException
+    {
+        try
+        {
+            mimeType = new Tika().detect(inputStream);
+        }
+        catch (Exception e)
+        {
+            throw new DocumentContentException(e.getMessage());
+        }
+    }
+
+    /**
+     * Detects the media file {@code Mime} type.
+     * @param multiPartFile Multipart file.
+     * @throws DocumentContentException Thrown in case an error occurred while processing the media file.
+     */
+    private void detectMimeType(final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    {
+        try
+        {
+            mimeType = new Tika().detect(multiPartFile.getInputStream());
+        }
+        catch (Exception e)
+        {
+            throw new DocumentContentException(e.getMessage());
+        }
+    }
+
+    /**
+     * Returns the document output full path name (path + name).
+     * @param outputPath Output path and file name.
+     * @return Document full path and file name.
+     */
+    public final String getOutputFilename(final @NonNull String outputPath)
+    {
+        String end = getName() + "." + extension;
+
+        return outputPath.endsWith(File.separator)
+                ? (outputPath + end)
+                : (outputPath + File.separator + end);
+    }
+
+    @Override
+    public final void setOwner(EntityIdentity owner)
+    {
+        this.owner = owner;
+    }
 }

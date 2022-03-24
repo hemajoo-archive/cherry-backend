@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.IEmailAddress;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,11 +42,22 @@ import javax.validation.constraints.NotNull;
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailAddress, ServerEntity
+public class ServerEmailAddressEntity extends ServerBaseEntity implements IEmailAddress, ServerEntity
 {
-    public static final String FIELD_EMAIL          = "email";
-    public static final String FIELD_IS_DEFAULT     = "isDefaultEmail";
-    public static final String FIELD_ADDRESS_TYPE   = "addressType";
+    /**
+     * Property used to set a search criteria for the <b>email</b> field.
+     */
+    public static final String FIELD_EMAIL = "email";
+
+    /**
+     * Property used to set a search criteria for the <b>is default email</b> field.
+     */
+    public static final String FIELD_IS_DEFAULT = "isDefaultEmail";
+
+    /**
+     * Property used to set a search criteria for the <b>address type</b> field.
+     */
+    public static final String FIELD_ADDRESS_TYPE = "addressType";
 
     //public static final String FIELD_PERSON         = "person";
 
@@ -96,14 +107,16 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
         super(EntityType.EMAIL_ADDRESS);
     }
 
-//    /**
-//     * Sets the owner person.
-//     * <hr>
-//     * <b>NOTE:</b> Never invoke directly this service to add an email address to a person. For that, you need to call {@link ServerPersonEntity#addEmailAddress(ServerEmailAddressEntity)}!.
-//     * @param person Person being the owner of the email address.
-//     */
-//    public void setPerson(final ServerPersonEntity person)
+//    @Override
+//    public void setParent(ServerBaseEntity parent) throws EmailAddressException
 //    {
-//        this.person = person;
+//        try
+//        {
+//            super.setParent(parent);
+//        }
+//        catch (Exception e)
+//        {
+//            throw new EmailAddressException(e);
+//        }
 //    }
 }

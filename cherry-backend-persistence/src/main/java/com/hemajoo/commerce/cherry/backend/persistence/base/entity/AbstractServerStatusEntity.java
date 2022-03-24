@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.StatusEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IStatusEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -31,10 +31,17 @@ import java.util.Date;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
-public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements StatusEntity, ServerEntity
+public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements IStatusEntity, ServerEntity
 {
-    public static final String FIELD_STATUS_TYPE    = "statusType";
-    public static final String FIELD_SINCE          = "since";
+    /**
+     * Property used to set a search criteria for the <b>status type</b> field.
+     */
+    public static final String FIELD_STATUS_TYPE = "statusType";
+
+    /**
+     * Property used to set a search criteria for the <b>since</b> field.
+     */
+    public static final String FIELD_SINCE = "since";
 
     /**
      * Entity status.

@@ -12,30 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.postal;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
+import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
- * Behavior of a server document entity.
+ * Defines the behavior of a <b>client postal address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends IDocument, ServerEntity
+public interface IClientPostalAddress extends IPostalAddress, IClientEntity
 {
     /**
-     * Returns the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @return Owner entity.
+     * Returns the entity identity owning this postal address.
+     * @return Entity identity.
      */
-    <T extends ServerBaseEntity> T getOwner();
+    Identity getOwner();
 
     /**
-     * Sets the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @param owner Owner entity.
+     * Sets the entity identity owning this postal address.
+     * @param owner Entity identity.
      */
-    <T extends ServerBaseEntity> void setOwner(final T owner);
+    void setOwner(final Identity owner);
 }
