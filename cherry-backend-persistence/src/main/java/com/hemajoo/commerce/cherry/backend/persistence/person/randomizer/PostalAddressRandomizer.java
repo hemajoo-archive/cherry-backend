@@ -21,8 +21,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPosta
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientPostalAddress;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddressCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.ClientPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressCategoryType;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 

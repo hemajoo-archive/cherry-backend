@@ -28,8 +28,8 @@ import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCri
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.SearchEmailAddress;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;

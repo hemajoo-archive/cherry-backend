@@ -23,7 +23,7 @@ import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentExcept
 import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 

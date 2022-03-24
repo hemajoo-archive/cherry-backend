@@ -12,11 +12,12 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.email;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.BaseSearch;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,54 +27,48 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 /**
- * Represents a <b>client email address entity</b>.
+ * Represents a search object for the <b>email address</b> entities.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+//@ApiModel(value = "EmailAddressSearch", description = "Specification object used to search for email addresses.")
 @Data
 @ToString(callSuper = true)
-//@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = true)
-public class ClientEmailAddress extends ClientBaseEntity implements IClientEmailAddress
+public final class SearchEmailAddress extends BaseSearch
 {
     /**
      * Email address.
      */
     @JsonProperty("email")
-    @Schema(name = "email", description = "Email address", example = "joe.doe@gmail.com")
-    //@Email(message = "email: '${validatedValue}' is not a valid email!")
+    @Schema(description = "Email address" /*, allowEmptyValue = true*/)
     private String email;
 
     /**
      * Is it the default email address?
      */
     @JsonProperty("isDefault")
-    @Schema(name = "defaultEmail", description = "Is it the default email address", example = "true")
     private Boolean isDefaultEmail;
 
     /**
      * Email address type.
      */
     @JsonProperty("addressType")
-    @Schema(name = "addressType", description = "Address type", example = "PRIVATE")
     @Enumerated(EnumType.STRING)
+    @Schema(description = "Email address type"/*, allowEmptyValue = true*/)
     private AddressType addressType;
 
-//    /**
-//     * The person identifier this email address belongs to.
-//     */
-//    @JsonProperty("person")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    //@JsonIgnoreProperties("emailAddresses")
-//    @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
-//    private EntityIdentity person; // TODO Could it be moved to base entity?
+    /**
+     * The person identifier this email address belongs to.
+     */
+    @JsonProperty("personId")
+    @Schema(description = "Person identifier (UUID) owning the email address(es)", hidden = false)
+    private String personId;
 
     /**
-     * Creates a new client email address entity.
+     * Creates a new email address search entity.
      */
-    public ClientEmailAddress()
+    public SearchEmailAddress()
     {
         super(EntityType.EMAIL_ADDRESS);
     }

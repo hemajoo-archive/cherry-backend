@@ -20,9 +20,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmail
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddress;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.SearchEmailAddress;
 import lombok.NonNull;
 import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;

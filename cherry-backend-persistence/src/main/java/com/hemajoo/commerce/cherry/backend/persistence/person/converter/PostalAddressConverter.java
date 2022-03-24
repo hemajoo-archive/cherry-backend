@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPostalAddressMapper;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientPostalAddress;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.PostalAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.ClientPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;

@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.IPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalAddress;
 
 /**
  * Behavior of a server postal address entity.
