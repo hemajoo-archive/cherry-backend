@@ -12,30 +12,19 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
+package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import org.springframework.content.rest.StoreRestResource;
+import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Behavior of a server document entity.
+ * Content store repository with {@code Amazon S3} support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends IDocument, ServerEntity
+@StoreRestResource
+public interface IDocumentS3Store extends S3ContentStore<DocumentServer, String>
 {
-    /**
-     * Returns the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @return Owner entity.
-     */
-    <T extends ServerBaseEntity> T getOwner();
-
-    /**
-     * Sets the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @param owner Owner entity.
-     */
-    <T extends ServerBaseEntity> void setOwner(final T owner);
+    // Empty.
 }

@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
@@ -107,5 +107,5 @@ public interface PersonService
      * @param entity Base entity.
      * @return List of documents.
      */
-    List<ServerDocumentEntity> getDocuments(final @NonNull ServerBaseEntity entity);
+    List<DocumentServer> getDocuments(final @NonNull ServerBaseEntity entity);
 }

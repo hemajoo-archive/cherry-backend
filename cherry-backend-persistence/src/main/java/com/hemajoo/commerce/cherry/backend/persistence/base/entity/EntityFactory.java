@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
@@ -52,7 +52,7 @@ public class EntityFactory
      * @return Server entity object.
      * @throws EntityException Thrown to indicate an error occurred when trying to create the server entity object.
      */
-    public final ServerEntity from(final EntityType type, final @NonNull UUID uuid) throws EntityException
+    public final IServerEntity from(final EntityType type, final @NonNull UUID uuid) throws EntityException
     {
         EntityManager entityManager = documentService.getEntityManager();
 
@@ -62,7 +62,7 @@ public class EntityFactory
                 return entityManager.find(ServerPersonEntity.class, uuid);
 
             case DOCUMENT:
-                return entityManager.find(ServerDocumentEntity.class, uuid);
+                return entityManager.find(DocumentServer.class, uuid);
 
             case EMAIL_ADDRESS:
                 return entityManager.find(ServerEmailAddressEntity.class, uuid);

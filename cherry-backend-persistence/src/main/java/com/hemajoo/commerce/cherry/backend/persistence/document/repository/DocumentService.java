@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 
 import javax.persistence.EntityManager;
@@ -53,7 +53,7 @@ public interface DocumentService
      * @return Document if found, null otherwise.
      * @throws DocumentException raised if the given document id has not been found!
      */
-    ServerDocumentEntity findById(UUID id) throws DocumentException;
+    DocumentServer findById(UUID id) throws DocumentException;
 
     /**
      * Saves a document.
@@ -61,14 +61,14 @@ public interface DocumentService
      * @return Saved document.
      * @throws DocumentException Raised if an error occurred while trying to save the document.
      */
-    ServerDocumentEntity save(ServerDocumentEntity document) throws DocumentException;
+    DocumentServer save(DocumentServer document) throws DocumentException;
 
     /**
      * Saves and flush a document.
      * @param document Document.
      * @return Saved document.
      */
-    ServerDocumentEntity saveAndFlush(ServerDocumentEntity document);
+    DocumentServer saveAndFlush(DocumentServer document);
 
     /**
      * Deletes a document given its identifier.
@@ -81,14 +81,14 @@ public interface DocumentService
      * Returns all the documents.
      * @return List of documents.
      */
-    List<ServerDocumentEntity> findAll();
+    List<DocumentServer> findAll();
 
     /**
      * Loads the content (media file) of the document.
      * @param document Document.
      * @throws DocumentException Raised if an error occurred while trying to load the document.
      */
-    void loadContent(ServerDocumentEntity document) throws DocumentException;
+    void loadContent(DocumentServer document) throws DocumentException;
 
     /**
      * Loads the content (media file) of the document.

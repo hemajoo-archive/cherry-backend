@@ -12,28 +12,30 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
+package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
 
 /**
- * Defines the behavior of a <b>server entity</b>.
+ * Behavior of a server document entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface ServerEntity extends IBaseEntity
+public interface IDocumentServer extends IDocument, IServerEntity
 {
     /**
-     * Returns the parent entity.
-     * @return Parent entity if set, {@code null} otherwise.
+     * Returns the owner entity of this document.
+     * @param <T> Type of the owner.
+     * @return Owner entity.
      */
-    ServerBaseEntity getParent();
+    <T extends ServerBaseEntity> T getOwner();
 
     /**
-     * Sets the parent entity.
-     * @param parent Parent entity.
-     * @throws RuntimeException Thrown to indicate an error occurred when trying to set the parent entity.
+     * Sets the owner entity of this document.
+     * @param <T> Type of the owner.
+     * @param owner Owner entity.
      */
-    void setParent(final ServerBaseEntity parent) throws RuntimeException;
+    <T extends ServerBaseEntity> void setOwner(final T owner);
 }

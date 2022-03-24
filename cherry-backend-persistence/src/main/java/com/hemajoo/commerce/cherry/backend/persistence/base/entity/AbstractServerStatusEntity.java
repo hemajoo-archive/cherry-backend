@@ -31,7 +31,7 @@ import java.util.Date;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
-public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements IStatusEntity, ServerEntity
+public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements IStatusEntity, IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>status type</b> field.

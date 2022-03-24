@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.content.ProxyContentStore;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.content.DocumentStore;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class DocumentServiceCore implements DocumentService
     private DocumentRepository documentRepository;
 
     @Autowired
-    private ProxyContentStore proxyStore;
+    private DocumentStore proxyStore;
 
     @Getter
     @PersistenceContext
@@ -62,19 +62,19 @@ public class DocumentServiceCore implements DocumentService
     }
 
     @Override
-    public ServerDocumentEntity findById(UUID id)
+    public DocumentServer findById(UUID id)
     {
         return documentRepository.findById(id).orElse(null);
     }
 
     @Transactional
     @Override
-    public ServerDocumentEntity save(ServerDocumentEntity document)
+    public DocumentServer save(DocumentServer document)
     {
         // Save the content file, if one exist and not already saved!
         if (document.getContent() != null && document.getContentId() == null)
         {
-            document = (ServerDocumentEntity) proxyStore.getStore().setContent(document, document.getContent());
+            document = (DocumentServer) proxyStore.getStore().setContent(document, document.getContent());
         }
 
         document = documentRepository.save(document);
@@ -83,7 +83,7 @@ public class DocumentServiceCore implements DocumentService
     }
 
     @Override
-    public ServerDocumentEntity saveAndFlush(ServerDocumentEntity document)
+    public DocumentServer saveAndFlush(DocumentServer document)
     {
         return documentRepository.saveAndFlush(document);
     }
@@ -91,7 +91,7 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public void deleteById(UUID id)
     {
-        ServerDocumentEntity document = findById(id);
+        DocumentServer document = findById(id);
 
         // If a content file is associated, then delete it!
         if (document != null && document.getContentId() != null)
@@ -103,14 +103,14 @@ public class DocumentServiceCore implements DocumentService
     }
 
     @Override
-    public List<ServerDocumentEntity> findAll()
+    public List<DocumentServer> findAll()
     {
         // TODO We should for each document inject its content such as for the findById
         return documentRepository.findAll();
     }
 
     @Override
-    public void loadContent(ServerDocumentEntity document)
+    public void loadContent(DocumentServer document)
     {
         document.setContent(proxyStore.getStore().getContent(document));
     }
@@ -118,7 +118,7 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public void loadContent(UUID documentId) throws DocumentException
     {
-        ServerDocumentEntity document = findById(documentId);
+        DocumentServer document = findById(documentId);
         if (document != null)
         {
             loadContent(document);

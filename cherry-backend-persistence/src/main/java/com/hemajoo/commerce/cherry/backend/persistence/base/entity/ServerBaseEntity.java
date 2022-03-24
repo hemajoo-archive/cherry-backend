@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.GenericGenerator;
@@ -41,7 +41,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ServerBaseEntity extends AbstractServerStatusEntity implements ServerEntity
+public class ServerBaseEntity extends AbstractServerStatusEntity implements IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>identifier</b> field.
@@ -138,7 +138,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Serv
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL/*, orphanRemoval = true*/)
-    private List<ServerDocumentEntity> documents = null;
+    private List<DocumentServer> documents = null;
 
     /**
      * The entity (parent) this entity (child) belongs to.
@@ -172,7 +172,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Serv
      * Adds a document to this entityDocumentEntity.
      * @param document Document.
      */
-    public final void addDocument(final @NonNull ServerDocumentEntity document)
+    public final void addDocument(final @NonNull DocumentServer document)
     {
         if (documents == null)
         {
@@ -187,7 +187,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Serv
      * Returns the documents associated to this entity.
      * @return List of documents.
      */
-    public List<ServerDocumentEntity> getDocuments()
+    public List<DocumentServer> getDocuments()
     {
         if (entityType == EntityType.MEDIA)
         {

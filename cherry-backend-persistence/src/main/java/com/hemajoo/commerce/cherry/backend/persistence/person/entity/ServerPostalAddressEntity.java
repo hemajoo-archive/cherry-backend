@@ -15,8 +15,8 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalAddress;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressCategoryType;
@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPostalAddressEntity extends ServerBaseEntity implements IPostalAddress, ServerEntity
+public class ServerPostalAddressEntity extends ServerBaseEntity implements IPostalAddress, IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>is default</b> field.

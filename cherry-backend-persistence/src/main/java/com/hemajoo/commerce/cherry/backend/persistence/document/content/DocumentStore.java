@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  */
 @Log4j2
 @Component
-public class ProxyContentStore
+public class DocumentStore
 {
     @Getter
     @Value("${spring.content.storage.type}")
@@ -37,19 +37,19 @@ public class ProxyContentStore
     /**
      * Content store type to use.
      */
-    private ContentStoreType storeType = ContentStoreType.UNKNOWN;
+    private DocumentStoreType storeType = DocumentStoreType.UNKNOWN;
 
     /**
      * <b>File system</b> content store.
      */
     @Autowired
-    private FileSystemDocumentStore storeFileSystem;
+    private IDocumentFileSystemStore storeFileSystem;
 
     /**
      * <b>Amazon S3</b> content store.
      */
     @Autowired(required = false)
-    private S3DocumentStore storeS3;
+    private IDocumentS3Store storeS3;
 
     /**
      * Returns the content store.
@@ -58,12 +58,12 @@ public class ProxyContentStore
     @SuppressWarnings("java:S3740")
     public final ContentStore getStore()
     {
-        if (storeType == ContentStoreType.UNKNOWN)
+        if (storeType == DocumentStoreType.UNKNOWN)
         {
             computeDocumentStoreSelection();
         }
 
-        return storeType == ContentStoreType.FILESYSTEM ? storeFileSystem : storeS3;
+        return storeType == DocumentStoreType.FILESYSTEM ? storeFileSystem : storeS3;
     }
 
     /**
@@ -75,19 +75,19 @@ public class ProxyContentStore
         if (springContentStoreType == null)
         {
             LOGGER.info("Defaulting to a content store type: FileSystem");
-            storeType = ContentStoreType.FILESYSTEM;
+            storeType = DocumentStoreType.FILESYSTEM;
         }
         else
         {
             if (springContentStoreType.equals("s3"))
             {
                 LOGGER.info("Using a content store of type: S3");
-                storeType = ContentStoreType.S3;
+                storeType = DocumentStoreType.S3;
             }
             else if (springContentStoreType.equals("filesystem"))
             {
                 LOGGER.info("Using a content store of type: FileSystem");
-                storeType = ContentStoreType.FILESYSTEM;
+                storeType = DocumentStoreType.FILESYSTEM;
             }
         }
     }

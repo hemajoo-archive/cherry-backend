@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
@@ -74,7 +74,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
     public static ServerEmailAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerEmailAddressEntity();
-        ServerDocumentEntity document;
+        DocumentServer document;
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

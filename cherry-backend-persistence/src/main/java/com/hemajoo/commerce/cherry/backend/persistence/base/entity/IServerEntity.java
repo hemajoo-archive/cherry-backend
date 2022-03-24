@@ -12,27 +12,28 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.document.content;
+package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
+
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
 
 /**
- * Enumeration representing the several possible <b>content store</b> types.
+ * Defines the behavior of a <b>server entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public enum ContentStoreType
+public interface IServerEntity extends IBaseEntity
 {
     /**
-     * Content store is on the <b>file system</b>.
+     * Returns the parent entity.
+     * @return Parent entity if set, {@code null} otherwise.
      */
-    FILESYSTEM,
+    ServerBaseEntity getParent();
 
     /**
-     * Content store is on <b>Amazon AWS S3</b>.
+     * Sets the parent entity.
+     * @param parent Parent entity.
+     * @throws RuntimeException Thrown to indicate an error occurred when trying to set the parent entity.
      */
-    S3,
-
-    /**
-     * <b>Unknown</b> content store.
-      */
-    UNKNOWN,
+    void setParent(final ServerBaseEntity parent) throws RuntimeException;
 }
