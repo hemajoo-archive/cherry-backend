@@ -20,7 +20,6 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmail
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
@@ -168,7 +167,12 @@ public final class EmailAddressValidationEngine
         }
     }
 
-    public void validateEmailForUpdate(final @NonNull ClientEmailAddressEntity emailAddress) throws EntityException, EmailAddressException
+    /**
+     * Validates an email address for an update.
+     * @param emailAddress Email address to update.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to validate an email address.
+     */
+    public void validateEmailForUpdate(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
         validateEmailAddressId(emailAddress.getId());
         validateEmailEntityType(emailAddress.getEntityType());
@@ -177,11 +181,16 @@ public final class EmailAddressValidationEngine
         validateNameUniqueness(emailAddress);
     }
 
-    private void validateEmailEntityType(final EntityType entityType) throws EntityException
+    /**
+     * Validates an entity type as being an <b>email address</b>.
+     * @param entityType Entity type.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to validate an entity type.
+     */
+    private void validateEmailEntityType(final EntityType entityType) throws EmailAddressException
     {
         if (entityType != EntityType.EMAIL_ADDRESS)
         {
-            throw new EntityException(entityType, String.format("Entity type: %s expected!", EntityType.EMAIL_ADDRESS), HttpStatus.BAD_REQUEST);
+            throw new EmailAddressException(String.format("Entity type: %s expected!", EntityType.EMAIL_ADDRESS));
         }
     }
 }

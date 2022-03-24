@@ -15,14 +15,14 @@
 package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
  * Defines the behavior of a <b>client phone number</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientPhoneNumber extends PhoneNumber, ClientEntity
+public interface ClientPhoneNumber extends PhoneNumber, IClientEntity
 {
     /**
      * Returns the entity identity owning this phone number.

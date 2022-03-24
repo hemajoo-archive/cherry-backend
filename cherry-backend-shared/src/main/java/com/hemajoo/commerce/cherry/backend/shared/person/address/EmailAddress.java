@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.address;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
 
 /**
  * Defines the behavior of an <b>email address</b>.
@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface EmailAddress extends BaseEntity
+public interface EmailAddress extends IBaseEntity
 {
     /**
      * Returns the email address.

@@ -21,6 +21,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.content.commons.repository.ContentStore;
 import org.springframework.stereotype.Component;
 
+/**
+ * Proxy content store.
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 @Log4j2
 @Component
 public class ProxyContentStore
@@ -35,17 +40,21 @@ public class ProxyContentStore
     private ContentStoreType storeType = ContentStoreType.UNKNOWN;
 
     /**
-     * Content store repository.
+     * <b>File system</b> content store.
      */
     @Autowired
     private FileSystemDocumentStore storeFileSystem;
 
     /**
-     * Content store repository.
+     * <b>Amazon S3</b> content store.
      */
     @Autowired(required = false)
     private S3DocumentStore storeS3;
 
+    /**
+     * Returns the content store.
+     * @return Content store.
+     */
     @SuppressWarnings("java:S3740")
     public final ContentStore getStore()
     {

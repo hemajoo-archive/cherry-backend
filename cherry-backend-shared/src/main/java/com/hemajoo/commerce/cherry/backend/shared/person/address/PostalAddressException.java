@@ -14,49 +14,68 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.address;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.AbstractEntityCheckedException;
-import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import java.io.Serial;
 
 /**
  * Checked exception thrown to indicate an error occurred with a <b>postal address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class PostalAddressException extends AbstractEntityCheckedException
+public class PostalAddressException extends EntityException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
+     * Http status code.
+     */
+    @Getter
+    private HttpStatus status = HttpStatus.BAD_REQUEST;
+
+    /**
      * Thrown to indicate that an error occurred with a <b>postal address</b>.
      * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
      */
-    public PostalAddressException(final Exception exception, final HttpStatus status)
+    public PostalAddressException(final Exception exception)
     {
-        super(EntityType.POSTAL_ADDRESS, exception, status);
+        super(exception);
     }
 
     /**
      * Thrown to indicate that an error occurred with a <b>postal address</b>.
      * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
+     */
+    public PostalAddressException(final String message)
+    {
+        super(message);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a <b>postal address</b>.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param status Http status code.
      */
     public PostalAddressException(final String message, final HttpStatus status)
     {
-        super(EntityType.POSTAL_ADDRESS, message, status);
+        super(message);
+
+        this.status = status;
     }
 
     /**
      * Thrown to indicate that an error occurred with a <b>postal address</b>.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
      */
-    public PostalAddressException(final String message, final Exception exception, final HttpStatus status)
+    public PostalAddressException(final String message, final Exception exception)
     {
-        super(EntityType.POSTAL_ADDRESS, message, exception, status);
-    }}
+        super(message, exception);
+    }
+}

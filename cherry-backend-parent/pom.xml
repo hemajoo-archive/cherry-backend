@@ -446,6 +446,9 @@
                     <docencoding>${project.build.sourceEncoding}</docencoding>
                     <charset>${project.build.sourceEncoding}</charset>
                     <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                    <sourceFileExcludes>
+                        <exclude>**/*Impl.java</exclude>
+                    </sourceFileExcludes>
                 </configuration>
                 <executions>
                     <execution>

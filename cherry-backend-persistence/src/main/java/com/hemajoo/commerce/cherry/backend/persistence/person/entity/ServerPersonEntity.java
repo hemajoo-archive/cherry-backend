@@ -53,11 +53,30 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public static final LocalDate MIN_BIRTHDATE = LocalDate.of(1500, Month.JANUARY, 1);
 
-    public static final String FIELD_LASTNAME       = "lastName";
-    public static final String FIELD_FIRSTNAME      = "firstName";
-    public static final String FIELD_BIRTHDATE      = "birthDate";
-    public static final String FIELD_GENDER_TYPE    = "genderType";
-    public static final String FIELD_PERSON_TYPE    = "personType";
+    /**
+     * Property used to set a search criteria for the <b>last name</b> field.
+     */
+    public static final String FIELD_LASTNAME = "lastName";
+
+    /**
+     * Property used to set a search criteria for the <b>first name</b> field.
+     */
+    public static final String FIELD_FIRSTNAME = "firstName";
+
+    /**
+     * Property used to set a search criteria for the <b>birth date</b> field.
+     */
+    public static final String FIELD_BIRTHDATE = "birthDate";
+
+    /**
+     * Property used to set a search criteria for the <b>gender type</b> field.
+     */
+    public static final String FIELD_GENDER_TYPE = "genderType";
+
+    /**
+     * Property used to set a search criteria for the <b>person type</b> field.
+     */
+    public static final String FIELD_PERSON_TYPE = "personType";
 
     /**
      * Person last name.
@@ -404,8 +423,9 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     /**
      * Removes an email address.
      * @param email Email address to remove.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to remove an email address.
      */
-    public final void removeEmailAddress(final @NonNull ServerEmailAddressEntity email)
+    public final void removeEmailAddress(final @NonNull ServerEmailAddressEntity email) throws EmailAddressException
     {
         email.setParent(null);
         emailAddresses.remove(email);

@@ -25,28 +25,14 @@ import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumber;
 public interface ServerPhoneNumber extends PhoneNumber, ServerEntity
 {
 //    /**
-//     * Returns the owner of this entity.
-//     * @param <T> Type of the owner entity.
-//     * @return Owner entity.
+//     * Returns the person owning this phone number.
+//     * @return Person.
 //     */
-//    <T extends ServerEntity & Person> T getPerson();
+//    ServerPerson getPerson();
 //
 //    /**
-//     * Sets the owner of this entity.
-//     * @param owner Owner entity.
-//     * @param <T> Type of the owner entity.
+//     * Sets the person owning this phone number.
+//     * @param owner Person.
 //     */
-//    <T extends ServerEntity & Person> void setPerson(final T owner);
-
-    /**
-     * Returns the person owning this phone number.
-     * @return Person.
-     */
-    ServerPerson getPerson();
-
-    /**
-     * Sets the person owning this phone number.
-     * @param owner Person.
-     */
-    void setPerson(final ServerPerson owner);
+//    void setPerson(final ServerPerson owner);
 }

@@ -18,7 +18,6 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import org.mapstruct.Context;
@@ -54,9 +53,9 @@ public abstract class AbstractDocumentMapper
      * @param context Context object.
      * @param entityManager Entity manager.
      * @return Client document entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws DocumentException Thrown to indicate an error occurred while trying to convert a document entity.
      */
-    public abstract ServerDocumentEntity fromClientToServer(ClientDocumentEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
+    public abstract ServerDocumentEntity fromClientToServer(ClientDocumentEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws DocumentException;
 
     /**
      * Maps from a server document entity to a client document entity.
@@ -71,7 +70,7 @@ public abstract class AbstractDocumentMapper
      * @param entity Server document entity.
      * @param context Context object.
      * @return Copy of the server document entity.
-     * @throws DocumentException Thrown if an error occurred while trying to copy the server document entity!
+     * @throws DocumentException Thrown to indicate an error occurred while trying to copy a document entity.
      */
     public abstract ServerDocumentEntity copy(ServerDocumentEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
 
@@ -80,6 +79,7 @@ public abstract class AbstractDocumentMapper
      * @param entity Client document entity.
      * @param context Context object.
      * @return Copy of the client document entity.
+     * @throws DocumentException Thrown to indicate an error occurred while trying to copy a document entity.
      */
-    public abstract ClientDocumentEntity copy(ClientDocumentEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract ClientDocumentEntity copy(ClientDocumentEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
 }

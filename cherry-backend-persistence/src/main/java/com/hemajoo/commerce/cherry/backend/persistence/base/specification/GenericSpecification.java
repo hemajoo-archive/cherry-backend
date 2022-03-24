@@ -113,6 +113,10 @@ public final class GenericSpecification<T> implements Specification<T>
         list.add(criteria);
     }
 
+    /**
+     * Returns the number of criteria.
+     * @return Number of criteria.
+     */
     public int count()
     {
         return list.size();

@@ -19,9 +19,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractEmailAddressMapper;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -52,22 +51,36 @@ public final class EmailAddressConverter
      * Converts from an entity identity to a server email address entity.
      * @param identity Entity identity.
      * @return Server email address entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to convert an email address.
      */
-    public ServerEmailAddressEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
+    public ServerEmailAddressEntity fromIdentityToServer(EntityIdentity identity) throws EmailAddressException
     {
-        return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        try
+        {
+            return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new EmailAddressException(e);
+        }
     }
 
     /**
      * Converts from a client email address entity to a server email address entity.
      * @param client Client email address entity.
      * @return Server email address entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to convert an email address.
      */
-    public ServerEmailAddressEntity fromClientToServer(ClientEmailAddressEntity client) throws EntityException
+    public ServerEmailAddressEntity fromClientToServer(ClientEmailAddressEntity client) throws EmailAddressException
     {
-        return AbstractEmailAddressMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        try
+        {
+            return AbstractEmailAddressMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new EmailAddressException(e);
+        }
     }
 
     /**
@@ -84,20 +97,35 @@ public final class EmailAddressConverter
      * Copy a server email address entity.
      * @param server Server email address entity.
      * @return Copied server email address entity.
-     * @throws DocumentException Thrown to indicate an error occurred when trying to copy a server email address.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to copy an email address.
      */
-    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity server) throws DocumentException
+    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity server) throws EmailAddressException
     {
-        return AbstractEmailAddressMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractEmailAddressMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new EmailAddressException(e);
+        }
     }
 
     /**
      * Copy a client email address entity.
      * @param client Client email address entity.
      * @return Copied client email address entity.
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to copy an email address.
      */
-    public static ClientEmailAddressEntity copy(ClientEmailAddressEntity client)
+    public static ClientEmailAddressEntity copy(ClientEmailAddressEntity client) throws EmailAddressException
     {
-        return AbstractEmailAddressMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractEmailAddressMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new EmailAddressException(e);
+        }
     }
 }

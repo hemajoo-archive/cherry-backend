@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
 
 /**
  * Defines the behavior of a <b>server entity</b>.
@@ -22,9 +22,18 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface ServerEntity extends BaseEntity
+public interface ServerEntity extends IBaseEntity
 {
+    /**
+     * Returns the parent entity.
+     * @return Parent entity if set, {@code null} otherwise.
+     */
     ServerBaseEntity getParent();
 
-    void setParent(final ServerBaseEntity parent);
+    /**
+     * Sets the parent entity.
+     * @param parent Parent entity.
+     * @throws RuntimeException Thrown to indicate an error occurred when trying to set the parent entity.
+     */
+    void setParent(final ServerBaseEntity parent) throws RuntimeException;
 }

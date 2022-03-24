@@ -14,50 +14,24 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.backend.commons.entity.IdentityAware;
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 
 /**
- * Defines the behavior of a <b>base entity</b>.
+ * Defines the behavior of a <b>client entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface BaseEntity extends StatusEntity, Identity, IdentityAware
+public interface IClientEntity extends IBaseEntity
 {
     /**
-     * Returns the entity name.
-     * @return Entity name.
+     * Returns the parent entity this entity belongs to.
+     * @return Parent entity identity.
      */
-    String getName();
+    EntityIdentity getParent();
 
     /**
-     * Sets the entity name.
-     * @param name Entity name.
+     * Sets the parent entity identity.
+     * @param parent Parent entity identity.
      */
-    void setName(final String name);
-
-    /**
-     * Returns the entity description.
-     * @return Entity description.
-     */
-    String getDescription();
-
-    /**
-     * Sets the entity description.
-     * @param description Entity description.
-     */
-    void setDescription(final String description);
-
-    /**
-     * Returns the entity reference.
-     * @return Entity reference.
-     */
-    String getReference();
-
-    /**
-     * Sets the entity reference.
-     * @param reference Entity reference.
-     */
-    void setReference(final String reference);
+    void setParent(final EntityIdentity parent) throws RuntimeException;
 }

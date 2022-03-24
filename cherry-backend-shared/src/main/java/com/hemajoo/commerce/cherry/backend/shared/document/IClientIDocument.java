@@ -12,18 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.document;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Implementing this entity provides the behavior of a <b>client document entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity extends BaseEntity
+public interface IClientIDocument extends IDocument, IClientEntity
 {
-    EntityIdentity getParent();
+    /**
+     * Returns the document owner.
+     * @return Document owner.
+     */
+    EntityIdentity getOwner();
 
-    void setParent(final EntityIdentity parent);
+    /**
+     * Sets the document owner.
+     * @param owner Document owner.
+     */
+    void setOwner(final EntityIdentity owner);
 }

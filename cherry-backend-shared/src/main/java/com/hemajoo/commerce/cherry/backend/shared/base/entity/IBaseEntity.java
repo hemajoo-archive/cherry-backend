@@ -14,62 +14,50 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.backend.commons.entity.IdentityAware;
 
 /**
- * Defines the behavior of a <b>status entity</b>.
+ * Defines the behavior of a <b>base entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface AuditEntity extends Serializable
+public interface IBaseEntity extends IStatusEntity, Identity, IdentityAware
 {
     /**
-     * Returns the creation date.
-     * @return Date.
+     * Returns the entity name.
+     * @return Entity name.
      */
-    Date getCreatedDate();
+    String getName();
 
     /**
-     * Sets the creation date.
-     * @param date Creation date.
+     * Sets the entity name.
+     * @param name Entity name.
      */
-    void setCreatedDate(final Date date);
+    void setName(final String name);
 
     /**
-     * Returns the last modification date.
-     * @return Date.
+     * Returns the entity description.
+     * @return Entity description.
      */
-    Date getModifiedDate();
+    String getDescription();
 
     /**
-     * Sets the last modification date.
-     * @param date Modification date.
+     * Sets the entity description.
+     * @param description Entity description.
      */
-    void setModifiedDate(final Date date);
+    void setDescription(final String description);
 
     /**
-     * Returns the creation author.
-     * @return Author.
+     * Returns the entity reference.
+     * @return Entity reference.
      */
-    String getCreatedBy();
+    String getReference();
 
     /**
-     * Sets the creation author.
-     * @param author Creation author.
+     * Sets the entity reference.
+     * @param reference Entity reference.
      */
-    void setCreatedBy(final String author);
-
-    /**
-     * Returns the last modification author.
-     * @return Author.
-     */
-    String getModifiedBy();
-
-    /**
-     * Sets the last modification author.
-     * @param author Modification author.
-     */
-    void setModifiedBy(final String author);
+    void setReference(final String reference);
 }

@@ -34,7 +34,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class ClientBaseEntity extends AbstractClientStatusEntity implements ClientEntity
+public class ClientBaseEntity extends AbstractClientStatusEntity implements IClientEntity
 {
     /**
      * Entity identifier.

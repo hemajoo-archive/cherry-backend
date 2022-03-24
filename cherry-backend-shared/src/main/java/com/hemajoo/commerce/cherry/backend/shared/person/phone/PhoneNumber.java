@@ -14,14 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
 
 /**
  * Defines the behavior of a <b>phone number</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PhoneNumber extends BaseEntity
+public interface PhoneNumber extends IBaseEntity
 {
     /**
      * Returns the phone number.

@@ -24,7 +24,6 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDoc
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
@@ -92,16 +91,15 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public ServerEmailAddressEntity update(ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException, DocumentException
+    public ServerEmailAddressEntity update(ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         ServerEmailAddressEntity original = findById(emailAddress.getId());
-
         return save(merge(emailAddress, original));
     }
 
     //@Transactional
     @Override
-    public ServerEmailAddressEntity save(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException
+    public ServerEmailAddressEntity save(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         emailAddressRepository.save(emailAddress);
 
@@ -110,7 +108,14 @@ public class EmailAddressServiceCore implements EmailAddressService
         {
             for (ServerDocumentEntity document : emailAddress.getDocuments())
             {
-                saveDocumentContent(document);
+                try
+                {
+                    saveDocumentContent(document);
+                }
+                catch (DocumentException e)
+                {
+                    throw new EmailAddressException(e);
+                }
             }
         }
 
@@ -118,7 +123,7 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException
+    public ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         emailAddress = save(emailAddress);
 
@@ -268,7 +273,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         }
     }
 
-    private ServerEmailAddressEntity merge(final ServerEmailAddressEntity source, final ServerEmailAddressEntity target) throws EntityException
+    private ServerEmailAddressEntity merge(final ServerEmailAddressEntity source, final ServerEmailAddressEntity target) throws EmailAddressException
     {
         Diff diff = EntityComparator.getJavers().compare(source, target);
 

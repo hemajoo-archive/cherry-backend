@@ -76,6 +76,9 @@ public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
     @Autowired
     protected DocumentRepository documentRepository;
 
+    /**
+     * Content store base location.
+     */
     @Getter
     @Value("${hemajoo.commerce.cherry.store.location}")
     protected String baseContentStoreLocation;
@@ -116,6 +119,9 @@ public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
     @Value("${spring.jpa.properties.hibernate.default_schema}")
     private String schemas;
 
+    /**
+     * Initializes the database.
+     */
     protected void initializeDatabase()
     {
         LOG.log(Level.INFO, ()
@@ -134,9 +140,12 @@ public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
             flyway.migrate();
 
             isDatabaseInitialized = true;
-    }
+        }
     }
 
+    /**
+     * Sets up the unit tests.
+     */
     @BeforeEach
     protected void setUp()
     {

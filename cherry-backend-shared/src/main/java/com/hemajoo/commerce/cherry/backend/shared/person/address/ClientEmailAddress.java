@@ -14,14 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.address;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
  * Defines the behavior of a <b>client email address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEmailAddress extends EmailAddress, ClientEntity
+public interface ClientEmailAddress extends EmailAddress, IClientEntity
 {
 //    /**
 //     * Returns the entity identity owning this email address.

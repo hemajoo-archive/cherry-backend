@@ -86,7 +86,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Convert an entity identity to a server email address")
-    final void testConvertIdentityToServerEmailAddress() throws EntityException, EmailAddressException, DocumentException
+    final void testConvertIdentityToServerEmailAddress() throws EntityException, DocumentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
         ServerPersonEntity owner = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
@@ -115,7 +115,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Convert a client email address to a server email address")
-    final void testConvertClientToServerEmailAddressWithOwner()
+    final void testConvertClientToServerEmailAddressWithOwner() throws EmailAddressException
     {
         ClientEmailAddressEntity client = EmailAddressRandomizer.generateClientEntity(true);
         ServerEmailAddressEntity server = converterEmailAddress.fromClientToServer(client);
@@ -162,7 +162,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Convert a list of client email addresses to a list of server email addresses")
-    final void testConvertClientToServerEmailAddressList()
+    final void testConvertClientToServerEmailAddressList() throws EmailAddressException
     {
         List<ServerEmailAddressEntity> emails = new ArrayList<>();
 
@@ -185,8 +185,13 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
                 .isNotNull());
 
         // Convert back from client to server email address list.
-        List<ServerEmailAddressEntity> servers = clients.stream()
-                .map(element -> converterEmailAddress.fromClientToServer(element)).toList();
+        List<ServerEmailAddressEntity> servers = new ArrayList<>();
+        ServerEmailAddressEntity serverEmailAddressEntity;
+        for (ClientEmailAddressEntity client : clients)
+        {
+            serverEmailAddressEntity = converterEmailAddress.fromClientToServer(client);
+            servers.add(serverEmailAddressEntity);
+        }
 
         assertThat(clients.size())
                 .as("Email address server and client list should have the same size!")
@@ -252,7 +257,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Compare a server email address and its copy are equal")
-    final void testCopyServerEmailAddress() throws DocumentException
+    final void testCopyServerEmailAddress() throws EmailAddressException
     {
         ServerEmailAddressEntity original = EmailAddressRandomizer.generateServerEntity(true);
         ServerEmailAddressEntity copy = EmailAddressConverter.copy(original);
@@ -268,7 +273,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Compare a client email address and its copy are equal")
-    final void testCopyClientEmailAddress()
+    final void testCopyClientEmailAddress() throws EmailAddressException
     {
         ClientEmailAddressEntity original = EmailAddressRandomizer.generateClientEntity(true);
         ClientEmailAddressEntity copy = EmailAddressConverter.copy(original);

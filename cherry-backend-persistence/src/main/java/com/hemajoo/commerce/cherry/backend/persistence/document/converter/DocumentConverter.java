@@ -19,7 +19,6 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.mapper.AbstractDocumentMapper;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import org.springframework.stereotype.Component;
@@ -52,22 +51,36 @@ public class DocumentConverter
      * Converts from an entity identity to a server document entity.
      * @param identity Entity identity.
      * @return Server document entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to convert a document.
      */
-    public ServerDocumentEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
+    public ServerDocumentEntity fromIdentityToServer(EntityIdentity identity) throws DocumentException
     {
-        return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        try
+        {
+            return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new DocumentException(e);
+        }
     }
 
     /**
      * Converts from a client document entity to a server document entity.
      * @param client Client document entity.
      * @return Server document entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to convert a document.
      */
-    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity client) throws EntityException
+    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity client) throws DocumentException
     {
-        return AbstractDocumentMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        try
+        {
+            return AbstractDocumentMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new DocumentException(e);
+        }
     }
 
     /**
@@ -88,16 +101,31 @@ public class DocumentConverter
      */
     public static ServerDocumentEntity copy(ServerDocumentEntity server) throws DocumentException
     {
-        return AbstractDocumentMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractDocumentMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new DocumentException(e);
+        }
     }
 
     /**
      * Copy a client document entity.
      * @param client Client document entity.
      * @return Copied client document entity.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
      */
-    public static ClientDocumentEntity copy(ClientDocumentEntity client)
+    public static ClientDocumentEntity copy(ClientDocumentEntity client) throws DocumentException
     {
-        return AbstractDocumentMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractDocumentMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new DocumentException(e);
+        }
     }
 }

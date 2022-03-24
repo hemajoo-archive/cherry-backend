@@ -36,7 +36,7 @@ import java.io.InputStream;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class ClientDocumentEntity extends ClientBaseEntity implements ClientDocument
+public class ClientDocumentEntity extends ClientBaseEntity implements IClientIDocument
 {
     /**
      * Document type.

@@ -14,14 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
 
 /**
  * Defines the behavior of a <b>client person</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientPerson extends Person, ClientEntity
+public interface ClientPerson extends Person, IClientEntity
 {
     // Marker interface.
 }

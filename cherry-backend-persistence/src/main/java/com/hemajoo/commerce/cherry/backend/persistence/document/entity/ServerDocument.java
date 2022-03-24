@@ -16,14 +16,14 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.Document;
+import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
 
 /**
  * Behavior of a server document entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends Document, ServerEntity
+public interface ServerDocument extends IDocument, ServerEntity
 {
     /**
      * Returns the owner entity of this document.

@@ -17,8 +17,6 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
@@ -34,6 +32,10 @@ import java.util.UUID;
  */
 public interface EmailAddressService
 {
+    /**
+     * <b>Email address</b> repository.
+     * @return Repository.
+     */
     EmailAddressRepository getRepository();
 
     /**
@@ -55,7 +57,7 @@ public interface EmailAddressService
      * @return Updated server email address entity.
      * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
      */
-    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException, DocumentException;
+    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EmailAddressException;
 
     /**
      * Saves the given email address.
@@ -63,7 +65,7 @@ public interface EmailAddressService
      * @return Saved email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
-    ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
+    ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
 
     /**
      * Saves and flush a email address.
@@ -71,7 +73,7 @@ public interface EmailAddressService
      * @return Email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
-    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
+    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
 
     /**
      * Deletes the email address matching the given identifier.

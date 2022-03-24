@@ -16,7 +16,6 @@ package com.hemajoo.commerce.cherry.backend.persistence.test.person;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactoryException;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
@@ -257,7 +256,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Sets a document as being the parent of an email address.")
-    final void testSetDocumentAsParentOfEmailAddress() throws DocumentException, EmailAddressException
+    final void testSetDocumentAsParentOfEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
@@ -278,7 +277,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Sets an email address as being the parent of another email address.")
-    final void testSetEmailAddressAsParentOfEmailAddress() throws EmailAddressException, DocumentException
+    final void testSetEmailAddressAsParentOfEmailAddress() throws EmailAddressException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerEmailAddressEntity other = EmailAddressRandomizer.generateServerEntity(false);
@@ -330,14 +329,14 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     {
         final ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
 
-        assertThrows(EntityException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
             email.setParent(email);
         });
     }
 
     @Test
     @DisplayName("Retrieves an email address using the entity factory.")
-    final void testRetrieveEmailAddressUsingEntityFactory() throws EmailAddressException, EntityFactoryException, DocumentException
+    final void testRetrieveEmailAddressUsingEntityFactory() throws EntityException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         email = servicePerson.getEmailAddressService().save(email);

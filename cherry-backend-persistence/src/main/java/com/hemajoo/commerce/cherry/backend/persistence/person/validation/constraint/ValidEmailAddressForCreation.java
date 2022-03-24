@@ -32,7 +32,21 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEmailAddressForCreation
 {
+    /**
+     * Returns the message.
+     * @return Message.
+     */
     String message() default "Person id: '${validatedValue}' does not exist!";
+
+    /**
+     * Returns an array of classes for the groups.
+     * @return Array of classes.
+     */
     Class<?>[] groups() default {};
+
+    /**
+     * Returns an array of classes representing the payload.
+     * @return Array of classes.
+     */
     Class<? extends Payload>[] payload() default {};
 }

@@ -16,7 +16,6 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -44,9 +43,9 @@ public abstract class AbstractBaseEntityMapper
      * @param identity Entity identity.
      * @param entityManager Entity manager.
      * @return Server base entity.
-     * @throws EntityException Thrown in case an error occurred while trying to retrieve the entity from the underlying database.
+     * @throws Exception Thrown in case an error occurred while trying to retrieve the entity from the underlying database.
      */
-    public <T extends ServerBaseEntity> T map(EntityIdentity identity, @Context EntityManager entityManager) throws EntityException
+    public <T extends ServerBaseEntity> T map(EntityIdentity identity, @Context EntityManager entityManager) throws Exception
     {
         ServerBaseEntity entity;
 
@@ -55,7 +54,7 @@ public abstract class AbstractBaseEntityMapper
             entity = entityManager.find(ServerBaseEntity.class, identity.getId());
             if (entity == null)
             {
-                throw new EntityException(identity.getEntityType(), String.format("Server entity with identity: %s cannot be found!", identity));
+                throw new Exception(String.format("Server entity with identity: %s cannot be found!", identity));
             }
 
             return (T) entity;

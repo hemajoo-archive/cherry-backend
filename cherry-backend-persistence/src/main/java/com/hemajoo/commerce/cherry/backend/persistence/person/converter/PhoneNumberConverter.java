@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseE
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPhoneNumberMapper;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -51,22 +51,36 @@ public final class PhoneNumberConverter
      * Converts from an entity identity to a server phone number entity.
      * @param identity Entity identity.
      * @return Server phone number entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws PhoneNumberException Thrown to indicate an error occurred when trying to convert a phone number.
      */
-    public ServerPhoneNumberEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
+    public ServerPhoneNumberEntity fromIdentityToServer(EntityIdentity identity) throws PhoneNumberException
     {
-        return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        try
+        {
+            return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new PhoneNumberException(e);
+        }
     }
 
     /**
      * Converts from a client phone number entity to a server phone number entity.
      * @param client Client phone number entity.
      * @return Server phone number entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws PhoneNumberException Thrown to indicate an error occurred when trying to convert a phone number.
      */
-    public ServerPhoneNumberEntity fromClientToServer(ClientPhoneNumberEntity client) throws EntityException
+    public ServerPhoneNumberEntity fromClientToServer(ClientPhoneNumberEntity client) throws PhoneNumberException
     {
-        return AbstractPhoneNumberMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        try
+        {
+            return AbstractPhoneNumberMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
+        }
+        catch (Exception e)
+        {
+            throw new PhoneNumberException(e);
+        }
     }
 
     /**
@@ -83,19 +97,35 @@ public final class PhoneNumberConverter
      * Copy a server phone number entity.
      * @param server Server phone number entity.
      * @return Copied server phone number entity.
+     * @throws PhoneNumberException Thrown to indicate an error occurred when trying to copy a phone number.
      */
-    public static ServerPhoneNumberEntity copy(ServerPhoneNumberEntity server)
+    public static ServerPhoneNumberEntity copy(ServerPhoneNumberEntity server) throws PhoneNumberException
     {
-        return AbstractPhoneNumberMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractPhoneNumberMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new PhoneNumberException(e);
+        }
     }
 
     /**
      * Copy a client phone number entity.
      * @param client Client phone number entity.
      * @return Copied client phone number entity.
+     * @throws PhoneNumberException Thrown to indicate an error occurred when trying to copy a phone number.
      */
-    public static ClientPhoneNumberEntity copy(ClientPhoneNumberEntity client)
+    public static ClientPhoneNumberEntity copy(ClientPhoneNumberEntity client) throws PhoneNumberException
     {
-        return AbstractPhoneNumberMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        try
+        {
+            return AbstractPhoneNumberMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
+        }
+        catch (Exception e)
+        {
+            throw new PhoneNumberException(e);
+        }
     }
 }

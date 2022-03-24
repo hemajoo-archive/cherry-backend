@@ -12,27 +12,40 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.document;
+package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
+
+import java.util.Date;
 
 /**
- * Implementing this entity provides the behavior of a <b>client document entity</b>.
+ * Defines the behavior of a <b>status</b> entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientDocument extends Document, ClientEntity
+public interface IStatusEntity extends IAuditEntity
 {
     /**
-     * Returns the document owner.
-     * @return Document owner.
+     * Returns the status type.
+     * @return Status type.
      */
-    EntityIdentity getOwner();
+    StatusType getStatusType();
 
     /**
-     * Sets the document owner.
-     * @param owner Document owner.
+     * Sets the status type date.
+     * @param type Status type.
      */
-    void setOwner(final EntityIdentity owner);
+    void setStatusType(final StatusType type);
+
+    /**
+     * Returns the inactivation date.
+     * @return Inactivation since date.
+     */
+    Date getSince();
+
+    /**
+     * Sets the since (inactivation) date.
+     * @param date Inactivation date.
+     */
+    void setSince(final Date date);
 }

@@ -41,13 +41,35 @@ import javax.validation.constraints.NotNull;
 @EntityListeners(AuditingEntityListener.class)
 public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
 {
-    public static final String FIELD_IS_DEFAULT             = "isDefault";
-    public static final String FIELD_NUMBER                 = "number";
-    public static final String FIELD_COUNTRY_CODE           = "countryCode";
-    public static final String FIELD_PHONE_TYPE             = "phoneType";
-    public static final String FIELD_PHONE_CATEGORY_TYPE    = "categoryType";
+    /**
+     * Property used to set a search criteria for the <b>is default</b> field.
+     */
+    public static final String FIELD_IS_DEFAULT = "isDefault";
 
-    public static final String FIELD_PERSON_ID              = "personId";
+    /**
+     * Property used to set a search criteria for the <b>number</b> field.
+     */
+    public static final String FIELD_NUMBER = "number";
+
+    /**
+     * Property used to set a search criteria for the <b>country code</b> field.
+     */
+    public static final String FIELD_COUNTRY_CODE = "countryCode";
+
+    /**
+     * Property used to set a search criteria for the <b>phone type</b> field.
+     */
+    public static final String FIELD_PHONE_TYPE = "phoneType";
+
+    /**
+     * Property used to set a search criteria for the <b>category type</b> field.
+     */
+    public static final String FIELD_PHONE_CATEGORY_TYPE = "categoryType";
+
+    /**
+     * Property used to set a search criteria for the <b>person identifier</b> field.
+     */
+    public static final String FIELD_PERSON_ID = "personId";
 
     /**
      * Phone number.

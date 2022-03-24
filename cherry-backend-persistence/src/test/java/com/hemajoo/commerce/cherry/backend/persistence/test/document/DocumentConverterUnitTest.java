@@ -22,7 +22,6 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.converter.Docume
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import org.javers.core.diff.Diff;
@@ -36,7 +35,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -93,7 +91,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Convert an identity to a server document")
-    final void testConvertIdentityToServerDocument() throws DocumentException, EntityException
+    final void testConvertIdentityToServerDocument() throws DocumentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
         ServerDocumentEntity reference = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
@@ -122,7 +120,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         EntityIdentity identity = new EntityIdentity(UUID.randomUUID(), EntityType.DOCUMENT);
 
         assertThatThrownBy(() -> converterDocument.fromIdentityToServer(identity))
-                .isInstanceOf(EntityException.class);
+                .isInstanceOf(DocumentException.class);
     }
 
     @Test
@@ -156,7 +154,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
         // If the owner of the client document to convert does not exist, ensure an exception is raised!
         assertThatThrownBy(() -> converterDocument.fromClientToServer(client))
-                .isInstanceOf(EntityException.class);
+                .isInstanceOf(DocumentException.class);
     }
 
     @Test
@@ -170,8 +168,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         }
 
         List<ClientDocumentEntity> clients = documents.stream()
-                .map(document -> converterDocument.fromServerToClient(document))
-                .collect(Collectors.toList());
+                .map(document -> converterDocument.fromServerToClient(document)).toList();
 
         assertThat(clients.size())
                 .as("Document server and client list should have the same size!")
@@ -192,9 +189,13 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
             clients.add(DocumentRandomizer.generateClientEntity(true));
         }
 
-        List<ServerDocumentEntity> servers = clients.stream()
-                .map(document -> converterDocument.fromClientToServer(document))
-                .collect(Collectors.toList());
+        List<ServerDocumentEntity> servers = new ArrayList<>();
+        ServerDocumentEntity serverDocumentEntity;
+        for (ClientDocumentEntity client : clients)
+        {
+            serverDocumentEntity = converterDocument.fromClientToServer(client);
+            servers.add(serverDocumentEntity);
+        }
 
         assertThat(servers.size())
                 .as("Both lists should have the same size!")
@@ -216,8 +217,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         }
 
         List<EntityIdentity> identities = documents.stream()
-                .map(document -> converterDocument.fromServerToIdentity(document))
-                .collect(Collectors.toList());
+                .map(document -> converterDocument.fromServerToIdentity(document)).toList();
 
         assertThat(identities.size())
                 .as("Both lists should have the same size!")

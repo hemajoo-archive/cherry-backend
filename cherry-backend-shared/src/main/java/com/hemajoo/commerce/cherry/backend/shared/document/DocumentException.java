@@ -14,8 +14,6 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
-import org.ressec.avocado.core.exception.checked.AbstractCheckedException;
-
 import java.io.Serial;
 
 /**
@@ -24,7 +22,7 @@ import java.io.Serial;
  * @version 1.0.0
  */
 @SuppressWarnings("java:S110")
-public class DocumentException extends AbstractCheckedException
+public class DocumentException extends Exception
 {
     /**
      * Default serialization identifier.

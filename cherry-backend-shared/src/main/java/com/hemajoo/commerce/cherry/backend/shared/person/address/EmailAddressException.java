@@ -14,30 +14,38 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.address;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.AbstractEntityCheckedException;
-import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import java.io.Serial;
 
 /**
  * Checked exception thrown to indicate an error occurred with an <b>email address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressException extends AbstractEntityCheckedException
+public class EmailAddressException extends EntityException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Http status code.
+     */
+    @Getter
+    private HttpStatus status = HttpStatus.BAD_REQUEST;
 
     /**
      * Thrown to indicate that an error occurred with an <b>email address</b>.
      * @param exception Parent {@link Exception}.
-     * @param status {@link HttpStatus}.
      */
-    public EmailAddressException(final Exception exception, final HttpStatus status)
+    public EmailAddressException(final Exception exception)
     {
-        super(EntityType.EMAIL_ADDRESS, exception, status);
+        super(exception);
     }
 
     /**
@@ -46,27 +54,28 @@ public class EmailAddressException extends AbstractEntityCheckedException
      */
     public EmailAddressException(final String message)
     {
-        super(EntityType.EMAIL_ADDRESS, message, HttpStatus.BAD_REQUEST);
+        super(message);
     }
 
     /**
      * Thrown to indicate that an error occurred with an <b>email address</b>.
      * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
+     * @param status Http status.
      */
     public EmailAddressException(final String message, final HttpStatus status)
     {
-        super(EntityType.EMAIL_ADDRESS, message, status);
+        super(message);
+
+        this.status = status;
     }
 
     /**
      * Thrown to indicate that an error occurred with an <b>email address</b>.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent {@link Exception}.
-     * @param status {@link HttpStatus}.
      */
-    public EmailAddressException(final String message, final Exception exception, final HttpStatus status)
+    public EmailAddressException(final String message, final Exception exception)
     {
-        super(EntityType.EMAIL_ADDRESS, message, exception, status);
+        super(message, exception);
     }
 }

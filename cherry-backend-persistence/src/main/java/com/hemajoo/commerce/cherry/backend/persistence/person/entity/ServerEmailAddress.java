@@ -25,15 +25,15 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddress;
  */
 public interface ServerEmailAddress extends EmailAddress, ServerEntity
 {
-    /**
-     * Returns the person owning this email address.
-     * @return Person.
-     */
-    ServerPerson getPerson();
-
-    /**
-     * Sets the person owning this email address.
-     * @param owner Person.
-     */
-    void setPerson(final ServerPerson owner);
+//    /**
+//     * Returns the person owning this email address.
+//     * @return Person.
+//     */
+//    ServerPerson getPerson();
+//
+//    /**
+//     * Sets the person owning this email address.
+//     * @param owner Person.
+//     */
+//    void setPerson(final ServerPerson owner);
 }
