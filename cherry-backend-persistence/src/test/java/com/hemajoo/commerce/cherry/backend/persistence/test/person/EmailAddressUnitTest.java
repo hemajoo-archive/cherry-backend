@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.test.person;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
@@ -91,7 +91,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create an email address with one document")
     void testCreateEmailAddressWithOneDocument() throws EmailAddressException, DocumentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
@@ -116,7 +116,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create an email address with several documents")
     void testCreateEmailAddressWithSeveralDocument() throws EmailAddressException, DocumentException
     {
-        List<ServerDocumentEntity> documents = new ArrayList<>();
+        List<DocumentServer> documents = new ArrayList<>();
         for (int i = 0; i < 5; i++)
         {
             documents.add(DocumentRandomizer.generateServerEntity(false));
@@ -205,7 +205,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, EmailAddressException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
 
         servicePerson.getPersonService().save(person); // Save it to get its UUID
@@ -259,7 +259,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     final void testSetDocumentAsParentOfEmailAddress() throws EmailAddressException, DocumentException
     {
         ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(false);
 
         document = servicePerson.getDocumentService().save(document);
         email = servicePerson.getEmailAddressService().save(email);

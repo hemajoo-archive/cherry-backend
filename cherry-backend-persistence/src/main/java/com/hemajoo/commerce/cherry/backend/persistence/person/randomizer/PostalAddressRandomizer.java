@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
@@ -34,7 +34,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
+public final class PostalAddressRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Address type enumeration generator.
@@ -55,7 +55,7 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
     public static ServerPostalAddressEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerPostalAddressEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -87,8 +87,8 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
     public static ServerPostalAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerPostalAddressEntity();
-        ServerDocumentEntity document;
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        DocumentServer document;
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -123,7 +123,7 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
     public static ClientPostalAddress generateClient(final boolean withRandomId)
     {
         var entity = new ClientPostalAddress();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -156,7 +156,7 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
     {
         ClientDocument document;
         ClientPostalAddress entity = new ClientPostalAddress();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
@@ -30,7 +30,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
+public final class DocumentRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Document type enumeration generator.
@@ -43,10 +43,10 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static ServerDocumentEntity generateServerEntity(final boolean withRandomId) throws DocumentContentException
+    public static DocumentServer generateServerEntity(final boolean withRandomId) throws DocumentContentException
     {
-        var entity = new ServerDocumentEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new DocumentServer();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -70,7 +70,7 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
     public static ClientDocument generateClientEntity(final boolean withRandomId) throws DocumentContentException
     {
         var entity = new ClientDocument();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

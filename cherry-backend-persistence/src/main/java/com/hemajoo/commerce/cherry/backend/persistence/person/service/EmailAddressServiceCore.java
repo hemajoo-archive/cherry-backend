@@ -18,9 +18,9 @@ import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
@@ -106,7 +106,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         // Save the documents attached to the email address.
         if (emailAddress.getDocuments() != null)
         {
-            for (ServerDocumentEntity document : emailAddress.getDocuments())
+            for (DocumentServer document : emailAddress.getDocuments())
             {
                 try
                 {
@@ -192,7 +192,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    ServerBaseEntity.FIELD_ID,
+                    ServerEntity.FIELD_ID,
                     UUID.fromString(search.getId().toString()),
                     SearchOperation.EQUAL));
         }
@@ -253,7 +253,7 @@ public class EmailAddressServiceCore implements EmailAddressService
      * @param document Document.
      * @throws DocumentException Thrown if an error occurred while trying to save the document content to the content store.
      */
-    private void saveDocumentContent(final @NonNull ServerDocumentEntity document) throws DocumentException
+    private void saveDocumentContent(final @NonNull DocumentServer document) throws DocumentException
     {
         try
         {

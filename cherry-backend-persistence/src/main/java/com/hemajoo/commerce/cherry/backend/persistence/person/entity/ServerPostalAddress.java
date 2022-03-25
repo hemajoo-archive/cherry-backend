@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalAddress;
 
 /**
@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalA
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPostalAddress extends IPostalAddress, ServerEntity
+public interface ServerPostalAddress extends IPostalAddress, IServerEntity
 {
 //    /**
 //     * Returns the person owning this email address.

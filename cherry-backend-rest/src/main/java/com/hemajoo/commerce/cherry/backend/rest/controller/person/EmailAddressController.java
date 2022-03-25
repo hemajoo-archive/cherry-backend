@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.rest.controller.person;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.EmailAddressConverter;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
@@ -147,7 +147,7 @@ public class EmailAddressController
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
-        ServerBaseEntity parent = (ServerBaseEntity) factory.from(parentType, UUID.fromString(parentId));
+        ServerEntity parent = (ServerEntity) factory.from(parentType, UUID.fromString(parentId));
         serverEmail.setParent(parent);
         serverEmail = servicePerson.getEmailAddressService().save(serverEmail);
 

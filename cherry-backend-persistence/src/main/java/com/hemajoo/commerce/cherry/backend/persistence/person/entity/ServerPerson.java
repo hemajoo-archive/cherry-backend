@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.IPerson;
 
 /**
@@ -22,6 +22,6 @@ import com.hemajoo.commerce.cherry.backend.shared.person.IPerson;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPerson extends IPerson, ServerEntity
+public interface ServerPerson extends IPerson, IServerEntity
 {
 }

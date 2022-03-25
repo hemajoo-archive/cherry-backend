@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Provides an entity identifier generator.
+ * Entity identifier generator.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

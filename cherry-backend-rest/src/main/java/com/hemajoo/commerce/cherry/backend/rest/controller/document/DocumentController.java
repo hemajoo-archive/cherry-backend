@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.rest.controller.document;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
@@ -85,7 +85,7 @@ public class DocumentController
             @Parameter(name = "personId", description = "Person identifier (UUID) being the parent of the new document", required = true)
             @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentException, DocumentContentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(false);
 
         ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(personId));
         document.setOwner(person);
@@ -118,7 +118,7 @@ public class DocumentController
                                          @Parameter(description = "Person identifier (UUID) being the parent of the new document", name = "personId", required = true)
                                          @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
-        ServerDocumentEntity document;
+        DocumentServer document;
 
         if (file.isEmpty())
         {
@@ -147,9 +147,9 @@ public class DocumentController
         return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
     }
 
-    private ServerDocumentEntity uploadDocument(MultipartFile file) throws IOException
+    private DocumentServer uploadDocument(MultipartFile file) throws IOException
     {
-        ServerDocumentEntity document = new ServerDocumentEntity();
+        DocumentServer document = new DocumentServer();
 
         InputStream stream = new ByteArrayInputStream(file.getBytes());
 

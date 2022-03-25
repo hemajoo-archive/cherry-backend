@@ -28,12 +28,12 @@ import javax.persistence.EntityManager;
  * @version 1.0.0
  */
 @Mapper
-public abstract class AbstractBaseEntityMapper
+public abstract class AbstractEntityMapper
 {
     /**
      * Instance to this bean mapper.
      */
-    public static final AbstractBaseEntityMapper INSTANCE = Mappers.getMapper(AbstractBaseEntityMapper.class);
+    public static final AbstractEntityMapper INSTANCE = Mappers.getMapper(AbstractEntityMapper.class);
 
     /**
      * Maps an entity identity to a server base entity.
@@ -45,13 +45,13 @@ public abstract class AbstractBaseEntityMapper
      * @return Server base entity.
      * @throws Exception Thrown in case an error occurred while trying to retrieve the entity from the underlying database.
      */
-    public <T extends ServerBaseEntity> T map(EntityIdentity identity, @Context EntityManager entityManager) throws Exception
+    public <T extends ServerEntity> T map(EntityIdentity identity, @Context EntityManager entityManager) throws Exception
     {
-        ServerBaseEntity entity;
+        ServerEntity entity;
 
         if (identity != null)
         {
-            entity = entityManager.find(ServerBaseEntity.class, identity.getId());
+            entity = entityManager.find(ServerEntity.class, identity.getId());
             if (entity == null)
             {
                 throw new Exception(String.format("Server entity with identity: %s cannot be found!", identity));

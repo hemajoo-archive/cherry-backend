@@ -34,7 +34,7 @@ public class ValidatorHibernateCustomizer implements HibernatePropertiesCustomiz
     // see: https://stackoverflow.com/questions/62985187/getting-nullpointerexception-for-repository-while-using-custom-javax-validator
 
     /**
-     * Validator provider.
+     * Object provider.
      */
     private final ObjectProvider<Validator> provider;
 

@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.IEmailAddress;
@@ -42,7 +42,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerEmailAddressEntity extends ServerBaseEntity implements IEmailAddress, ServerEntity
+public class ServerEmailAddressEntity extends ServerEntity implements IEmailAddress, IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>email</b> field.

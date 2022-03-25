@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.test;
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.content.FileSystemDocumentStore;
+import com.hemajoo.commerce.cherry.backend.persistence.document.content.IDocumentFileSystemStore;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentRepository;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
@@ -34,12 +34,12 @@ import java.util.logging.Logger;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
+public abstract class AbstractDatabaseUnitTest extends AbstractBaseUnitTest
 {
     /**
      * Logger.
      */
-    private static final Logger LOG = Logger.getLogger(AbstractBaseDatabaseUnitTest.class.getName());
+    private static final Logger LOG = Logger.getLogger(AbstractDatabaseUnitTest.class.getName());
 
     /**
      * Is the database initialized?
@@ -68,7 +68,7 @@ public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
      * Document content store.
      */
     @Autowired
-    protected FileSystemDocumentStore documentStore;
+    protected IDocumentFileSystemStore documentStore;
 
     /**
      * Document repository.

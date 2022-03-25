@@ -14,25 +14,17 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import org.springframework.content.rest.StoreRestResource;
+import org.springframework.content.s3.store.S3ContentStore;
+
 /**
- * Enumeration representing the several possible <b>content store</b> types.
+ * Content store repository for <b>Amazon S3</b> support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum ContentStoreType
+@StoreRestResource
+public interface IDocumentS3Store extends S3ContentStore<DocumentServer, String>
 {
-    /**
-     * Content store is on the <b>file system</b>.
-     */
-    FILESYSTEM,
-
-    /**
-     * Content store is on <b>Amazon AWS S3</b>.
-     */
-    S3,
-
-    /**
-     * <b>Unknown</b> content store.
-      */
-    UNKNOWN,
+    // Empty.
 }

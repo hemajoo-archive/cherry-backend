@@ -14,17 +14,17 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import org.springframework.content.fs.store.FilesystemContentStore;
 import org.springframework.content.rest.StoreRestResource;
-import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Content store repository with {@code Amazon S3} support.
+ * Content store repository for <b>file system</b> support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @StoreRestResource
-public interface S3DocumentStore extends S3ContentStore<ServerDocumentEntity, String>
+public interface IDocumentFileSystemStore extends FilesystemContentStore<DocumentServer, String>
 {
     // Empty.
 }

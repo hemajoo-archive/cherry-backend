@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.document.converter.DocumentConverter;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
@@ -73,7 +73,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a server document to an identity")
     final void testConvertServerToIdentityDocument() throws DocumentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(true);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(true);
         EntityIdentity identity = converterDocument.fromServerToIdentity(document);
 
         assertThat(identity)
@@ -94,10 +94,10 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertIdentityToServerDocument() throws DocumentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerDocumentEntity reference = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
+        DocumentServer reference = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
-        ServerDocumentEntity server = converterDocument.fromIdentityToServer(identity);
+        DocumentServer server = converterDocument.fromIdentityToServer(identity);
 
         assertThat(server)
                 .as("Server entity should not be null!")
@@ -128,12 +128,12 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerDocumentWithOwner() throws DocumentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerDocumentEntity owner = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer owner = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         ClientDocument client = DocumentRandomizer.generateClientEntity(true);
         client.setOwner(owner.getIdentity());
 
-        ServerDocumentEntity server = converterDocument.fromClientToServer(client);
+        DocumentServer server = converterDocument.fromClientToServer(client);
 
         assertThat(server)
                 .as("Server document should not be null!")
@@ -161,7 +161,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a list of server documents to a list of client documents")
     final void testConvertServerToClientDocumentList() throws DocumentException
     {
-        List<ServerDocumentEntity> documents = new ArrayList<>();
+        List<DocumentServer> documents = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             documents.add(DocumentRandomizer.generateServerEntity(true));
@@ -189,8 +189,8 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
             clients.add(DocumentRandomizer.generateClientEntity(true));
         }
 
-        List<ServerDocumentEntity> servers = new ArrayList<>();
-        ServerDocumentEntity serverDocumentEntity;
+        List<DocumentServer> servers = new ArrayList<>();
+        DocumentServer serverDocumentEntity;
         for (ClientDocument client : clients)
         {
             serverDocumentEntity = converterDocument.fromClientToServer(client);
@@ -210,7 +210,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a list of server documents to a list of entity identities")
     final void testConvertServerDocumentToIdentityList() throws DocumentException
     {
-        List<ServerDocumentEntity> documents = new ArrayList<>();
+        List<DocumentServer> documents = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             documents.add(DocumentRandomizer.generateServerEntity(true));
@@ -232,8 +232,8 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Copy a server document")
     final void testCopyServerDocument() throws DocumentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(true);
-        ServerDocumentEntity copy = DocumentConverter.copy(document);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(true);
+        DocumentServer copy = DocumentConverter.copy(document);
 
         assertThat(document)
                 .as("Both server documents should be equal!")

@@ -15,9 +15,9 @@
 package com.hemajoo.commerce.cherry.backend.persistence.document.converter;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.mapper.AbstractDocumentMapper;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
@@ -42,7 +42,7 @@ public class DocumentConverter
      * @param server Server document entity.
      * @return Entity identity.
      */
-    public EntityIdentity fromServerToIdentity(ServerDocumentEntity server)
+    public EntityIdentity fromServerToIdentity(DocumentServer server)
     {
         return AbstractDocumentMapper.INSTANCE.fromServerToIdentity(server, new CycleAvoidingMappingContext());
     }
@@ -53,11 +53,11 @@ public class DocumentConverter
      * @return Server document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to convert a document.
      */
-    public ServerDocumentEntity fromIdentityToServer(EntityIdentity identity) throws DocumentException
+    public DocumentServer fromIdentityToServer(EntityIdentity identity) throws DocumentException
     {
         try
         {
-            return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+            return AbstractEntityMapper.INSTANCE.map(identity,entityManager);
         }
         catch (Exception e)
         {
@@ -71,7 +71,7 @@ public class DocumentConverter
      * @return Server document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to convert a document.
      */
-    public ServerDocumentEntity fromClientToServer(ClientDocument client) throws DocumentException
+    public DocumentServer fromClientToServer(ClientDocument client) throws DocumentException
     {
         try
         {
@@ -88,7 +88,7 @@ public class DocumentConverter
      * @param server Server document entity.
      * @return Client document entity.
      */
-    public ClientDocument fromServerToClient(ServerDocumentEntity server)
+    public ClientDocument fromServerToClient(DocumentServer server)
     {
         return AbstractDocumentMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -99,7 +99,7 @@ public class DocumentConverter
      * @return Copied server document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
      */
-    public static ServerDocumentEntity copy(ServerDocumentEntity server) throws DocumentException
+    public static DocumentServer copy(DocumentServer server) throws DocumentException
     {
         try
         {

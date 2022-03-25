@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.backend.rest.configuration;
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.content.ProxyContentStore;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.content.DocumentStore;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
@@ -32,9 +32,9 @@ import java.io.InputStream;
 public class DocumentHelper
 {
     @Autowired
-    private ProxyContentStore proxyStore;
+    private DocumentStore proxyStore;
 
-    public void saveAs(final @NonNull ServerDocumentEntity document, final @NonNull String outputPath) throws DocumentException
+    public void saveAs(final @NonNull DocumentServer document, final @NonNull String outputPath) throws DocumentException
     {
         try
         {

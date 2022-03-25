@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.test.document;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
@@ -54,7 +54,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create a document")
     void testCreateDocument() throws DocumentContentException, DocumentException
     {
-        ServerDocumentEntity document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         assertThat(document)
                 .as("Document should not be null!")
@@ -69,8 +69,8 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create a document being parent of another document")
     void testCreateDocumentOwningDocument() throws DocumentException
     {
-        ServerDocumentEntity parent = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
-        ServerDocumentEntity child = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer parent = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer child = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         assertThat(parent)
                 .as("Parent document should not be null!")
@@ -97,7 +97,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Update a document")
     void testUpdateDocument() throws DocumentException
     {
-        ServerDocumentEntity document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         assertThat(document)
                 .as("Document should not be null!")
@@ -111,7 +111,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
         document.setDescription("Test description for document: " + document.getId());
         servicePerson.getDocumentService().saveAndFlush(document);
 
-        ServerDocumentEntity updated = servicePerson.getDocumentService().findById(document.getId());
+        DocumentServer updated = servicePerson.getDocumentService().findById(document.getId());
 
         assertThat(updated)
                 .as("Document should not be null!")
@@ -126,7 +126,7 @@ class DocumentUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete a document")
     void testDeleteDocument() throws DocumentException
     {
-        ServerDocumentEntity document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         assertThat(document)
                 .as("Document should not be null!")

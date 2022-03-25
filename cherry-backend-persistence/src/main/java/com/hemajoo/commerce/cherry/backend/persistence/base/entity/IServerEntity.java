@@ -12,16 +12,28 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.base.validation;
+package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
+
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
 
 /**
- * A group sequence used to order the validation of constraints.
- * <br><br>
- * This group contains extended validations that must be executed after the basic validations.
+ * Defines the behavior of a <b>server entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface ExtendedValidation
+public interface IServerEntity extends IBaseEntity
 {
-    // Empty.
+    /**
+     * Returns the parent entity.
+     * @return Parent entity if set, {@code null} otherwise.
+     */
+    ServerEntity getParent();
+
+    /**
+     * Sets the parent entity.
+     * @param parent Parent entity.
+     * @throws RuntimeException Thrown to indicate an error occurred when trying to set the parent entity.
+     */
+    void setParent(final ServerEntity parent) throws RuntimeException;
 }

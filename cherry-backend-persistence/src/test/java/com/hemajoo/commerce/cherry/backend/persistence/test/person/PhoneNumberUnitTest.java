@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.test.person;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
@@ -79,7 +79,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create a phone number with one document")
     void testCreatePhoneNumberWithOneDocument() throws DocumentContentException, DocumentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
+        DocumentServer document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerPhoneNumberEntity phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
@@ -106,7 +106,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create a phone number with several documents")
     void testCreatePhoneNumberWithSeveralDocument() throws DocumentContentException, DocumentException
     {
-        List<ServerDocumentEntity> documents = new ArrayList<>();
+        List<DocumentServer> documents = new ArrayList<>();
         for (int i = 0; i < 5; i++)
         {
             documents.add(DocumentRandomizer.generateServerEntity(false));

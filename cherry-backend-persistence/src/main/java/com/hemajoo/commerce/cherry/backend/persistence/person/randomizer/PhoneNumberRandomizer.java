@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
@@ -34,7 +34,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
+public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Phone number type enumeration generator.
@@ -55,7 +55,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
     public static ServerPhoneNumberEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerPhoneNumberEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -82,8 +82,8 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
     public static ServerPhoneNumberEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerPhoneNumberEntity();
-        ServerDocumentEntity document;
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        DocumentServer document;
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -114,7 +114,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
     public static ClientPhoneNumber generateClientEntity(final boolean withRandomId)
     {
         var entity = new ClientPhoneNumber();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -142,7 +142,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
     {
         ClientDocument document;
         ClientPhoneNumber entity = new ClientPhoneNumber();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
