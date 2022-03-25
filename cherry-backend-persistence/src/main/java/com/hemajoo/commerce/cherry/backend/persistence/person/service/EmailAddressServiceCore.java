@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
@@ -192,7 +192,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    ServerBaseEntity.FIELD_ID,
+                    ServerEntity.FIELD_ID,
                     UUID.fromString(search.getId().toString()),
                     SearchOperation.EQUAL));
         }

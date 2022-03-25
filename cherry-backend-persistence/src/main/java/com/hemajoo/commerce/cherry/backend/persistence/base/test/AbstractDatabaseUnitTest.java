@@ -34,12 +34,12 @@ import java.util.logging.Logger;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
+public abstract class AbstractDatabaseUnitTest extends AbstractBaseUnitTest
 {
     /**
      * Logger.
      */
-    private static final Logger LOG = Logger.getLogger(AbstractBaseDatabaseUnitTest.class.getName());
+    private static final Logger LOG = Logger.getLogger(AbstractDatabaseUnitTest.class.getName());
 
     /**
      * Is the database initialized?

@@ -22,7 +22,7 @@ import org.springframework.content.commons.repository.ContentStore;
 import org.springframework.stereotype.Component;
 
 /**
- * Proxy content store.
+ * Document store.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

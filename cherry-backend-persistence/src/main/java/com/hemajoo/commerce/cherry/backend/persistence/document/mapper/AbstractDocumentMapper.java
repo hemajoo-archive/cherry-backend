@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.document.mapper;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
@@ -31,7 +31,7 @@ import javax.persistence.EntityManager;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Mapper(uses = { AbstractBaseEntityMapper.class })
+@Mapper(uses = { AbstractEntityMapper.class })
 public abstract class AbstractDocumentMapper
 {
     /**

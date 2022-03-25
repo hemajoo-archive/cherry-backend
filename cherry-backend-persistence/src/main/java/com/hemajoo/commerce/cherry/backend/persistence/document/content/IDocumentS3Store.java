@@ -19,7 +19,7 @@ import org.springframework.content.rest.StoreRestResource;
 import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Content store repository with {@code Amazon S3} support.
+ * Content store repository for <b>Amazon S3</b> support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

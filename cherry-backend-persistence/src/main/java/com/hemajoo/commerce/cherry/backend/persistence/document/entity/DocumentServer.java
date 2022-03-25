@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
 import lombok.*;
@@ -43,7 +43,7 @@ import java.io.InputStream;
 @Table(name = "DOCUMENT")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class DocumentServer extends ServerBaseEntity implements IDocumentServer
+public class DocumentServer extends ServerEntity implements IDocumentServer
 {
     /**
      * Document type.
@@ -134,8 +134,8 @@ public class DocumentServer extends ServerBaseEntity implements IDocumentServer
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
-    @OneToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
-    private ServerBaseEntity owner;
+    @OneToOne(targetEntity = ServerEntity.class, fetch = FetchType.EAGER)
+    private ServerEntity owner;
 
     /**
      * Document content.
@@ -159,7 +159,7 @@ public class DocumentServer extends ServerBaseEntity implements IDocumentServer
      * @param owner Document owner.
      * @param documentType Document type.
      */
-    public DocumentServer(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType)
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
@@ -176,7 +176,7 @@ public class DocumentServer extends ServerBaseEntity implements IDocumentServer
      * @param filename File name.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public DocumentServer(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -194,7 +194,7 @@ public class DocumentServer extends ServerBaseEntity implements IDocumentServer
      * @param file File.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public DocumentServer(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -212,7 +212,7 @@ public class DocumentServer extends ServerBaseEntity implements IDocumentServer
      * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public DocumentServer(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -357,7 +357,7 @@ public class DocumentServer extends ServerBaseEntity implements IDocumentServer
     }
 
     @Override
-    public void setOwner(ServerBaseEntity owner)
+    public void setOwner(ServerEntity owner)
     {
         this.owner = owner;
     }

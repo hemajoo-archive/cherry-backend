@@ -19,7 +19,7 @@ import org.springframework.content.fs.store.FilesystemContentStore;
 import org.springframework.content.rest.StoreRestResource;
 
 /**
- * Content store repository with {@code FileSystem} support.
+ * Content store repository for <b>file system</b> support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

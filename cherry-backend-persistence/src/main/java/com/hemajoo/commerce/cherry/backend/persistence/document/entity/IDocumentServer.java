@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
 
 /**
@@ -30,12 +30,12 @@ public interface IDocumentServer extends IDocument, IServerEntity
      * @param <T> Type of the owner.
      * @return Owner entity.
      */
-    <T extends ServerBaseEntity> T getOwner();
+    <T extends ServerEntity> T getOwner();
 
     /**
      * Sets the owner entity of this document.
      * @param <T> Type of the owner.
      * @param owner Owner entity.
      */
-    <T extends ServerBaseEntity> void setOwner(final T owner);
+    <T extends ServerEntity> void setOwner(final T owner);
 }

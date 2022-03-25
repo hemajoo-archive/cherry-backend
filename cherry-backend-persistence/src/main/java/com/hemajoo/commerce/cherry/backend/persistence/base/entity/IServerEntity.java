@@ -28,12 +28,12 @@ public interface IServerEntity extends IBaseEntity
      * Returns the parent entity.
      * @return Parent entity if set, {@code null} otherwise.
      */
-    ServerBaseEntity getParent();
+    ServerEntity getParent();
 
     /**
      * Sets the parent entity.
      * @param parent Parent entity.
      * @throws RuntimeException Thrown to indicate an error occurred when trying to set the parent entity.
      */
-    void setParent(final ServerBaseEntity parent) throws RuntimeException;
+    void setParent(final ServerEntity parent) throws RuntimeException;
 }

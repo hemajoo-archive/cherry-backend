@@ -41,7 +41,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ServerBaseEntity extends AbstractServerStatusEntity implements IServerEntity
+public class ServerEntity extends AbstractServerStatusEntity implements IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>identifier</b> field.
@@ -147,8 +147,8 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements ISer
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties
-    @ManyToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
-    private ServerBaseEntity parent;
+    @ManyToOne(targetEntity = ServerEntity.class, fetch = FetchType.EAGER)
+    private ServerEntity parent;
 
     /**
      * Parent type.
@@ -163,7 +163,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements ISer
      * Creates a new base entity.
      * @param type Entity type.
      */
-    protected ServerBaseEntity(final EntityType type)
+    protected ServerEntity(final EntityType type)
     {
         this.entityType = type;
     }
@@ -208,7 +208,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements ISer
      * @param parent Parent entity.
      * @throws RuntimeException Thrown to indicate an error occurred while trying to set the parent entity.
      */
-    public void setParent(final ServerBaseEntity parent) throws RuntimeException
+    public void setParent(final ServerEntity parent) throws RuntimeException
     {
         if (parent != null && parent.getId() == this.getId())
         {

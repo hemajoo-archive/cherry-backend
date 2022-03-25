@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.base.randomizer;
 
 import com.github.javafaker.Faker;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
 import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class AbstractBaseEntityRandomizer
+public abstract class AbstractEntityRandomizer
 {
     /**
      * Default dependency bound.
@@ -55,7 +55,7 @@ public abstract class AbstractBaseEntityRandomizer
     /**
      * Creates a new base entity randomizer.
      */
-    protected AbstractBaseEntityRandomizer()
+    protected AbstractEntityRandomizer()
     {
         // Empty
     }
@@ -64,7 +64,7 @@ public abstract class AbstractBaseEntityRandomizer
      * Populates the base persistent entity with random values.
      * @param parent Parent entity.
      */
-    public static void populateBaseFields(final @NonNull ServerBaseEntity parent)
+    public static void populateBaseFields(final @NonNull ServerEntity parent)
     {
         String description = FAKER.hitchhikersGuideToTheGalaxy().marvinQuote();
         if (description.length() > 255)

@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
@@ -141,7 +141,7 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<DocumentServer> getDocuments(@NonNull ServerBaseEntity entity)
+    public List<DocumentServer> getDocuments(@NonNull ServerEntity entity)
     {
         return entity.getDocuments();
     }

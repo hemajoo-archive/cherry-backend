@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
@@ -35,7 +35,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PersonRandomizer extends AbstractBaseEntityRandomizer
+public final class PersonRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Person type enumeration generator.
@@ -55,7 +55,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
     public static ServerPersonEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerPersonEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -83,7 +83,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
     {
         var entity = new ServerPersonEntity();
         DocumentServer document;
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -114,7 +114,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
     public static ClientPerson generateClientEntity(final boolean withRandomId)
     {
         var entity = new ClientPerson();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
         {
@@ -142,7 +142,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
     {
         ClientDocument document;
         ClientPerson entity = new ClientPerson();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -176,7 +176,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
     {
         var person = generateServerEntity(withRandomId);
 
-        int count = bound > 0 ? bound : AbstractBaseEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
+        int count = bound > 0 ? bound : AbstractEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
         for (var i = 0; i < count; i++)
         {
             person.addEmailAddress(EmailAddressRandomizer.generateServerEntity(withRandomId));

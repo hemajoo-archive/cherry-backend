@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.document.converter;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.mapper.AbstractDocumentMapper;
@@ -57,7 +57,7 @@ public class DocumentConverter
     {
         try
         {
-            return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
+            return AbstractEntityMapper.INSTANCE.map(identity,entityManager);
         }
         catch (Exception e)
         {

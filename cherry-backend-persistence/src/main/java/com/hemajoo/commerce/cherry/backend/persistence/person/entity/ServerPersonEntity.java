@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 @Hidden
 @Table(name = "PERSON")
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson, IServerEntity
+public class ServerPersonEntity extends ServerEntity implements ServerPerson, IServerEntity
 {
     /**
      * Minimal birthdate.
