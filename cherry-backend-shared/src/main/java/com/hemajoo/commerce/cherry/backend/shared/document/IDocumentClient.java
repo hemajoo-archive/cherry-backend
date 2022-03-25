@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IClientDocument extends IDocument, IClientEntity
+public interface IDocumentClient extends IDocument, IClientEntity
 {
     /**
      * Returns the document owner.

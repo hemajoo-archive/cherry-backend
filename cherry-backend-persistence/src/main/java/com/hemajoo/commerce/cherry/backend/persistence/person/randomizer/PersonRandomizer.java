@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractE
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
@@ -140,7 +140,7 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      */
     public static ClientPerson generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        ClientDocument document;
+        DocumentClient document;
         ClientPerson entity = new ClientPerson();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
