@@ -33,7 +33,7 @@ import javax.persistence.Enumerated;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class SearchPhoneNumber extends BaseSearch
+public class PhoneNumberSearch extends BaseSearch
 {
     /**
      * Phone number.
@@ -76,7 +76,7 @@ public class SearchPhoneNumber extends BaseSearch
     /**
      * Creates a new phone number search instance.
      */
-    public SearchPhoneNumber()
+    public PhoneNumberSearch()
     {
         super(EntityType.PHONE_NUMBER);
     }

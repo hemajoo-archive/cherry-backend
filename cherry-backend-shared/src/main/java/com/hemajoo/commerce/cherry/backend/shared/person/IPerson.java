@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntity;
 
 import java.util.Date;
 
@@ -23,7 +23,7 @@ import java.util.Date;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IPerson extends IBaseEntity
+public interface IPerson extends IEntity
 {
     /**
      * Returns the person last name.

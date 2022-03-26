@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntity;
 
 /**
  * Defines the behavior of a <b>server entity</b>.
@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
  * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface IServerEntity extends IBaseEntity
+public interface IServerEntity extends IEntity
 {
     /**
      * Returns the parent entity.

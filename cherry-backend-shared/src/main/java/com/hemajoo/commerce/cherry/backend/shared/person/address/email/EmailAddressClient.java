@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.shared.person.address.email;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -36,7 +36,7 @@ import javax.persistence.Enumerated;
 @ToString(callSuper = true)
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = true)
-public class ClientEmailAddress extends ClientBaseEntity implements IClientEmailAddress
+public class EmailAddressClient extends EntityClient implements IEmailAddressClient
 {
     /**
      * Email address.
@@ -74,7 +74,7 @@ public class ClientEmailAddress extends ClientBaseEntity implements IClientEmail
     /**
      * Creates a new client email address entity.
      */
-    public ClientEmailAddress()
+    public EmailAddressClient()
     {
         super(EntityType.EMAIL_ADDRESS);
     }

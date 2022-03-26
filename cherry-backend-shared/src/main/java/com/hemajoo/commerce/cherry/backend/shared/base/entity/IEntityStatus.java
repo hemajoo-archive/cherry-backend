@@ -14,62 +14,38 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import java.io.Serializable;
+import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
+
 import java.util.Date;
 
 /**
- * Defines the behavior of a <b>status entity</b>.
+ * Defines the behavior of the status of an <b>entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @since Cherry 0.1.0
  * @version 1.0.0
  */
-public interface IAuditEntity extends Serializable
+public interface IEntityStatus extends IEntityAudit
 {
     /**
-     * Returns the creation date.
-     * @return Date.
+     * Returns the status type.
+     * @return Status type.
      */
-    Date getCreatedDate();
+    StatusType getStatusType();
 
     /**
-     * Sets the creation date.
-     * @param date Creation date.
+     * Sets the status type date.
+     * @param type Status type.
      */
-    void setCreatedDate(final Date date);
+    void setStatusType(final StatusType type);
 
     /**
-     * Returns the last modification date.
-     * @return Date.
+     * Returns the inactivation date.
+     * @return Inactivation since date.
      */
-    Date getModifiedDate();
+    Date getSince();
 
     /**
-     * Sets the last modification date.
-     * @param date Modification date.
+     * Sets the since (inactivation) date.
+     * @param date Inactivation date.
      */
-    void setModifiedDate(final Date date);
-
-    /**
-     * Returns the creation author.
-     * @return Author.
-     */
-    String getCreatedBy();
-
-    /**
-     * Sets the creation author.
-     * @param author Creation author.
-     */
-    void setCreatedBy(final String author);
-
-    /**
-     * Returns the last modification author.
-     * @return Author.
-     */
-    String getModifiedBy();
-
-    /**
-     * Sets the last modification author.
-     * @param author Modification author.
-     */
-    void setModifiedBy(final String author);
+    void setSince(final Date date);
 }

@@ -17,11 +17,11 @@ package com.hemajoo.commerce.cherry.backend.shared.person;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.ClientPostalAddress;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumber;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressClient;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-public class ClientPerson extends ClientBaseEntity implements IClientPerson
+public class PersonClient extends EntityClient implements IPersonClient
 {
     /**
      * Minimal birthdate.
@@ -94,7 +94,7 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Schema(hidden = true)
-    private List<ClientPostalAddress> postalAddresses = new ArrayList<>();
+    private List<PostalAddressClient> postalAddresses = new ArrayList<>();
 
     /**
      * Set of phone numbers associated to the person.
@@ -102,7 +102,7 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Schema(hidden = true)
-    private List<ClientPhoneNumber> phoneNumbers = new ArrayList<>();
+    private List<PhoneNumberClient> phoneNumbers = new ArrayList<>();
 
     /**
      * Set of email addresses associated to the person.
@@ -110,12 +110,12 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Schema(hidden = true)
-    private List<ClientEmailAddress> emailAddresses = new ArrayList<>();
+    private List<EmailAddressClient> emailAddresses = new ArrayList<>();
 
     /**
      * Creates a new person.
      */
-    public ClientPerson()
+    public PersonClient()
     {
         super(EntityType.PERSON);
     }
@@ -145,17 +145,17 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
      * @return Default email address if one, null otherwise.
      */
     @JsonIgnore
-    public final ClientEmailAddress getDefaultEmailAddress()
+    public final EmailAddressClient getDefaultEmailAddress()
     {
-        Optional<ClientEmailAddress> optional = emailAddresses.stream()
-                .filter(ClientEmailAddress::getIsDefaultEmail).findFirst();
+        Optional<EmailAddressClient> optional = emailAddresses.stream()
+                .filter(EmailAddressClient::getIsDefaultEmail).findFirst();
 
         return optional.orElse(null);
     }
 
     public final boolean hasDefaultEmailAddress()
     {
-        return emailAddresses.stream().anyMatch(ClientEmailAddress::getIsDefaultEmail);
+        return emailAddresses.stream().anyMatch(EmailAddressClient::getIsDefaultEmail);
     }
 
     /**
@@ -163,10 +163,10 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
      * @return Default postal address if one, null otherwise.
      */
     @JsonIgnore
-    public final ClientPostalAddress getDefaultPostalAddress()
+    public final PostalAddressClient getDefaultPostalAddress()
     {
-        Optional<ClientPostalAddress> optional =  postalAddresses.stream()
-                .filter(ClientPostalAddress::getIsDefault).findFirst();
+        Optional<PostalAddressClient> optional =  postalAddresses.stream()
+                .filter(PostalAddressClient::getIsDefault).findFirst();
 
         return optional.orElse(null);
     }
@@ -187,7 +187,7 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
      * @param type Address type.
      * @return List of email addresses.
      */
-    public final List<ClientEmailAddress> findEmailAddressByType(final AddressType type)
+    public final List<EmailAddressClient> findEmailAddressByType(final AddressType type)
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getAddressType() == type)
@@ -199,7 +199,7 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
      * @param status Status type.
      * @return List of email addresses.
      */
-    public final List<ClientEmailAddress> findEmailAddressByStatus(final StatusType status)
+    public final List<EmailAddressClient> findEmailAddressByStatus(final StatusType status)
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getStatusType() == status)
@@ -211,7 +211,7 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
      * @param type Address type.
      * @return List of postal addresses.
      */
-    public final List<ClientPostalAddress> findPostalAddressByType(final AddressType type)
+    public final List<PostalAddressClient> findPostalAddressByType(final AddressType type)
     {
         return postalAddresses.stream()
                 .filter(postalAddress -> postalAddress.getAddressType() == type)
@@ -223,7 +223,7 @@ public class ClientPerson extends ClientBaseEntity implements IClientPerson
      * @param status Status type.
      * @return List of postal addresses.
      */
-    public final List<ClientPostalAddress> findPostalAddressByStatus(final StatusType status)
+    public final List<PostalAddressClient> findPostalAddressByStatus(final StatusType status)
     {
         return postalAddresses.stream()
                 .filter(postalAddress -> postalAddress.getStatusType() == status)

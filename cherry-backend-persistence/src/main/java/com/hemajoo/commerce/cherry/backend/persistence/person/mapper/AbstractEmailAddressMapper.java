@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -55,7 +55,7 @@ public abstract class AbstractEmailAddressMapper
      * @return Client email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to convert an email address entity.
      */
-    public abstract ServerEmailAddressEntity fromClientToServer(ClientEmailAddress entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EmailAddressException;
+    public abstract ServerEmailAddressEntity fromClientToServer(EmailAddressClient entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EmailAddressException;
 
     /**
      * Maps from a server email address entity to a client email address entity.
@@ -63,7 +63,7 @@ public abstract class AbstractEmailAddressMapper
      * @param context Context object.
      * @return Client email address entity.
      */
-    public abstract ClientEmailAddress fromServerToClient(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract EmailAddressClient fromServerToClient(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a server email address entity.
@@ -81,5 +81,5 @@ public abstract class AbstractEmailAddressMapper
      * @return Copy of the client email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred while trying to copy an email address entity.
      */
-    public abstract ClientEmailAddress copy(ClientEmailAddress entity, @Context CycleAvoidingMappingContext context) throws EmailAddressException;
+    public abstract EmailAddressClient copy(EmailAddressClient entity, @Context CycleAvoidingMappingContext context) throws EmailAddressException;
 }

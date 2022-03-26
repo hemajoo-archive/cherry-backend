@@ -23,8 +23,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PhoneNu
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberSearch;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.SearchPhoneNumber;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,7 +114,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
     }
 
     @Override
-    public List<ServerPhoneNumberEntity> search(@NonNull SearchPhoneNumber phoneNumber)
+    public List<ServerPhoneNumberEntity> search(@NonNull PhoneNumberSearch phoneNumber)
     {
         GenericSpecification<ServerPhoneNumberEntity> specification = new GenericSpecification<>();
 

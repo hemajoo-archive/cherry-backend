@@ -17,8 +17,8 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberSearch;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.SearchPhoneNumber;
 import lombok.NonNull;
 
 import java.util.List;
@@ -110,5 +110,5 @@ public interface PhoneNumberService
      * @param phoneNumber Phone number search object containing the predicates.
      * @return List of phone numbers matching the given predicates.
      */
-    List<ServerPhoneNumberEntity> search(final @NonNull SearchPhoneNumber phoneNumber);
+    List<ServerPhoneNumberEntity> search(final @NonNull PhoneNumberSearch phoneNumber);
 }

@@ -21,8 +21,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPosta
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.ClientPostalAddress;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressClient;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -120,9 +120,9 @@ public final class PostalAddressRandomizer extends AbstractEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static ClientPostalAddress generateClient(final boolean withRandomId)
+    public static PostalAddressClient generateClient(final boolean withRandomId)
     {
-        var entity = new ClientPostalAddress();
+        var entity = new PostalAddressClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -152,10 +152,10 @@ public final class PostalAddressRandomizer extends AbstractEntityRandomizer
      * @return Postal address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPostalAddress generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PostalAddressClient generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         DocumentClient document;
-        ClientPostalAddress entity = new ClientPostalAddress();
+        PostalAddressClient entity = new PostalAddressClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

@@ -29,7 +29,7 @@ import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOpe
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -169,7 +169,7 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public List<ServerEmailAddressEntity> search(final @NonNull SearchEmailAddress search)
+    public List<ServerEmailAddressEntity> search(final @NonNull EmailAddressSearch search)
     {
         GenericSpecification<ServerEmailAddressEntity> specification = new GenericSpecification<>();
 

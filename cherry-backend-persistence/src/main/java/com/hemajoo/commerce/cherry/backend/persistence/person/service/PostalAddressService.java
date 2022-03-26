@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.SearchPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressSearch;
 import lombok.NonNull;
 
 import java.util.List;
@@ -95,5 +95,5 @@ public interface PostalAddressService
      * @param postalAddress Postal address search object containing the predicates.
      * @return List of postal addresses matching the given predicates.
      */
-    List<ServerPostalAddressEntity> search(final @NonNull SearchPostalAddress postalAddress);
+    List<ServerPostalAddressEntity> search(final @NonNull PostalAddressSearch postalAddress);
 }

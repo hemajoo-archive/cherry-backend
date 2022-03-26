@@ -29,9 +29,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
 import com.hemajoo.commerce.cherry.backend.shared.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -102,7 +102,7 @@ public class EmailAddressController
      */
     @Operation(summary = "Retrieve an email address")
     @GetMapping("/get/{id}")
-    public ResponseEntity<ClientEmailAddress> get(
+    public ResponseEntity<EmailAddressClient> get(
             @Parameter(description = "Email address identifier", required = true)
             @Valid @ValidEmailAddressId // Handles email id validation automatically, need both annotations!
             @NotNull
@@ -120,9 +120,9 @@ public class EmailAddressController
      */
     @Operation(summary = "Create a new email address")
     @PostMapping("/create")
-    public ResponseEntity<ClientEmailAddress> create(
+    public ResponseEntity<EmailAddressClient> create(
             @Parameter(description = "Email address", required = true)
-            @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddress emailAddress) throws EmailAddressException
+            @Valid @ValidEmailAddressForCreation @RequestBody EmailAddressClient emailAddress) throws EmailAddressException
     {
         ServerEmailAddressEntity serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
         serverEmailAddress = servicePerson.getEmailAddressService().save(serverEmailAddress);
@@ -139,7 +139,7 @@ public class EmailAddressController
      */
     @Operation(summary = "Create a new random email address")
     @PostMapping("/random")
-    public ResponseEntity<ClientEmailAddress> random(
+    public ResponseEntity<EmailAddressClient> random(
             @Parameter(description = "Parent entity type", name = "parentType", required = true)
             @NotNull @RequestParam EntityType parentType,
             @Parameter(description = "Entity identifier (UUID) being the owner of the new random email address", name = "parentId", required = true)
@@ -163,8 +163,8 @@ public class EmailAddressController
     @Operation(summary = "Update an email address"/*, notes = "Update an email address given the new values."*/)
     @PutMapping("/update")
     //@Transactional
-    public ResponseEntity<ClientEmailAddress> update(
-            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddress email) throws EmailAddressException
+    public ResponseEntity<EmailAddressClient> update(
+            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody EmailAddressClient email) throws EmailAddressException
     {
         try
         {
@@ -173,7 +173,7 @@ public class EmailAddressController
 
             ServerEmailAddressEntity source = converterEmailAddress.fromClientToServer(email);
             ServerEmailAddressEntity updated = servicePerson.getEmailAddressService().update(source);
-            ClientEmailAddress client = converterEmailAddress.fromServerToClient(updated);
+            EmailAddressClient client = converterEmailAddress.fromServerToClient(updated);
 
             return ResponseEntity.ok(client);
         }
@@ -212,11 +212,11 @@ public class EmailAddressController
             @ApiResponse(responseCode = "400", description = "Missing or invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
-    public ResponseEntity<List<ClientEmailAddress>> search(final @RequestBody @NotNull SearchEmailAddress search) throws EmailAddressException
+    public ResponseEntity<List<EmailAddressClient>> search(final @RequestBody @NotNull EmailAddressSearch search) throws EmailAddressException
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
-        List<ClientEmailAddress> clients = servicePerson.getEmailAddressService().search(search)
+        List<EmailAddressClient> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element))
                 .collect(Collectors.toList());
@@ -237,11 +237,11 @@ public class EmailAddressController
             @ApiResponse(responseCode = "400", description = "Missing or invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/query")
-    public ResponseEntity<List<String>> query(final @NotNull SearchEmailAddress search) throws EmailAddressException
+    public ResponseEntity<List<String>> query(final @NotNull EmailAddressSearch search) throws EmailAddressException
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
-        List<ClientEmailAddress> clients = servicePerson.getEmailAddressService().search(search)
+        List<EmailAddressClient> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element))
                 .collect(Collectors.toList());

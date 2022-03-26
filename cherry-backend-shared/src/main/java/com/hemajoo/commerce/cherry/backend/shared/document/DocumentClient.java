@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.shared.document;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityClient;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
@@ -36,7 +36,7 @@ import java.io.InputStream;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class DocumentClient extends ClientBaseEntity implements IDocumentClient
+public class DocumentClient extends EntityClient implements IDocumentClient
 {
     /**
      * Document type.

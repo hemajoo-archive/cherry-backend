@@ -12,40 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person;
 
-import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-
-import java.util.Date;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
 
 /**
- * Defines the behavior of a <b>status</b> entity.
+ * Defines the behavior of a <b>client person</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IStatusEntity extends IAuditEntity
+public interface IPersonClient extends IPerson, IEntityClient
 {
-    /**
-     * Returns the status type.
-     * @return Status type.
-     */
-    StatusType getStatusType();
-
-    /**
-     * Sets the status type date.
-     * @param type Status type.
-     */
-    void setStatusType(final StatusType type);
-
-    /**
-     * Returns the inactivation date.
-     * @return Inactivation since date.
-     */
-    Date getSince();
-
-    /**
-     * Sets the since (inactivation) date.
-     * @param date Inactivation date.
-     */
-    void setSince(final Date date);
+    // Marker interface.
 }

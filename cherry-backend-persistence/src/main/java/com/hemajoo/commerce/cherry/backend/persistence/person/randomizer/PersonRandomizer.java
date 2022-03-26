@@ -20,8 +20,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import lombok.experimental.UtilityClass;
@@ -111,9 +111,9 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Random person.
      */
-    public static ClientPerson generateClientEntity(final boolean withRandomId)
+    public static PersonClient generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientPerson();
+        var entity = new PersonClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
@@ -138,10 +138,10 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPerson generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PersonClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         DocumentClient document;
-        ClientPerson entity = new ClientPerson();
+        PersonClient entity = new PersonClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

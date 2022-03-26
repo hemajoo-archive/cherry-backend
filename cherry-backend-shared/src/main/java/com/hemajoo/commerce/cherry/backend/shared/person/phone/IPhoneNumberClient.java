@@ -12,26 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.entity;
+package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 
-import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
+import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
 
 /**
- * Defines the behavior of a <b>client entity</b>.
+ * Defines the behavior of a <b>client phone number</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IClientEntity extends IBaseEntity
+public interface IPhoneNumberClient extends IPhoneNumber, IEntityClient
 {
     /**
-     * Returns the parent entity this entity belongs to.
-     * @return Parent entity identity.
+     * Returns the entity identity owning this phone number.
+     * @return Entity identity.
      */
-    EntityIdentity getParent();
+    Identity getOwner();
 
     /**
-     * Sets the parent entity identity.
-     * @param parent Parent entity identity.
+     * Sets the entity identity owning this phone number.
+     * @param owner Entity identity.
      */
-    void setParent(final EntityIdentity parent) throws RuntimeException;
+    void setOwner(final Identity owner);
 }

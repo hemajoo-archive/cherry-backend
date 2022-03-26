@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntit
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractEmailAddressMapper;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import org.springframework.stereotype.Component;
 
@@ -71,7 +71,7 @@ public final class EmailAddressConverter
      * @return Server email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to convert an email address.
      */
-    public ServerEmailAddressEntity fromClientToServer(ClientEmailAddress client) throws EmailAddressException
+    public ServerEmailAddressEntity fromClientToServer(EmailAddressClient client) throws EmailAddressException
     {
         try
         {
@@ -88,7 +88,7 @@ public final class EmailAddressConverter
      * @param server Server email address entity.
      * @return Client email address entity.
      */
-    public ClientEmailAddress fromServerToClient(ServerEmailAddressEntity server)
+    public EmailAddressClient fromServerToClient(ServerEmailAddressEntity server)
     {
         return AbstractEmailAddressMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -117,7 +117,7 @@ public final class EmailAddressConverter
      * @return Copied client email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to copy an email address.
      */
-    public static ClientEmailAddress copy(ClientEmailAddress client) throws EmailAddressException
+    public static EmailAddressClient copy(EmailAddressClient client) throws EmailAddressException
     {
         try
         {

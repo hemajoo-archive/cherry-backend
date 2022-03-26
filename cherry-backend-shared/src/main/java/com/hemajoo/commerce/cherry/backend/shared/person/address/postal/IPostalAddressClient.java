@@ -15,14 +15,14 @@
 package com.hemajoo.commerce.cherry.backend.shared.person.address.postal;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
 
 /**
  * Defines the behavior of a <b>client postal address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IClientPostalAddress extends IPostalAddress, IClientEntity
+public interface IPostalAddressClient extends IPostalAddress, IEntityClient
 {
     /**
      * Returns the entity identity owning this postal address.

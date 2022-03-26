@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.person.address.postal;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntity;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 
 /**
@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IPostalAddress extends IBaseEntity
+public interface IPostalAddress extends IEntity
 {
     /**
      * Returns the postal address street name.

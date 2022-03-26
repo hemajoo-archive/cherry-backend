@@ -12,27 +12,26 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.phone;
+package com.hemajoo.commerce.cherry.backend.shared.person.address.email;
 
-import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
 
 /**
- * Defines the behavior of a <b>client phone number</b>.
+ * Defines the behavior of a <b>client email address</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IClientPhoneNumber extends IPhoneNumber, IClientEntity
+public interface IEmailAddressClient extends IEmailAddress, IEntityClient
 {
-    /**
-     * Returns the entity identity owning this phone number.
-     * @return Entity identity.
-     */
-    Identity getOwner();
-
-    /**
-     * Sets the entity identity owning this phone number.
-     * @param owner Entity identity.
-     */
-    void setOwner(final Identity owner);
+//    /**
+//     * Returns the entity identity owning this email address.
+//     * @return Entity identity.
+//     */
+//    EntityIdentity getPerson();
+//
+//    /**
+//     * Sets the entity identity owning this email address.
+//     * @param owner Entity identity.
+//     */
+//    void setPerson(final EntityIdentity owner);
 }

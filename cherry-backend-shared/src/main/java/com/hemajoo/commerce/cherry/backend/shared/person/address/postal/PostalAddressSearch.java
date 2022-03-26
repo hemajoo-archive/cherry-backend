@@ -32,7 +32,7 @@ import javax.persistence.Enumerated;
 @Schema(name = "PostalAddressSearch", description = "Specification object used to search for postal addresses.")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SearchPostalAddress extends BaseSearch
+public class PostalAddressSearch extends BaseSearch
 {
     /**
      * Postal address street name.
@@ -99,7 +99,7 @@ public class SearchPostalAddress extends BaseSearch
     /**
      * Creates a new postal address search instance.
      */
-    public SearchPostalAddress()
+    public PostalAddressSearch()
     {
         super(EntityType.POSTAL_ADDRESS);
     }

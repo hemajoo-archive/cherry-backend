@@ -34,7 +34,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class ClientBaseEntity extends AbstractClientStatusEntity implements IClientEntity
+public class EntityClient extends AbstractClientStatusEntity implements IEntityClient
 {
     /**
      * Entity identifier.
@@ -103,7 +103,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements ICli
      * Creates a new base client entity.
      * @param type Entity type.
      */
-    protected ClientBaseEntity(final EntityType type)
+    protected EntityClient(final EntityType type)
     {
         this.entityType = type;
     }

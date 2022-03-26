@@ -20,8 +20,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumber;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -111,9 +111,9 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static ClientPhoneNumber generateClientEntity(final boolean withRandomId)
+    public static PhoneNumberClient generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientPhoneNumber();
+        var entity = new PhoneNumberClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -138,10 +138,10 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * @return Phone number.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPhoneNumber generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PhoneNumberClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         DocumentClient document;
-        ClientPhoneNumber entity = new ClientPhoneNumber();
+        PhoneNumberClient entity = new PhoneNumberClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

@@ -27,7 +27,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonR
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.SearchPerson;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonSearch;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,7 +165,7 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<ServerPersonEntity> search(@NonNull SearchPerson person)
+    public List<ServerPersonEntity> search(@NonNull PersonSearch person)
     {
         GenericSpecification<ServerPersonEntity> specification = new GenericSpecification<>();
 

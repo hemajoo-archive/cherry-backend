@@ -15,14 +15,14 @@
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
 
 /**
  * Implementing this entity provides the behavior of a <b>client document entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IDocumentClient extends IDocument, IClientEntity
+public interface IDocumentClient extends IDocument, IEntityClient
 {
     /**
      * Returns the document owner.

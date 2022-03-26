@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IAuditEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityAudit;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,7 +37,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractServerAuditEntity implements IAuditEntity
+public abstract class AbstractServerAuditEntity implements IEntityAudit
 {
     /**
      * Property used to set a search criteria for the <b>created date</b> field.

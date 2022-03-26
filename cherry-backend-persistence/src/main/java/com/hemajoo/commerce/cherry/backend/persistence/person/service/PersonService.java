@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmail
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.SearchPerson;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonSearch;
 import lombok.NonNull;
 
 import java.util.List;
@@ -91,7 +91,7 @@ public interface PersonService
      * @param person Person specification.
      * @return List of persons.
      */
-    List<ServerPersonEntity> search(final @NonNull SearchPerson person);
+    List<ServerPersonEntity> search(final @NonNull PersonSearch person);
 
     /**
      * Returns the list of email addresses owned by the given person.

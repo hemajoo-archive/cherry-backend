@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.base.randomizer;
 import com.github.javafaker.Faker;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityClient;
 import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -84,7 +84,7 @@ public abstract class AbstractEntityRandomizer
      * Populates the base client entity with random values.
      * @param parent Parent entity.
      */
-    public static void populateBaseFields(final @NonNull ClientBaseEntity parent)
+    public static void populateBaseFields(final @NonNull EntityClient parent)
     {
         String description = FAKER.hitchhikersGuideToTheGalaxy().marvinQuote();
         if (description.length() > 255)

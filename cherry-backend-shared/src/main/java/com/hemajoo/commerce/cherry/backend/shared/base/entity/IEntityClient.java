@@ -12,16 +12,26 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person;
+package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IClientEntity;
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 
 /**
- * Defines the behavior of a <b>client person</b>.
+ * Defines the behavior of a client <b>entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IClientPerson extends IPerson, IClientEntity
+public interface IEntityClient extends IEntity
 {
-    // Marker interface.
+    /**
+     * Returns the parent entity this entity belongs to.
+     * @return Parent entity identity.
+     */
+    EntityIdentity getParent();
+
+    /**
+     * Sets the parent entity identity.
+     * @param parent Parent entity identity.
+     */
+    void setParent(final EntityIdentity parent) throws RuntimeException;
 }

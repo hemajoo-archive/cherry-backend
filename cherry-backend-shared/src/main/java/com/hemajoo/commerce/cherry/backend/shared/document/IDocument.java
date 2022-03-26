@@ -14,14 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.IBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntity;
 
 /**
  * Implementing this interface provides the behavior of a <b>document</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IDocument extends IBaseEntity
+public interface IDocument extends IEntity
 {
     /**
      * Returns the document type.

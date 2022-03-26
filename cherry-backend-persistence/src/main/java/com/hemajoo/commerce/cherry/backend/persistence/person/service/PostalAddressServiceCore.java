@@ -23,7 +23,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PostalA
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.SearchPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressSearch;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,7 +101,7 @@ public class PostalAddressServiceCore implements PostalAddressService
     }
 
     @Override
-    public List<ServerPostalAddressEntity> search(@NonNull SearchPostalAddress postalAddress)
+    public List<ServerPostalAddressEntity> search(@NonNull PostalAddressSearch postalAddress)
     {
         GenericSpecification<ServerPostalAddressEntity> specification = new GenericSpecification<>();
 

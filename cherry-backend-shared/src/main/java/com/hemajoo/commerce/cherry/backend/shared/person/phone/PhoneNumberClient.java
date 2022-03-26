@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.shared.person.phone;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityClient;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +33,7 @@ import javax.persistence.Enumerated;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ClientPhoneNumber extends ClientBaseEntity implements IClientPhoneNumber
+public class PhoneNumberClient extends EntityClient implements IPhoneNumberClient
 {
     /**
      * Phone number.
@@ -79,7 +79,7 @@ public class ClientPhoneNumber extends ClientBaseEntity implements IClientPhoneN
     /**
      * Creates a new phone number.
      */
-    public ClientPhoneNumber()
+    public PhoneNumberClient()
     {
         super(EntityType.PHONE_NUMBER);
     }

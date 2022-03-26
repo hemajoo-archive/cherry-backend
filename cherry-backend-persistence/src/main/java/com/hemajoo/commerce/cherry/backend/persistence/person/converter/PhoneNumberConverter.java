@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntit
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPhoneNumberMapper;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumber;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberException;
 import org.springframework.stereotype.Component;
 
@@ -71,7 +71,7 @@ public final class PhoneNumberConverter
      * @return Server phone number entity.
      * @throws PhoneNumberException Thrown to indicate an error occurred when trying to convert a phone number.
      */
-    public ServerPhoneNumberEntity fromClientToServer(ClientPhoneNumber client) throws PhoneNumberException
+    public ServerPhoneNumberEntity fromClientToServer(PhoneNumberClient client) throws PhoneNumberException
     {
         try
         {
@@ -88,7 +88,7 @@ public final class PhoneNumberConverter
      * @param server Server phone number entity.
      * @return Client phone number entity.
      */
-    public ClientPhoneNumber fromServerToClient(ServerPhoneNumberEntity server)
+    public PhoneNumberClient fromServerToClient(ServerPhoneNumberEntity server)
     {
         return AbstractPhoneNumberMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -117,7 +117,7 @@ public final class PhoneNumberConverter
      * @return Copied client phone number entity.
      * @throws PhoneNumberException Thrown to indicate an error occurred when trying to copy a phone number.
      */
-    public static ClientPhoneNumber copy(ClientPhoneNumber client) throws PhoneNumberException
+    public static PhoneNumberClient copy(PhoneNumberClient client) throws PhoneNumberException
     {
         try
         {

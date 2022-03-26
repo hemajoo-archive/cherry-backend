@@ -12,64 +12,65 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.person.address.email;
+package com.hemajoo.commerce.cherry.backend.shared.person;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.BaseSearch;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.time.LocalDate;
 
 /**
- * Represents a search object for the <b>email address</b> entities.
+ * Represents a search object for the <b>person</b> entities.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-//@ApiModel(value = "EmailAddressSearch", description = "Specification object used to search for email addresses.")
+@Schema(name = "PersonSearch", description = "Specification object used to search for persons.")
 @Data
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public final class SearchEmailAddress extends BaseSearch
+public class PersonSearch extends BaseSearch
 {
     /**
-     * Email address.
+     * Person last name.
      */
-    @JsonProperty("email")
-    @Schema(description = "Email address" /*, allowEmptyValue = true*/)
-    private String email;
+    @Schema(description = "Last name"/*, allowEmptyValue = true*/)
+    private String lastName;
 
     /**
-     * Is it the default email address?
+     * Person first name.
      */
-    @JsonProperty("isDefault")
-    private Boolean isDefaultEmail;
+    @Schema(description = "First name"/*, allowEmptyValue = true*/)
+    private String firstName;
 
     /**
-     * Email address type.
+     * Person birthdate.
      */
-    @JsonProperty("addressType")
+    @Schema(description = "Birth date", format = "YYYY-MM-DD"/*, allowEmptyValue = true*/)
+    private LocalDate birthDate;
+
+    /**
+     * Person gender type.
+     */
     @Enumerated(EnumType.STRING)
-    @Schema(description = "Email address type"/*, allowEmptyValue = true*/)
-    private AddressType addressType;
+    @Schema(name = "genderType", description = "Gender type"/*, allowEmptyValue = true*/)
+    private GenderType genderType;
 
     /**
-     * The person identifier this email address belongs to.
+     * Person type.
      */
-    @JsonProperty("personId")
-    @Schema(description = "Person identifier (UUID) owning the email address(es)", hidden = false)
-    private String personId;
+    @Enumerated(EnumType.STRING)
+    @Schema(name = "personType", description = "Person type"/*, allowEmptyValue = true*/)
+    private PersonType personType;
 
     /**
-     * Creates a new email address search entity.
+     * Creates a new person search instance.
      */
-    public SearchEmailAddress()
+    public PersonSearch()
     {
-        super(EntityType.EMAIL_ADDRESS);
+        super(EntityType.PERSON);
     }
 }
