@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.randomizer;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
 import lombok.experimental.UtilityClass;
@@ -25,7 +25,7 @@ import org.ressec.avocado.core.random.EnumRandomGenerator;
 import java.util.UUID;
 
 /**
- * Document generator.
+ * Randomizer used to randomly generate <b>documents</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -67,9 +67,9 @@ public final class DocumentRandomizer extends AbstractEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static ClientDocument generateClientEntity(final boolean withRandomId) throws DocumentContentException
+    public static DocumentClient generateClientEntity(final boolean withRandomId) throws DocumentContentException
     {
-        var entity = new ClientDocument();
+        var entity = new DocumentClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.repository;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,7 +30,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PostalAddressRepository extends JpaRepository<ServerPostalAddressEntity, UUID>, JpaSpecificationExecutor<ServerPostalAddressEntity>
+public interface PostalAddressRepository extends JpaRepository<PostalAddressServer, UUID>, JpaSpecificationExecutor<PostalAddressServer>
 {
     /**
      * Returns the list of postal addresses matching the given address type.
@@ -38,7 +38,7 @@ public interface PostalAddressRepository extends JpaRepository<ServerPostalAddre
      * @return List of postal addresses.
      * @see AddressType
      */
-    List<ServerPostalAddressEntity> findByAddressType(AddressType type);
+    List<PostalAddressServer> findByAddressType(AddressType type);
 
     /**
      * Returns the list of postal addresses matching the given status type.
@@ -46,49 +46,49 @@ public interface PostalAddressRepository extends JpaRepository<ServerPostalAddre
      * @return List of postal addresses.
      * @see StatusType
      */
-    List<ServerPostalAddressEntity> findByStatusType(StatusType statusType);
+    List<PostalAddressServer> findByStatusType(StatusType statusType);
 
     /**
      * Returns the list of postal addresses matching the given country code.
      * @param countryCode Country code (ISO Alpha-3).
      * @return List of postal addresses.
      */
-    List<ServerPostalAddressEntity> findByCountryCode(String countryCode);
+    List<PostalAddressServer> findByCountryCode(String countryCode);
 
     /**
      * Returns the list of postal addresses matching the given locality.
      * @param locality Locality.
      * @return List of postal addresses.
      */
-    List<ServerPostalAddressEntity> findByLocality(String locality);
+    List<PostalAddressServer> findByLocality(String locality);
 
     /**
      * Returns the list of postal addresses matching the given zip code.
      * @param zipCode Zip or postal code.
      * @return List of postal addresses.
      */
-    List<ServerPostalAddressEntity> findByZipCode(String zipCode);
+    List<PostalAddressServer> findByZipCode(String zipCode);
 
     /**
      * Returns the list of postal addresses matching the given area.
      * @param area Area.
      * @return List of postal addresses.
      */
-    List<ServerPostalAddressEntity> findByArea(String area);
+    List<PostalAddressServer> findByArea(String area);
 
     /**
      * Returns the list of default or not default postal address.
      * @param isDefault True to get a list of default postal addresses, false otherwise.
      * @return List of postal addresses.
      */
-    List<ServerPostalAddressEntity> findByIsDefault(boolean isDefault);
+    List<PostalAddressServer> findByIsDefault(boolean isDefault);
 
     /**
      * Returns the list of postal addresses belonging to the given person identifier.
      * @param personId Person identifier.
      * @return List of postal addresses.
      */
-    List<ServerPostalAddressEntity> findByPersonId(UUID personId);
+    List<PostalAddressServer> findByPersonId(UUID personId);
 
     /**
      * Returns the list of postal addresses matching the given specification.
@@ -96,5 +96,5 @@ public interface PostalAddressRepository extends JpaRepository<ServerPostalAddre
      * @return List of postal addresses.
      */
     @NotNull
-    List<ServerPostalAddressEntity> findAll(final Specification<ServerPostalAddressEntity> specification);
+    List<PostalAddressServer> findAll(final Specification<PostalAddressServer> specification);
 }

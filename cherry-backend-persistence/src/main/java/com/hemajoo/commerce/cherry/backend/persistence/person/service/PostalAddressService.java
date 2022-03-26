@@ -15,85 +15,209 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PostalAddressRepository;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.SearchPostalAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressSearch;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Postal address persistence service behavior.
+ * Implementation of the postal address persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PostalAddressService
+@Service
+public class PostalAddressService implements IPostalAddressService
 {
     /**
-     * Returns the number of postal addresses.
-     * @return Number of postal addresses.
+     * Repository for the postal addresses.
      */
-    Long count();
+    @Autowired
+    private PostalAddressRepository postalAddressRepository;
 
-    /**
-     * Finds an postal address given its identifier.
-     * @param id Postal address identifier.
-     * @return Postal address if found, null otherwise.
-     */
-    ServerPostalAddressEntity findById(UUID id);
 
-    /**
-     * Saves a postal address.
-     * @param postalAddress Postal address.
-     * @return Saved postal address.
-     */
-    ServerPostalAddressEntity save(ServerPostalAddressEntity postalAddress);
+    @Override
+    public Long count()
+    {
+        return postalAddressRepository.count();
+    }
 
-    /**
-     * Deletes a postal address given its identifier.
-     * @param id Postal address identifier.
-     */
-    void deleteById(UUID id);
+    @Override
+    public PostalAddressServer findById(UUID id)
+    {
+        return postalAddressRepository.findById(id).orElse(null);
+    }
 
-    /**
-     * Returns the postal addresses.
-     * @return List of postal addresses.
-     */
-    List<ServerPostalAddressEntity> findAll();
+    @Override
+    public PostalAddressServer save(PostalAddressServer postalAddress)
+    {
+        return postalAddressRepository.save(postalAddress);
+    }
 
-    /**
-     * Returns a list of postal addresses given an address type.
-     * @param type Address type.
-     * @return List of matching postal addresses.
-     */
-    List<ServerPostalAddressEntity> findByAddressType(AddressType type);
+    @Override
+    public void deleteById(UUID id)
+    {
+        postalAddressRepository.deleteById(id);
+    }
 
-    /**
-     * Returns a list of postal addresses given a status type.
-     * @param status Status type.
-     * @return List of matching postal addresses.
-     */
-    List<ServerPostalAddressEntity> findByStatus(StatusType status);
+    @Override
+    public List<PostalAddressServer> findAll()
+    {
+        return postalAddressRepository.findAll();
+    }
 
-    /**
-     * Returns a list of default or not default postal addresses.
-     * @param isDefault Is it a default postal address?
-     * @return List of matching postal addresses.
-     */
-    List<ServerPostalAddressEntity> findByIsDefault(boolean isDefault);
+    @Override
+    public List<PostalAddressServer> findByAddressType(AddressType type)
+    {
+        return postalAddressRepository.findByAddressType(type);
+    }
 
-    /**
-     * Returns a list of postal addresses belonging to a person.
-     * @param personId Person identifier.
-     * @return List of matching email addresses.
-     */
-    List<ServerPostalAddressEntity> findByPersonId(UUID personId);
+    @Override
+    public List<PostalAddressServer> findByStatus(StatusType status)
+    {
+        return postalAddressRepository.findByStatusType(status);
+    }
 
-    /**
-     * Returns the postal addresses matching the given set of predicates.
-     * @param postalAddress Postal address search object containing the predicates.
-     * @return List of postal addresses matching the given predicates.
-     */
-    List<ServerPostalAddressEntity> search(final @NonNull SearchPostalAddress postalAddress);
+    @Override
+    public List<PostalAddressServer> findByIsDefault(boolean isDefault)
+    {
+        return postalAddressRepository.findByIsDefault(isDefault);
+    }
+
+    @Override
+    public List<PostalAddressServer> findByPersonId(UUID personId)
+    {
+        return postalAddressRepository.findByPersonId(personId);
+    }
+
+    @Override
+    public List<PostalAddressServer> search(@NonNull PostalAddressSearch postalAddress)
+    {
+        GenericSpecification<PostalAddressServer> specification = new GenericSpecification<>();
+
+        // Inherited fields
+        if (postalAddress.getCreatedBy() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
+                    postalAddress.getCreatedBy(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getModifiedBy() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
+                    postalAddress.getModifiedBy(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getStatusType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
+                    postalAddress.getStatusType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (postalAddress.getId() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_ID,
+                    postalAddress.getId(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (postalAddress.getIsDefault() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_IS_DEFAULT,
+                    postalAddress.getIsDefault(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (postalAddress.getAddressType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_ADDRESS_TYPE,
+                    postalAddress.getAddressType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (postalAddress.getPersonId() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_PERSON_ID,
+                    postalAddress.getPersonId(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (postalAddress.getCategoryType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_CATEGORY_TYPE,
+                    postalAddress.getCategoryType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (postalAddress.getArea() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_AREA,
+                    postalAddress.getArea(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getCountryCode() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_COUNTRY_CODE,
+                    postalAddress.getCountryCode(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getLocality() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_LOCALITY,
+                    postalAddress.getLocality(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getStreetName() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_STREET_NAME,
+                    postalAddress.getStreetName(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getStreetNumber() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_STREET_NUMBER,
+                    postalAddress.getStreetNumber(),
+                    SearchOperation.MATCH));
+        }
+
+        if (postalAddress.getZipCode() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PostalAddressServer.FIELD_ZIP_CODE,
+                    postalAddress.getZipCode(),
+                    SearchOperation.MATCH));
+        }
+
+        return postalAddressRepository.findAll(specification);
+    }
 }

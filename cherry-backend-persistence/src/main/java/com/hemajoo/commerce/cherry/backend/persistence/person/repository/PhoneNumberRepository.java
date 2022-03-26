@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.repository;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
 import org.jetbrains.annotations.NotNull;
@@ -31,49 +31,49 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PhoneNumberRepository extends JpaRepository<ServerPhoneNumberEntity, UUID>, JpaSpecificationExecutor<ServerPhoneNumberEntity>
+public interface PhoneNumberRepository extends JpaRepository<PhoneNumberServer, UUID>, JpaSpecificationExecutor<PhoneNumberServer>
 {
     /**
      * Returns the list of phone numbers matching the given status type.
      * @param statusType Status type.
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByStatusType(StatusType statusType);
+    List<PhoneNumberServer> findByStatusType(StatusType statusType);
 
     /**
      * Returns the list of phone numbers matching the given type.
      * @param type Phone number type.
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByPhoneType(PhoneNumberType type);
+    List<PhoneNumberServer> findByPhoneType(PhoneNumberType type);
 
     /**
      * Returns the list of phone numbers matching the given category type.
      * @param type Phone number category type.
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByCategoryType(PhoneNumberCategoryType type);
+    List<PhoneNumberServer> findByCategoryType(PhoneNumberCategoryType type);
 
     /**
      * Returns the list of phone numbers matching the given country code.
      * @param code Country code (ISO Alpha-3).
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByCountryCode(String code);
+    List<PhoneNumberServer> findByCountryCode(String code);
 
     /**
      * Returns the list of phone numbers matching the given value.
      * @param isDefault True to get the default phone numbers, false otherwise.
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByIsDefault(boolean isDefault);
+    List<PhoneNumberServer> findByIsDefault(boolean isDefault);
 
     /**
      * Returns the list of phone numbers belonging to the given person identifier.
      * @param personId Person identifier.
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByPersonId(long personId);
+    List<PhoneNumberServer> findByPersonId(long personId);
 
     /**
      * Returns the list of phone numbers matching the given specification.
@@ -81,5 +81,5 @@ public interface PhoneNumberRepository extends JpaRepository<ServerPhoneNumberEn
      * @return List of phone numbers.
      */
     @NotNull
-    List<ServerPhoneNumberEntity> findAll(final Specification<ServerPhoneNumberEntity> specification);
+    List<PhoneNumberServer> findAll(final Specification<PhoneNumberServer> specification);
 }

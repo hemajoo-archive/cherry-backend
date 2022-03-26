@@ -17,6 +17,8 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentSearch;
+import lombok.NonNull;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -96,4 +98,11 @@ public interface DocumentService
      * @throws DocumentException Raised if an error occurred while trying to load the document.
      */
     void loadContent(UUID documentId) throws DocumentException;
+
+    /**
+     * Searches for documents given some criteria.
+     * @param search Search object.
+     * @return List of documents matching the given criteria.
+     */
+    List<DocumentServer> search(final @NonNull DocumentSearch search);
 }

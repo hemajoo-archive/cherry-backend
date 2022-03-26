@@ -16,12 +16,12 @@ package com.hemajoo.commerce.cherry.backend.rest.controller.person;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.PersonConverter;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -82,13 +82,13 @@ public class PersonController
      */
     @Operation(summary = "Retrieve an email address")
     @GetMapping("/get/{id}")
-    public ResponseEntity<ClientPerson> get(
+    public ResponseEntity<PersonClient> get(
             @Parameter(description = "Person identifier", required = true)
             @Valid @ValidPersonId // Handles person id validation automatically, need both annotations!
             @NotNull
             @PathVariable String id)
     {
-        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(id));
+        PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(id));
         return ResponseEntity.ok(converterPerson.fromServerToClient(person));
     }
 
@@ -117,9 +117,9 @@ public class PersonController
      */
     @Operation(summary = "Create a new random person")
     @PostMapping("/random")
-    public ResponseEntity<ClientPerson> random() throws DocumentException
+    public ResponseEntity<PersonClient> random() throws DocumentException
     {
-        ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
+        PersonServer person = PersonRandomizer.generateServerEntity(false);
         person = servicePerson.getPersonService().save(person);
 
         return ResponseEntity.ok(converterPerson.fromServerToClient(person));

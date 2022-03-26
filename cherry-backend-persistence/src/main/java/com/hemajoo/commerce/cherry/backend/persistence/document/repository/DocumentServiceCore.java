@@ -14,10 +14,19 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.content.DocumentStore;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentSearch;
 import lombok.Getter;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +51,15 @@ public class DocumentServiceCore implements DocumentService
     @Autowired
     private DocumentRepository documentRepository;
 
+    /**
+     * Document store.
+     */
     @Autowired
-    private DocumentStore proxyStore;
+    private DocumentStore documentStore;
 
+    /**
+     * Entity manager.
+     */
     @Getter
     @PersistenceContext
     private EntityManager entityManager;
@@ -74,7 +89,7 @@ public class DocumentServiceCore implements DocumentService
         // Save the content file, if one exist and not already saved!
         if (document.getContent() != null && document.getContentId() == null)
         {
-            document = (DocumentServer) proxyStore.getStore().setContent(document, document.getContent());
+            document = (DocumentServer) documentStore.getStore().setContent(document, document.getContent());
         }
 
         document = documentRepository.save(document);
@@ -96,14 +111,14 @@ public class DocumentServiceCore implements DocumentService
         // If a content file is associated, then delete it!
         if (document != null && document.getContentId() != null)
         {
-            proxyStore.getStore().unsetContent(document);
+            documentStore.getStore().unsetContent(document);
         }
 
         documentRepository.deleteById(id);
     }
 
     @Override
-    public List<DocumentServer> findAll()
+    public List<DocumentServer> findAll() //TODO Should be removed!
     {
         // TODO We should for each document inject its content such as for the findById
         return documentRepository.findAll();
@@ -112,7 +127,7 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public void loadContent(DocumentServer document)
     {
-        document.setContent(proxyStore.getStore().getContent(document));
+        document.setContent(documentStore.getStore().getContent(document));
     }
 
     @Override
@@ -125,6 +140,111 @@ public class DocumentServiceCore implements DocumentService
         }
 
         throw new DocumentException(String.format("Cannot find document id.: '%s'", documentId.toString()));
+    }
+
+    @Override
+    public List<DocumentServer> search(@NonNull DocumentSearch search)
+    {
+        GenericSpecification<DocumentServer> specification = new GenericSpecification<>();
+
+        // Inherited fields
+        if (search.getCreatedBy() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
+                    search.getCreatedBy(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getModifiedBy() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
+                    search.getModifiedBy(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getId() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_ID,
+                    search.getId(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (search.getStatusType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
+                    search.getStatusType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (search.getDescription() != null)
+        {
+            specification.add(new SearchCriteria(
+                    ServerEntity.FIELD_DESCRIPTION,
+                    search.getDescription(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getName() != null)
+        {
+            specification.add(new SearchCriteria(
+                    ServerEntity.FIELD_NAME,
+                    search.getName(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getExtension() != null)
+        {
+            specification.add(new SearchCriteria(
+                    DocumentServer.FIELD_EXTENSION,
+                    search.getExtension(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getFilename() != null)
+        {
+            specification.add(new SearchCriteria(
+                    DocumentServer.FIELD_FILENAME,
+                    search.getFilename(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getContentPath() != null)
+        {
+            specification.add(new SearchCriteria(
+                    DocumentServer.FIELD_CONTENT_PATH,
+                    search.getContentPath(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getContentLength() != null)
+        {
+            specification.add(new SearchCriteria(
+                    DocumentServer.FIELD_CONTENT_LENGTH,
+                    search.getContentLength(),
+                    SearchOperation.GREATER_THAN_EQUAL));
+        }
+
+        if (search.getMimeType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    DocumentServer.FIELD_MIMETYPE,
+                    search.getMimeType(),
+                    SearchOperation.MATCH));
+        }
+
+        if (search.getTags() != null)
+        {
+            specification.add(new SearchCriteria(
+                    DocumentServer.FIELD_TAGS,
+                    search.getTags(),
+                    SearchOperation.MATCH));
+        }
+
+        return documentRepository.findAll(specification);
     }
 }
 

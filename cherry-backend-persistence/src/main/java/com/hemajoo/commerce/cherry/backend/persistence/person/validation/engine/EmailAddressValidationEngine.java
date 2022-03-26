@@ -16,13 +16,13 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
 import lombok.NonNull;
 import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +41,19 @@ import java.util.UUID;
 public final class EmailAddressValidationEngine
 {
     @Autowired
-    private PersonService servicePerson;
+    private IPersonService servicePerson;
 
     @Autowired
-    private EmailAddressService serviceEmailAddress;
+    private IEmailAddressService serviceEmailAddress;
 
     /**
      * Checks if the given search object is valid or not?
      * @param search Search email address object.
      * @throws EmailAddressException Thrown to indicate an error occurred while submitting a search email address object.
      */
-    public static void isSearchValid(final @NonNull SearchEmailAddress search) throws EmailAddressException
+    public static void isSearchValid(final @NonNull EmailAddressSearch search) throws EmailAddressException
     {
-        SearchEmailAddress reference = new SearchEmailAddress();
+        EmailAddressSearch reference = new EmailAddressSearch();
 
         if (EntityComparator.getJavers().compare(reference, search).getChangesByType(ValueChange.class).isEmpty())
         {
@@ -83,7 +83,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to check.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressId(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
+    public void validateEmailAddressId(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
     {
         validateEmailAddressId(emailAddress.getId());
     }
@@ -110,12 +110,12 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to check.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateDefaultEmail(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
+    public void validateDefaultEmail(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
     {
         if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
-            ServerPersonEntity person = servicePerson.findById(emailAddress.getParent().getId());
-            ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
+            PersonServer person = servicePerson.findById(emailAddress.getParent().getId());
+            EmailAddressServer defaultEmailAddress = person.getDefaultEmailAddress();
             if (!Objects.equals(defaultEmailAddress.getIdentity(), emailAddress.getIdentity()) || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
@@ -132,9 +132,9 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateNameUniqueness(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
+    public void validateNameUniqueness(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
     {
-        ServerPersonEntity person = servicePerson.findById(emailAddress.getParent().getId());
+        PersonServer person = servicePerson.findById(emailAddress.getParent().getId());
 
         if (person == null)
         {
@@ -149,7 +149,7 @@ public final class EmailAddressValidationEngine
         {
             if (emailAddress.getId() != null) // New email address entity
             {
-                ServerEmailAddressEntity email = person.getEmailById(emailAddress.getId());
+                EmailAddressServer email = person.getEmailById(emailAddress.getId());
                 if (email != null && !email.getId().equals(emailAddress.getId()))
                 {
                     throw new EmailAddressException(
@@ -172,7 +172,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to update.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to validate an email address.
      */
-    public void validateEmailForUpdate(final @NonNull ClientEmailAddress emailAddress) throws EmailAddressException
+    public void validateEmailForUpdate(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
     {
         validateEmailAddressId(emailAddress.getId());
         validateEmailEntityType(emailAddress.getEntityType());

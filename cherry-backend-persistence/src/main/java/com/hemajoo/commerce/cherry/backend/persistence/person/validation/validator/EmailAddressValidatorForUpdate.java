@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.validation.valida
 
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.ClientEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressValidatorForUpdate implements ConstraintValidator<ValidEmailAddressForUpdate, ClientEmailAddress>
+public class EmailAddressValidatorForUpdate implements ConstraintValidator<ValidEmailAddressForUpdate, EmailAddressClient>
 {
     /**
      * Email address validation engine.
@@ -47,7 +47,7 @@ public class EmailAddressValidatorForUpdate implements ConstraintValidator<Valid
 
     @Override
     @SuppressWarnings("squid:S1166")
-    public boolean isValid(ClientEmailAddress emailAddress, ConstraintValidatorContext context)
+    public boolean isValid(EmailAddressClient emailAddress, ConstraintValidatorContext context)
     {
         try
         {

@@ -17,11 +17,11 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumber;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -52,9 +52,9 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static ServerPhoneNumberEntity generateServerEntity(final boolean withRandomId)
+    public static PhoneNumberServer generateServerEntity(final boolean withRandomId)
     {
-        var entity = new ServerPhoneNumberEntity();
+        var entity = new PhoneNumberServer();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -79,9 +79,9 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * @return Phone number.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPhoneNumberEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PhoneNumberServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        var entity = new ServerPhoneNumberEntity();
+        var entity = new PhoneNumberServer();
         DocumentServer document;
         AbstractEntityRandomizer.populateBaseFields(entity);
 
@@ -111,9 +111,9 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static ClientPhoneNumber generateClientEntity(final boolean withRandomId)
+    public static PhoneNumberClient generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientPhoneNumber();
+        var entity = new PhoneNumberClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -138,10 +138,10 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * @return Phone number.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPhoneNumber generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PhoneNumberClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        ClientDocument document;
-        ClientPhoneNumber entity = new ClientPhoneNumber();
+        DocumentClient document;
+        PhoneNumberClient entity = new PhoneNumberClient();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

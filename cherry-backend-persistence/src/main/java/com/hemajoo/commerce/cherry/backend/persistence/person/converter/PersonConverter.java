@@ -17,9 +17,9 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.converter;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPersonMapper;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPerson;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +42,7 @@ public final class PersonConverter
      * @param server Server person entity.
      * @return Entity identity.
      */
-    public EntityIdentity fromServerToIdentity(ServerPersonEntity server)
+    public EntityIdentity fromServerToIdentity(PersonServer server)
     {
         return AbstractPersonMapper.INSTANCE.fromServerToIdentity(server, new CycleAvoidingMappingContext());
     }
@@ -53,7 +53,7 @@ public final class PersonConverter
      * @return Server person entity.
      * @throws PersonException Thrown to indicate an error occurred when trying to convert a person.
      */
-    public ServerPersonEntity fromIdentityToServer(EntityIdentity identity) throws PersonException
+    public PersonServer fromIdentityToServer(EntityIdentity identity) throws PersonException
     {
         try
         {
@@ -71,7 +71,7 @@ public final class PersonConverter
      * @return Server person entity.
      * @throws PersonException Thrown to indicate an error occurred when trying to convert a person.
      */
-    public ServerPersonEntity fromClientToServer(ClientPerson client) throws PersonException
+    public PersonServer fromClientToServer(PersonClient client) throws PersonException
     {
         try
         {
@@ -88,7 +88,7 @@ public final class PersonConverter
      * @param server Server person entity.
      * @return Client person entity.
      */
-    public ClientPerson fromServerToClient(ServerPersonEntity server)
+    public PersonClient fromServerToClient(PersonServer server)
     {
         return AbstractPersonMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -99,7 +99,7 @@ public final class PersonConverter
      * @return Copied server person entity.
      * @throws PersonException Thrown to indicate an error occurred when trying to copy a person.
      */
-    public static ServerPersonEntity copy(ServerPersonEntity server) throws PersonException
+    public static PersonServer copy(PersonServer server) throws PersonException
     {
         try
         {
@@ -117,7 +117,7 @@ public final class PersonConverter
      * @return Copied client person entity.
      * @throws PersonException Thrown to indicate an error occurred when trying to copy a person.
      */
-    public static ClientPerson copy(ClientPerson client) throws PersonException
+    public static PersonClient copy(PersonClient client) throws PersonException
     {
         try
         {

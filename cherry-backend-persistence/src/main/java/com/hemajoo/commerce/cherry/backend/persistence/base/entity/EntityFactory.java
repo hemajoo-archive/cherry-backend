@@ -17,10 +17,10 @@ package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -59,19 +59,19 @@ public class EntityFactory
         switch (type)
         {
             case PERSON:
-                return entityManager.find(ServerPersonEntity.class, uuid);
+                return entityManager.find(PersonServer.class, uuid);
 
             case DOCUMENT:
                 return entityManager.find(DocumentServer.class, uuid);
 
             case EMAIL_ADDRESS:
-                return entityManager.find(ServerEmailAddressEntity.class, uuid);
+                return entityManager.find(EmailAddressServer.class, uuid);
 
             case POSTAL_ADDRESS:
-                return entityManager.find(ServerPostalAddressEntity.class, uuid);
+                return entityManager.find(PostalAddressServer.class, uuid);
 
             case PHONE_NUMBER:
-                return entityManager.find(ServerPhoneNumberEntity.class, uuid);
+                return entityManager.find(PhoneNumberServer.class, uuid);
 
             default:
                 throw new EntityException(String.format("Entity type: '%s' is not handled!", type));

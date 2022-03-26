@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.test.person;
 
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAddressRandomizer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,10 +41,10 @@ class EmailAddressValidationUnitTest
     @DisplayName("Email address must not be null")
     final void testNullEmailAddress()
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(true);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(true);
         email.setEmail(null);
 
-        Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
+        Set<ConstraintViolation<EmailAddressServer>> violations = validator.validate(email);
 
         assertThat(violations)
                 .as(String.format("Should have raised a violation rule because email address: '%s' is null or empty!", email.getEmail()))
@@ -55,10 +55,10 @@ class EmailAddressValidationUnitTest
     @DisplayName("Email address must be valid")
     final void testValidEmailAddress()
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(true);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(true);
         email.setEmail("john.doe#gmail.com");
 
-        Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
+        Set<ConstraintViolation<EmailAddressServer>> violations = validator.validate(email);
 
         assertThat(violations)
                 .as(String.format("Email address: %s is supposed to be invalid!", email.getEmail()))

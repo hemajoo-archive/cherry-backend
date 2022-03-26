@@ -19,21 +19,26 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntit
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.mapper.AbstractDocumentMapper;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocument;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Component to convert between instances of client and server documents.
+ * Component to <b>convert</b> between client and server document instances.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Component
 public class DocumentConverter
 {
+    /**
+     * Entity manager.
+     */
+    @Getter
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -57,7 +62,7 @@ public class DocumentConverter
     {
         try
         {
-            return AbstractEntityMapper.INSTANCE.map(identity,entityManager);
+            return AbstractEntityMapper.INSTANCE.map(identity, entityManager);
         }
         catch (Exception e)
         {
@@ -71,7 +76,7 @@ public class DocumentConverter
      * @return Server document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to convert a document.
      */
-    public DocumentServer fromClientToServer(ClientDocument client) throws DocumentException
+    public DocumentServer fromClientToServer(DocumentClient client) throws DocumentException
     {
         try
         {
@@ -88,7 +93,7 @@ public class DocumentConverter
      * @param server Server document entity.
      * @return Client document entity.
      */
-    public ClientDocument fromServerToClient(DocumentServer server)
+    public DocumentClient fromServerToClient(DocumentServer server)
     {
         return AbstractDocumentMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -117,7 +122,7 @@ public class DocumentConverter
      * @return Copied client document entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to copy a document.
      */
-    public static ClientDocument copy(ClientDocument client) throws DocumentException
+    public static DocumentClient copy(DocumentClient client) throws DocumentException
     {
         try
         {

@@ -14,11 +14,11 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.test;
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.content.IDocumentFileSystemStore;
+import com.hemajoo.commerce.cherry.backend.persistence.document.content.IDocumentStoreFileSystem;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentRepository;
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
 import lombok.Getter;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,13 +50,13 @@ public abstract class AbstractDatabaseUnitTest extends AbstractBaseUnitTest
      * Person persistence service.
      */
     @Autowired
-    protected PersonService personService;
+    protected IPersonService personService;
 
     /**
      * Email address persistence service.
      */
     @Autowired
-    protected EmailAddressService emailAddressService;
+    protected IEmailAddressService emailAddressService;
 
     /**
      * Document persistence service.
@@ -68,7 +68,7 @@ public abstract class AbstractDatabaseUnitTest extends AbstractBaseUnitTest
      * Document content store.
      */
     @Autowired
-    protected IDocumentFileSystemStore documentStore;
+    protected IDocumentStoreFileSystem documentStore;
 
     /**
      * Document repository.

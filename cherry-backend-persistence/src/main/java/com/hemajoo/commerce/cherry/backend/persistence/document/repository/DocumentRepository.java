@@ -17,16 +17,17 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * {@code JPA} repository for the document entity.
+ * Repository for the <b>document</b> entities.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface DocumentRepository extends JpaRepository<DocumentServer, UUID>
+public interface DocumentRepository extends JpaRepository<DocumentServer, UUID>, JpaSpecificationExecutor<DocumentServer>
 {
     /**
      * Returns a list of documents belonging to the given owner identifier.

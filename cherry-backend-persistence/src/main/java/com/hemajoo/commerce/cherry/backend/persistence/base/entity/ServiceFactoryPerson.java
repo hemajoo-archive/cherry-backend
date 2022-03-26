@@ -15,10 +15,10 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.PhoneNumberService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.PostalAddressService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPhoneNumberService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPostalAddressService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ public class ServiceFactoryPerson
      */
     @Getter
     @Autowired
-    private PersonService personService;
+    private IPersonService personService;
 
     /**
      * Document persistence service.
@@ -50,19 +50,19 @@ public class ServiceFactoryPerson
      */
     @Getter
     @Autowired
-    private EmailAddressService emailAddressService;
+    private IEmailAddressService emailAddressService;
 
     /**
      * Phone number persistence service.
      */
     @Getter
     @Autowired
-    private PhoneNumberService phoneNumberService;
+    private IPhoneNumberService phoneNumberService;
 
     /**
      * Postal address persistence service.
      */
     @Getter
     @Autowired
-    private PostalAddressService postalAddressService;
+    private IPostalAddressService postalAddressService;
 }
