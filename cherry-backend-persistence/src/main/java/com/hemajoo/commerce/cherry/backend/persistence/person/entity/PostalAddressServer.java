@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPostalAddressEntity extends ServerEntity implements IPostalAddress, IServerEntity
+public class PostalAddressServer extends ServerEntity implements IPostalAddress, IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>is default</b> field.
@@ -177,14 +177,14 @@ public class ServerPostalAddressEntity extends ServerEntity implements IPostalAd
     @EqualsAndHashCode.Exclude
     @Getter
     @Setter
-    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = PersonServer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
-    private ServerPersonEntity person;
+    private PersonServer person;
 
     /**
      * Creates a new postal address.
      */
-    public ServerPostalAddressEntity()
+    public PostalAddressServer()
     {
         super(EntityType.POSTAL_ADDRESS);
     }

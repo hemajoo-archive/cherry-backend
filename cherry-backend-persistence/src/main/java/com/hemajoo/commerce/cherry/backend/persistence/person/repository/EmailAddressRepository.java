@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.repository;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,35 +30,35 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface EmailAddressRepository extends JpaRepository<ServerEmailAddressEntity, UUID>, JpaSpecificationExecutor<ServerEmailAddressEntity>
+public interface EmailAddressRepository extends JpaRepository<EmailAddressServer, UUID>, JpaSpecificationExecutor<EmailAddressServer>
 {
     /**
      * Returns the list of email addresses matching the given address type.
      * @param addressType Address type.
      * @return List of email addresses.
      */
-    List<ServerEmailAddressEntity> findByAddressType(AddressType addressType);
+    List<EmailAddressServer> findByAddressType(AddressType addressType);
 
     /**
      * Returns the list of email addresses matching the given status type.
      * @param statusType Status type.
      * @return List of email addresses.
      */
-    List<ServerEmailAddressEntity> findByStatusType(StatusType statusType);
+    List<EmailAddressServer> findByStatusType(StatusType statusType);
 
     /**
      * Returns the list of email addresses matching the given value.
      * @param isDefaultEmail True to get default email addresses, false otherwise.
      * @return List of email addresses.
      */
-    List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
+    List<EmailAddressServer> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
      * Returns the list of email addresses belonging to the given parent identifier.
      * @param parentId Parent identifier.
      * @return List of email addresses.
      */
-    List<ServerEmailAddressEntity> findByParentId(UUID parentId);
+    List<EmailAddressServer> findByParentId(UUID parentId);
 
     /**
      * Returns the list of email addresses matching the given specification.
@@ -66,5 +66,5 @@ public interface EmailAddressRepository extends JpaRepository<ServerEmailAddress
      * @return List of email addresses.
      */
     @NotNull
-    List<ServerEmailAddressEntity> findAll(final Specification<ServerEmailAddressEntity> specification);
+    List<EmailAddressServer> findAll(final Specification<EmailAddressServer> specification);
 }

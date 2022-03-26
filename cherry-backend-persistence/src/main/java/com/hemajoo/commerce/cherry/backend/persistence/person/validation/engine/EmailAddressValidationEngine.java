@@ -16,10 +16,10 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.PersonService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
@@ -41,10 +41,10 @@ import java.util.UUID;
 public final class EmailAddressValidationEngine
 {
     @Autowired
-    private PersonService servicePerson;
+    private IPersonService servicePerson;
 
     @Autowired
-    private EmailAddressService serviceEmailAddress;
+    private IEmailAddressService serviceEmailAddress;
 
     /**
      * Checks if the given search object is valid or not?
@@ -114,8 +114,8 @@ public final class EmailAddressValidationEngine
     {
         if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
-            ServerPersonEntity person = servicePerson.findById(emailAddress.getParent().getId());
-            ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
+            PersonServer person = servicePerson.findById(emailAddress.getParent().getId());
+            EmailAddressServer defaultEmailAddress = person.getDefaultEmailAddress();
             if (!Objects.equals(defaultEmailAddress.getIdentity(), emailAddress.getIdentity()) || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
@@ -134,7 +134,7 @@ public final class EmailAddressValidationEngine
      */
     public void validateNameUniqueness(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
     {
-        ServerPersonEntity person = servicePerson.findById(emailAddress.getParent().getId());
+        PersonServer person = servicePerson.findById(emailAddress.getParent().getId());
 
         if (person == null)
         {
@@ -149,7 +149,7 @@ public final class EmailAddressValidationEngine
         {
             if (emailAddress.getId() != null) // New email address entity
             {
-                ServerEmailAddressEntity email = person.getEmailById(emailAddress.getId());
+                EmailAddressServer email = person.getEmailById(emailAddress.getId());
                 if (email != null && !email.getId().equals(emailAddress.getId()))
                 {
                     throw new EmailAddressException(

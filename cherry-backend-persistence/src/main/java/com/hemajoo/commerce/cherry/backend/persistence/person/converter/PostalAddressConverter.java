@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.converter;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPostalAddressMapper;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressException;
@@ -43,7 +43,7 @@ public final class PostalAddressConverter
      * @return Entity identity.
      * @throws PostalAddressException Thrown to indicate an error occurred when trying to convert a postal address.
      */
-    public EntityIdentity fromServerToIdentity(ServerPostalAddressEntity server) throws PostalAddressException
+    public EntityIdentity fromServerToIdentity(PostalAddressServer server) throws PostalAddressException
     {
         try
         {
@@ -61,7 +61,7 @@ public final class PostalAddressConverter
      * @return Server postal address entity.
      * @throws PostalAddressException Thrown to indicate an error occurred when trying to convert a postal address.
      */
-    public ServerPostalAddressEntity fromIdentityToServer(EntityIdentity identity) throws PostalAddressException
+    public PostalAddressServer fromIdentityToServer(EntityIdentity identity) throws PostalAddressException
     {
         try
         {
@@ -79,7 +79,7 @@ public final class PostalAddressConverter
      * @return Server postal address entity.
      * @throws PostalAddressException Thrown to indicate an error occurred while trying to convert a postal address entity.
      */
-    public ServerPostalAddressEntity fromClientToServer(PostalAddressClient client) throws PostalAddressException
+    public PostalAddressServer fromClientToServer(PostalAddressClient client) throws PostalAddressException
     {
         return AbstractPostalAddressMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
     }
@@ -89,7 +89,7 @@ public final class PostalAddressConverter
      * @param server Server postal address entity.
      * @return Client postal address entity.
      */
-    public PostalAddressClient fromServerToClient(ServerPostalAddressEntity server)
+    public PostalAddressClient fromServerToClient(PostalAddressServer server)
     {
         return AbstractPostalAddressMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -100,7 +100,7 @@ public final class PostalAddressConverter
      * @return Copied server postal address entity.
      * @throws PostalAddressException Thrown to indicate an error occurred when trying to copy a postal address.
      */
-    public static ServerPostalAddressEntity copy(ServerPostalAddressEntity server) throws PostalAddressException
+    public static PostalAddressServer copy(PostalAddressServer server) throws PostalAddressException
     {
         try
         {

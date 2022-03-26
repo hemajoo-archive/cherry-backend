@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.converter;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractEmailAddressMapper;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
@@ -42,7 +42,7 @@ public final class EmailAddressConverter
      * @param server Server email address entity.
      * @return Entity identity.
      */
-    public EntityIdentity fromServerToIdentity(ServerEmailAddressEntity server)
+    public EntityIdentity fromServerToIdentity(EmailAddressServer server)
     {
         return AbstractEmailAddressMapper.INSTANCE.fromServerToIdentity(server, new CycleAvoidingMappingContext());
     }
@@ -53,7 +53,7 @@ public final class EmailAddressConverter
      * @return Server email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to convert an email address.
      */
-    public ServerEmailAddressEntity fromIdentityToServer(EntityIdentity identity) throws EmailAddressException
+    public EmailAddressServer fromIdentityToServer(EntityIdentity identity) throws EmailAddressException
     {
         try
         {
@@ -71,7 +71,7 @@ public final class EmailAddressConverter
      * @return Server email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to convert an email address.
      */
-    public ServerEmailAddressEntity fromClientToServer(EmailAddressClient client) throws EmailAddressException
+    public EmailAddressServer fromClientToServer(EmailAddressClient client) throws EmailAddressException
     {
         try
         {
@@ -88,7 +88,7 @@ public final class EmailAddressConverter
      * @param server Server email address entity.
      * @return Client email address entity.
      */
-    public EmailAddressClient fromServerToClient(ServerEmailAddressEntity server)
+    public EmailAddressClient fromServerToClient(EmailAddressServer server)
     {
         return AbstractEmailAddressMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
@@ -99,7 +99,7 @@ public final class EmailAddressConverter
      * @return Copied server email address entity.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to copy an email address.
      */
-    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity server) throws EmailAddressException
+    public static EmailAddressServer copy(EmailAddressServer server) throws EmailAddressException
     {
         try
         {

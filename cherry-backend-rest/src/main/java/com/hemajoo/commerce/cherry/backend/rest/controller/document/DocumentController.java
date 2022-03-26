@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
@@ -87,7 +87,7 @@ public class DocumentController
     {
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
 
-        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(personId));
+        PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(personId));
         document.setOwner(person);
         document = servicePerson.getDocumentService().save(document);
 
@@ -129,7 +129,7 @@ public class DocumentController
         {
             document = uploadDocument(file);
 
-            ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(personId));
+            PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(personId));
             document.setName(name != null ? name : file.getName());
             document.setDescription(description);
             document.setReference(reference);

@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPostalAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
@@ -52,9 +52,9 @@ public final class PostalAddressRandomizer extends AbstractEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static ServerPostalAddressEntity generateServerEntity(final boolean withRandomId)
+    public static PostalAddressServer generateServerEntity(final boolean withRandomId)
     {
-        var entity = new ServerPostalAddressEntity();
+        var entity = new PostalAddressServer();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -84,9 +84,9 @@ public final class PostalAddressRandomizer extends AbstractEntityRandomizer
      * @return Postal address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPostalAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PostalAddressServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        var entity = new ServerPostalAddressEntity();
+        var entity = new PostalAddressServer();
         DocumentServer document;
         AbstractEntityRandomizer.populateBaseFields(entity);
 

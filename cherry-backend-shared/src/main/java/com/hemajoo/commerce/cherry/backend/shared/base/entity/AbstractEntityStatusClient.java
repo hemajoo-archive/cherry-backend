@@ -36,7 +36,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public abstract class AbstractClientStatusEntity extends AbstractClientAuditEntity
+public abstract class AbstractEntityStatusClient extends AbstractEntityAuditClient
 {
     /**
      * Email address status.

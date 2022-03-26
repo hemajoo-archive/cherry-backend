@@ -24,7 +24,7 @@ import org.springframework.content.rest.StoreRestResource;
  * @version 1.0.0
  */
 @StoreRestResource
-public interface IDocumentFileSystemStore extends FilesystemContentStore<DocumentServer, String>
+public interface IDocumentStoreFileSystem extends FilesystemContentStore<DocumentServer, String>
 {
     // Empty.
 }

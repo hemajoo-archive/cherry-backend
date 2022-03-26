@@ -43,13 +43,13 @@ public class DocumentStore
      * <b>File system</b> content store.
      */
     @Autowired
-    private IDocumentFileSystemStore storeFileSystem;
+    private IDocumentStoreFileSystem storeFileSystem;
 
     /**
      * <b>Amazon S3</b> content store.
      */
     @Autowired(required = false)
-    private IDocumentS3Store storeS3;
+    private IDocumentStoreS3 storeS3;
 
     /**
      * Returns the content store.

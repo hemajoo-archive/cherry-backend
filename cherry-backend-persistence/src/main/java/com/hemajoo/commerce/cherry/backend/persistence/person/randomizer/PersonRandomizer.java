@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
@@ -52,9 +52,9 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * @return Random person.
      */
-    public static ServerPersonEntity generateServerEntity(final boolean withRandomId)
+    public static PersonServer generateServerEntity(final boolean withRandomId)
     {
-        var entity = new ServerPersonEntity();
+        var entity = new PersonServer();
         AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -79,9 +79,9 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPersonEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PersonServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        var entity = new ServerPersonEntity();
+        var entity = new PersonServer();
         DocumentServer document;
         AbstractEntityRandomizer.populateBaseFields(entity);
 
@@ -172,7 +172,7 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * @return Person.
      * @throws EmailAddressException Raised in case an error occurred when trying to create an email address!
      */
-    public static ServerPersonEntity generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
+    public static PersonServer generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
     {
         var person = generateServerEntity(withRandomId);
 

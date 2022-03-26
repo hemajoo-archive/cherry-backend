@@ -12,16 +12,19 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
+package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.IPerson;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import org.springframework.content.rest.StoreRestResource;
+import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Behavior of a server person entity.
+ * Content store repository for <b>Amazon S3</b> support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPerson extends IPerson, IServerEntity
+@StoreRestResource
+public interface IDocumentStoreS3 extends S3ContentStore<DocumentServer, String>
 {
+    // Empty.
 }

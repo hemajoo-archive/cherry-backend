@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.EmailAddressConverter;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
@@ -76,7 +76,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a server email address to an entity identity")
     final void testConvertServerEmailAddressToIdentity()
     {
-        ServerEmailAddressEntity server = EmailAddressRandomizer.generateServerEntity(true);
+        EmailAddressServer server = EmailAddressRandomizer.generateServerEntity(true);
         EntityIdentity identity = converterEmailAddress.fromServerToIdentity(server);
 
         assertThat(identity)
@@ -89,13 +89,13 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertIdentityToServerEmailAddress() throws EntityException, DocumentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerPersonEntity owner = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
-        ServerEmailAddressEntity reference = EmailAddressRandomizer.generateServerEntity(false);
+        PersonServer owner = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        EmailAddressServer reference = EmailAddressRandomizer.generateServerEntity(false);
         reference.setParent(owner);
         reference = servicePerson.getEmailAddressService().save(reference);
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
-        ServerEmailAddressEntity server = converterEmailAddress.fromIdentityToServer(identity);
+        EmailAddressServer server = converterEmailAddress.fromIdentityToServer(identity);
 
         assertThat(server)
                 .as("Server email address should not be null!")
@@ -118,7 +118,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerEmailAddressWithOwner() throws EmailAddressException
     {
         EmailAddressClient client = EmailAddressRandomizer.generateClientEntity(true);
-        ServerEmailAddressEntity server = converterEmailAddress.fromClientToServer(client);
+        EmailAddressServer server = converterEmailAddress.fromClientToServer(client);
 
         assertThat(server)
                 .as("Server email address should not be null!")
@@ -142,7 +142,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a list of server email addresses to a list of client email addresses")
     final void testConvertServerToClientEmailAddressList()
     {
-        List<ServerEmailAddressEntity> emails = new ArrayList<>();
+        List<EmailAddressServer> emails = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             emails.add(EmailAddressRandomizer.generateServerEntity(true));
@@ -164,7 +164,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a list of client email addresses to a list of server email addresses")
     final void testConvertClientToServerEmailAddressList() throws EmailAddressException
     {
-        List<ServerEmailAddressEntity> emails = new ArrayList<>();
+        List<EmailAddressServer> emails = new ArrayList<>();
 
         // Create some random server email addresses.
         for (int i = 0; i < LIST_COUNT; i++)
@@ -185,8 +185,8 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
                 .isNotNull());
 
         // Convert back from client to server email address list.
-        List<ServerEmailAddressEntity> servers = new ArrayList<>();
-        ServerEmailAddressEntity serverEmailAddressEntity;
+        List<EmailAddressServer> servers = new ArrayList<>();
+        EmailAddressServer serverEmailAddressEntity;
         for (EmailAddressClient client : clients)
         {
             serverEmailAddressEntity = converterEmailAddress.fromClientToServer(client);
@@ -206,7 +206,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a list of server email address to a list of entity identities")
     final void testConvertServerToIdentityEmailAddressList()
     {
-        List<ServerEmailAddressEntity> emails = new ArrayList<>();
+        List<EmailAddressServer> emails = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             emails.add(EmailAddressRandomizer.generateServerEntity(true));
@@ -225,11 +225,11 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Convert a list entity identities to a list of server email address")
     final void testConvertIdentityToServerEmailAddressList() throws EntityException, EmailAddressException, DocumentException
     {
-        ServerEmailAddressEntity email;
-        ServerPersonEntity owner = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        EmailAddressServer email;
+        PersonServer owner = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         // When testing identities, we must ensure the objects exist in the underlying database.
-        List<ServerEmailAddressEntity> emails = new ArrayList<>();
+        List<EmailAddressServer> emails = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             email = EmailAddressRandomizer.generateServerEntity(false);
@@ -244,7 +244,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
                 .as("Both lists should have the same size!")
                 .isEqualTo(emails.size());
 
-        List<ServerEmailAddressEntity> servers = new ArrayList<>();
+        List<EmailAddressServer> servers = new ArrayList<>();
         for (EntityIdentity identity : identities)
         {
             servers.add(converterEmailAddress.fromIdentityToServer(identity));
@@ -259,8 +259,8 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Compare a server email address and its copy are equal")
     final void testCopyServerEmailAddress() throws EmailAddressException
     {
-        ServerEmailAddressEntity original = EmailAddressRandomizer.generateServerEntity(true);
-        ServerEmailAddressEntity copy = EmailAddressConverter.copy(original);
+        EmailAddressServer original = EmailAddressRandomizer.generateServerEntity(true);
+        EmailAddressServer copy = EmailAddressConverter.copy(original);
         assertThat(original)
                 .as("Both server email addresses should be equal!")
                 .isEqualTo(copy);

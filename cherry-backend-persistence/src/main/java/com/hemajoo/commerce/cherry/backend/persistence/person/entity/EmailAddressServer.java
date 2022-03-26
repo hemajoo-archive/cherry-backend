@@ -42,7 +42,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerEmailAddressEntity extends ServerEntity implements IEmailAddress, IServerEntity
+public class EmailAddressServer extends ServerEntity implements IEmailAddress, IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>email</b> field.
@@ -102,7 +102,7 @@ public class ServerEmailAddressEntity extends ServerEntity implements IEmailAddr
     /**
      * Creates a new persistent email address.
      */
-    public ServerEmailAddressEntity()
+    public EmailAddressServer()
     {
         super(EntityType.EMAIL_ADDRESS);
     }

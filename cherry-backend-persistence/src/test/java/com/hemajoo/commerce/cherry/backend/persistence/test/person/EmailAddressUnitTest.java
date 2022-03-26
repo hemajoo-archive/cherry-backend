@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
@@ -69,9 +69,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Create an email address")
     void testCreateEmailAddress() throws EmailAddressException, DocumentException
     {
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
-        ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer emailAddress = EmailAddressRandomizer.generateServerEntity(false);
         emailAddress.setParent(person);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
 
@@ -92,9 +92,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     void testCreateEmailAddressWithOneDocument() throws EmailAddressException, DocumentException
     {
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
-        ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer emailAddress = EmailAddressRandomizer.generateServerEntity(false);
         emailAddress.addDocument(document);
         person.addEmailAddress(emailAddress);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
@@ -122,9 +122,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
             documents.add(DocumentRandomizer.generateServerEntity(false));
         }
 
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
-        ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer emailAddress = EmailAddressRandomizer.generateServerEntity(false);
         documents.forEach(emailAddress::addDocument);
         person.addEmailAddress(emailAddress);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
@@ -146,9 +146,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Update an email address")
     void testUpdateEmailAddress() throws EmailAddressException, DocumentException
     {
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
-        ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer emailAddress = EmailAddressRandomizer.generateServerEntity(false);
         emailAddress.setParent(person);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
 
@@ -164,7 +164,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         emailAddress.setDescription("Test description for person: " + emailAddress.getId());
         emailAddress = servicePerson.getEmailAddressService().saveAndFlush(emailAddress);
 
-        ServerEmailAddressEntity updated = servicePerson.getEmailAddressService().findById(emailAddress.getId());
+        EmailAddressServer updated = servicePerson.getEmailAddressService().findById(emailAddress.getId());
 
         assertThat(updated)
                 .as("Email address should not be null!")
@@ -179,9 +179,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete an email address")
     void testDeleteEmailAddress() throws EmailAddressException, DocumentException
     {
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
-        ServerEmailAddressEntity emailAddress = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer emailAddress = EmailAddressRandomizer.generateServerEntity(false);
         emailAddress.setParent(person);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
 
@@ -204,9 +204,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete email address. Orphan document is to be deleted")
     final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, EmailAddressException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
-        ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
+        PersonServer person = PersonRandomizer.generateServerEntity(false);
 
         servicePerson.getPersonService().save(person); // Save it to get its UUID
         servicePerson.getDocumentService().save(document); // Save it to get its UUID
@@ -258,7 +258,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Sets a document as being the parent of an email address.")
     final void testSetDocumentAsParentOfEmailAddress() throws EmailAddressException, DocumentException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
 
         document = servicePerson.getDocumentService().save(document);
@@ -279,15 +279,15 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Sets an email address as being the parent of another email address.")
     final void testSetEmailAddressAsParentOfEmailAddress() throws EmailAddressException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
-        ServerEmailAddressEntity other = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer other = EmailAddressRandomizer.generateServerEntity(false);
 
         other = servicePerson.getEmailAddressService().save(other); // Must be saved first!
         email = servicePerson.getEmailAddressService().save(email);
         email.setParent(other);
         email = servicePerson.getEmailAddressService().save(email);
 
-        ServerEmailAddressEntity object = servicePerson.getEmailAddressService().findById(email.getId());
+        EmailAddressServer object = servicePerson.getEmailAddressService().findById(email.getId());
         assertThat(object)
                 .as("Should not be null!")
                 .isNotNull();
@@ -303,15 +303,15 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Sets a person as being the parent of another email address.")
     final void testSetPersonAsParentOfEmailAddress() throws EmailAddressException, DocumentException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
-        ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
+        PersonServer person = PersonRandomizer.generateServerEntity(false);
 
         person = servicePerson.getPersonService().save(person); // Must be saved first!
         email = servicePerson.getEmailAddressService().save(email);
         email.setParent(person);
         email = servicePerson.getEmailAddressService().save(email);
 
-        ServerEmailAddressEntity object = servicePerson.getEmailAddressService().findById(email.getId());
+        EmailAddressServer object = servicePerson.getEmailAddressService().findById(email.getId());
         assertThat(object)
                 .as("Should not be null!")
                 .isNotNull();
@@ -327,7 +327,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Ensures an entity cannot be set as its parent.")
     final void testCannotSetEmailAddressAsOwnParent()
     {
-        final ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        final EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
 
         assertThrows(RuntimeException.class, () -> {
             email.setParent(email);
@@ -338,10 +338,10 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Retrieves an email address using the entity factory.")
     final void testRetrieveEmailAddressUsingEntityFactory() throws EntityException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
         email = servicePerson.getEmailAddressService().save(email);
 
-        ServerEmailAddressEntity other = (ServerEmailAddressEntity) factory.from(EntityType.EMAIL_ADDRESS, email.getId());
+        EmailAddressServer other = (EmailAddressServer) factory.from(EntityType.EMAIL_ADDRESS, email.getId());
         assertThat(other)
                 .as("Entity should not be null!")
                 .isNotNull();

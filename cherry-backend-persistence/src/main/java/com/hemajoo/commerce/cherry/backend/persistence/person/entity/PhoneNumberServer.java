@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "PHONE_NUMBER")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPhoneNumberEntity extends ServerEntity implements IPhoneNumber, IServerEntity
+public class PhoneNumberServer extends ServerEntity implements IPhoneNumber, IServerEntity
 {
     /**
      * Property used to set a search criteria for the <b>is default</b> field.
@@ -122,14 +122,14 @@ public class ServerPhoneNumberEntity extends ServerEntity implements IPhoneNumbe
     @ToString.Exclude
     @Getter
     @Setter
-    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = PersonServer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
-    private ServerPersonEntity person;
+    private PersonServer person;
 
     /**
      * Creates a new phone number.
      */
-    public ServerPhoneNumberEntity()
+    public PhoneNumberServer()
     {
         super(EntityType.PHONE_NUMBER);
     }

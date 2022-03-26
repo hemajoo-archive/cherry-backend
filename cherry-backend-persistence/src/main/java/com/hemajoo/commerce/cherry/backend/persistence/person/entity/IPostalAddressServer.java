@@ -15,23 +15,23 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.IPhoneNumber;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.IPostalAddress;
 
 /**
- * Behavior of a server phone number entity.
+ * Behavior of a server postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerPhoneNumber extends IPhoneNumber, IServerEntity
+public interface IPostalAddressServer extends IPostalAddress, IServerEntity
 {
 //    /**
-//     * Returns the person owning this phone number.
+//     * Returns the person owning this email address.
 //     * @return Person.
 //     */
 //    ServerPerson getPerson();
 //
 //    /**
-//     * Sets the person owning this phone number.
+//     * Sets the person owning this email address.
 //     * @param owner Person.
 //     */
 //    void setPerson(final ServerPerson owner);

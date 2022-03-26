@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.content.DocumentStore;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
@@ -167,7 +167,7 @@ public class DocumentServiceCore implements DocumentService
         if (search.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    ServerPersonEntity.FIELD_ID,
+                    PersonServer.FIELD_ID,
                     search.getId(),
                     SearchOperation.EQUAL));
         }

@@ -19,9 +19,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.EmailAddressConverter;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAddressRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressServiceCore;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressForCreation;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressId;
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  */
 @Tag(name = "Email Addresses")
-@ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressServiceCore.class })
+@ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressService.class })
 //@GroupSequence( { EmailAddressController.class, BasicValidation.class, ExtendedValidation.class } )
 @Validated
 @RestController
@@ -108,7 +108,7 @@ public class EmailAddressController
             @NotNull
             @PathVariable String id)
     {
-        ServerEmailAddressEntity serverEmailAddress = servicePerson.getEmailAddressService().findById(UUID.fromString(id));
+        EmailAddressServer serverEmailAddress = servicePerson.getEmailAddressService().findById(UUID.fromString(id));
         return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmailAddress));
     }
 
@@ -124,7 +124,7 @@ public class EmailAddressController
             @Parameter(description = "Email address", required = true)
             @Valid @ValidEmailAddressForCreation @RequestBody EmailAddressClient emailAddress) throws EmailAddressException
     {
-        ServerEmailAddressEntity serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
+        EmailAddressServer serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
         serverEmailAddress = servicePerson.getEmailAddressService().save(serverEmailAddress);
 
         return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmailAddress));
@@ -145,7 +145,7 @@ public class EmailAddressController
             @Parameter(description = "Entity identifier (UUID) being the owner of the new random email address", name = "parentId", required = true)
             /*@Valid @ValidPersonId*/ @NotNull @RequestParam String parentId) throws EntityException
     {
-        ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
+        EmailAddressServer serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
         ServerEntity parent = (ServerEntity) factory.from(parentType, UUID.fromString(parentId));
         serverEmail.setParent(parent);
@@ -171,8 +171,8 @@ public class EmailAddressController
             //emailAddressRuleEngine.validateEmailAddressId(email);
             validationEmailAddress.validateEmailForUpdate(email);
 
-            ServerEmailAddressEntity source = converterEmailAddress.fromClientToServer(email);
-            ServerEmailAddressEntity updated = servicePerson.getEmailAddressService().update(source);
+            EmailAddressServer source = converterEmailAddress.fromClientToServer(email);
+            EmailAddressServer updated = servicePerson.getEmailAddressService().update(source);
             EmailAddressClient client = converterEmailAddress.fromServerToClient(updated);
 
             return ResponseEntity.ok(client);

@@ -14,98 +14,264 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
+import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonSearch;
+import lombok.Getter;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Person persistence service behavior.
+ * Person persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PersonService
+@Service
+public class PersonService implements IPersonService
 {
     /**
-     * Returns the person repository.
-     * @return Person repository.
+     * Person repository.
      */
-    PersonRepository getPersonRepository();
+    @Autowired
+    @Getter
+    private PersonRepository personRepository;
 
     /**
-     * Returns the total number of persons.
-     * @return Number of persons.
+     * Email address repository.
      */
-    Long count();
+    @Autowired
+    @Getter
+    private EmailAddressRepository emailAddressRepository;
 
     /**
-     * Returns if the given person identifier exist?
-     * @param id Person identifier.
-     * @return True if the person exist, false otherwise.
+     * Document service.
      */
-    boolean existId(final @NonNull UUID id);
+    @Autowired
+    @Getter
+    private DocumentService documentService;
 
-    /**
-     * Returns the person matching the given identifier.
-     * @param id Person identifier.
-     * @return Person.
-     */
-    ServerPersonEntity findById(UUID id);
+//    /**
+//     * Postal address service.
+//     */
+//    @Autowired
+//    @Getter
+//    private PostalAddressService postalAddressService;
+//
+//    /**
+//     * Phone number service.
+//     */
+//    @Autowired
+//    @Getter
+//    private PhoneNumberService phoneNumberService;
 
-    /**
-     * Saves the person.
-     * @param person Person.
-     * @return Saved person.
-     * @throws DocumentException Thrown in case an error occurred with one of the document when trying to save the person!
-     */
-    ServerPersonEntity save(ServerPersonEntity person) throws DocumentException;
+    @Override
+    public Long count()
+    {
+        return personRepository.count();
+    }
 
-    /**
-     * Saves the person and flush.
-     * @param person Person to save.
-     * @return Updated person.
-     */
-    ServerPersonEntity saveAndFlush(final @NonNull ServerPersonEntity person);
+    @Override
+    public boolean existId(final @NonNull UUID id)
+    {
+        return personRepository.existsById(id);
+    }
 
-    /**
-     * Deletes the person matching the given identifier.
-     * @param id Person identifier.
-     */
-    void deleteById(UUID id);
+    @Override
+    public PersonServer findById(UUID id)
+    {
+        return personRepository.findById(id).orElse(null);
+    }
 
-    /**
-     * Returns all the persons.
-     * @return List of persons.
-     */
-    List<ServerPersonEntity> findAll();
+    @Override
+    @Transactional(rollbackOn = DocumentException.class)
+    public PersonServer save(PersonServer person) throws DocumentException
+    {
+        if (person.getId() == null)
+        {
+            person = personRepository.save(person);
+        }
 
-    /**
-     * Returns the list of persons matching the given specification.
-     * @param person Person specification.
-     * @return List of persons.
-     */
-    List<ServerPersonEntity> search(final @NonNull PersonSearch person);
+        // REMINDER Important to save the underlying collections of entities that hold documents!
+        if (person.getDocuments() != null)
+        {
+            // Save the documents directly attached to the person.
+            for (DocumentServer document : person.getDocuments())
+            {
+                try
+                {
+                    documentService.save(document);
+                }
+                catch (Exception e)
+                {
+                    throw new DocumentException(e.getMessage());
+                }
+            }
+        }
 
-    /**
-     * Returns the list of email addresses owned by the given person.
-     * @param person Person.
-     * @return List of email addresses.
-     */
-    List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person);
+//        // Save the email addresses directly attached to the person.
+//        for (ServerEmailAddressEntity email : person.getEmailAddresses())
+//        {
+//            try
+//            {
+//                emailAddressService.save(email);
+//            }
+//            catch (Exception e)
+//            {
+//                throw new DocumentException(e.getMessage());
+//            }
+//        }
 
-//    ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person);
+        return person;
+    }
 
-    /**
-     * Returns the list of documents owned by the given base entity.
-     * @param entity Base entity.
-     * @return List of documents.
-     */
-    List<DocumentServer> getDocuments(final @NonNull ServerEntity entity);
+    @Override
+    public List<DocumentServer> getDocuments(@NonNull ServerEntity entity)
+    {
+        return entity.getDocuments();
+    }
+
+    @Override
+    public PersonServer saveAndFlush(@NonNull PersonServer person)
+    {
+        return personRepository.saveAndFlush(person);
+    }
+
+    @Override
+    public void deleteById(UUID id)
+    {
+        personRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PersonServer> findAll()
+    {
+        return personRepository.findAll();
+    }
+
+    @Override
+    public List<PersonServer> search(@NonNull PersonSearch person)
+    {
+        GenericSpecification<PersonServer> specification = new GenericSpecification<>();
+
+        // Inherited fields
+        if (person.getCreatedBy() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
+                    person.getCreatedBy(),
+                    SearchOperation.MATCH));
+        }
+
+        if (person.getModifiedBy() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
+                    person.getModifiedBy(),
+                    SearchOperation.MATCH));
+        }
+
+        if (person.getId() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_ID,
+                    person.getId(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (person.getPersonType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_PERSON_TYPE,
+                    person.getPersonType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (person.getStatusType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
+                    person.getStatusType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (person.getGenderType() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_GENDER_TYPE,
+                    person.getGenderType(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (person.getBirthDate() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_BIRTHDATE,
+                    person.getBirthDate(),
+                    SearchOperation.EQUAL));
+        }
+
+        if (person.getLastName() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_LASTNAME,
+                    person.getLastName(),
+                    SearchOperation.MATCH));
+        }
+
+        if (person.getFirstName() != null)
+        {
+            specification.add(new SearchCriteria(
+                    PersonServer.FIELD_FIRSTNAME,
+                    person.getFirstName(),
+                    SearchOperation.MATCH));
+        }
+
+        return personRepository.findAll(specification);
+    }
+
+    @Override
+    public List<EmailAddressServer> getEmailAddresses(final @NonNull PersonServer person)
+    {
+        return emailAddressRepository.findByParentId(person.getId());
+    }
+
+//    @Override
+//    public ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person)
+//    {
+//        person.setEmailAddresses(getEmailAddresses(person));
+//
+//        return person;
+//    }
+
+//    private void saveDocument(final @NonNull DocumentServerEntity document) throws DocumentException
+//    {
+//        try
+//        {
+//            if (document.getContentId() == null) // Not stored in the content store.
+//            {
+//                documentService.save(document);
+//            }
+//        }
+//        catch (Exception e)
+//        {
+//            throw new DocumentException(e.getMessage());
+//        }
+//    }
 }
+

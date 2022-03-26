@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.rest.controller.person;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.PersonConverter;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
@@ -88,7 +88,7 @@ public class PersonController
             @NotNull
             @PathVariable String id)
     {
-        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(id));
+        PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(id));
         return ResponseEntity.ok(converterPerson.fromServerToClient(person));
     }
 
@@ -119,7 +119,7 @@ public class PersonController
     @PostMapping("/random")
     public ResponseEntity<PersonClient> random() throws DocumentException
     {
-        ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
+        PersonServer person = PersonRandomizer.generateServerEntity(false);
         person = servicePerson.getPersonService().save(person);
 
         return ResponseEntity.ok(converterPerson.fromServerToClient(person));
