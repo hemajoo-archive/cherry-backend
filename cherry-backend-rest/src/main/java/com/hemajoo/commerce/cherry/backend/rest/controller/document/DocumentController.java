@@ -76,14 +76,14 @@ public class DocumentController
     /**
      * Service to create a random document.
      * @param personId Person identifier being the parent of the document to create.
-     * @return Message.
+     * @return Response.
      * @throws DocumentContentException Thrown to indicate an error occurred while trying to create a random document.
      */
     @Operation(summary = "Create a new random document")
     @PostMapping("/random")
     public ResponseEntity<String> random(
             @Parameter(name = "personId", description = "Person identifier (UUID) being the parent of the new document", required = true)
-            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentException, DocumentContentException
+            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentException
     {
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
 
@@ -92,6 +92,23 @@ public class DocumentController
         document = servicePerson.getDocumentService().save(document);
 
         return ResponseEntity.ok(String.format("Successfully saved document with id: '%s', with content id: '%s'", document.getId(), document.getContentId()));
+    }
+
+    /**
+     * Deletes a document given its identifier.
+     * @param id Document identifier.
+     * @return Response.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to delete a document.
+     */
+    @Operation(summary = "Delete a document")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(
+            @Parameter(description = "Document identifier (UUID)", required = true)
+            @NotNull @PathVariable String id) throws DocumentException
+    {
+        servicePerson.getDocumentService().deleteById(UUID.fromString(id));
+
+        return ResponseEntity.ok(String.format("Document with identifier: '%s' has been deleted successfully!", id));
     }
 
     /**

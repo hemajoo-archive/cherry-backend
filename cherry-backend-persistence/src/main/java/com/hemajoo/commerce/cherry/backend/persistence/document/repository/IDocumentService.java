@@ -76,7 +76,7 @@ public interface IDocumentService
     /**
      * Deletes a document given its identifier.
      * @param id Document identifier.
-     * @throws DocumentException Raised if an error occurred while trying to delete the document.
+     * @throws DocumentException Thrown in case the document to delete does not exist.
      */
     void deleteById(UUID id) throws DocumentException;
 

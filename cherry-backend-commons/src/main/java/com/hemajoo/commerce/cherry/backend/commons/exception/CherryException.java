@@ -12,21 +12,21 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.document;
+package com.hemajoo.commerce.cherry.backend.commons.exception;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.CherryException;
+import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
 
 /**
- * Exception thrown to indicate an error occurred with a <b>document</b>.
+ * Exception thrown to indicate an error occurred with a <b>Cherry</b> component.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @SuppressWarnings("java:S110")
-public class DocumentException extends CherryException
+public class CherryException extends Exception
 {
     /**
      * Default serialization identifier.
@@ -35,51 +35,61 @@ public class DocumentException extends CherryException
     private static final long serialVersionUID = 1L;
 
     /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
+     * Http status code.
+     */
+    @Getter
+    private HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+    /**
+     * Thrown to indicate that an error occurred with a <b>Cherry</b> component.
      * @param exception Parent exception.
      */
-    public DocumentException(final Exception exception)
+    public CherryException(final Exception exception)
     {
         super(exception);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
+     * Thrown to indicate that an error occurred with a <b>Cherry</b> component.
      * @param message Message describing the error being the cause of the raised exception.
      */
-    public DocumentException(final String message)
+    public CherryException(final String message)
     {
         super(message);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
+     * Thrown to indicate that an error occurred with a <b>Cherry</b> component.
      * @param message Message describing the error being the cause of the raised exception.
      * @param statusCode Http status code.
      */
-    public DocumentException(final @NonNull String message, final HttpStatus statusCode)
+    public CherryException(final @NonNull String message, final HttpStatus statusCode)
     {
-        super(message, statusCode);
+        super(message);
+
+        this.statusCode = statusCode;
     }
 
     /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
+     * Thrown to indicate that an error occurred with a <b>Cherry</b> component.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent exception.
      */
-    public DocumentException(final String message, final Exception exception)
+    public CherryException(final String message, final Exception exception)
     {
         super(message, exception);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a <b>document</b>.
+     * Thrown to indicate that an error occurred with a <b>Cherry</b> component.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent exception.
      * @param statusCode Http status code.
      */
-    public DocumentException(final @NonNull String message, final @NonNull Exception exception, final HttpStatus statusCode)
+    public CherryException(final @NonNull String message, final @NonNull Exception exception, final HttpStatus statusCode)
     {
-        super(message, exception, statusCode);
+        super(message, exception);
+
+        this.statusCode = statusCode;
     }
 }

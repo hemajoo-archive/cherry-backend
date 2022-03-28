@@ -22,7 +22,9 @@ import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentQuery;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,10 +34,11 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Implementation of the document persistence service.
+ * Implementation of the <b>document</b> persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@Log4j2
 @Service
 public class DocumentService implements IDocumentService
 {
@@ -92,9 +95,11 @@ public class DocumentService implements IDocumentService
         if (document.getContent() != null && document.getContentId() == null)
         {
             document = (DocumentServer) documentStore.getStore().setContent(document, document.getContent());
+            LOGGER.debug(String.format("Successfully saved document content with id: '%s'", document.getId()));
         }
 
         document = documentRepository.save(document);
+        LOGGER.debug(String.format("Successfully saved document with id: '%s'", document.getId()));
 
         return document;
     }
@@ -102,21 +107,28 @@ public class DocumentService implements IDocumentService
     @Override
     public DocumentServer saveAndFlush(DocumentServer document)
     {
-        return documentRepository.saveAndFlush(document);
+        return documentRepository.saveAndFlush(document); //TODO What about the content ?
     }
 
     @Override
-    public void deleteById(UUID id)
+    public void deleteById(UUID id) throws DocumentException
     {
         DocumentServer document = findById(id);
 
+        if (document == null)
+        {
+            throw new DocumentException(String.format("Document with id: '%s' cannot be found!", id.toString()), HttpStatus.NOT_FOUND);
+        }
+
         // If a content file is associated, then delete it!
-        if (document != null && document.getContentId() != null)
+        if (document.getContentId() != null)
         {
             documentStore.getStore().unsetContent(document);
+            LOGGER.debug(String.format("Successfully deleted document content with id: '%s'", document.getContentId()));
         }
 
         documentRepository.deleteById(id);
+        LOGGER.debug(String.format("Successfully deleted document with id: '%s'", document.getId()));
     }
 
     @Override
@@ -143,7 +155,7 @@ public class DocumentService implements IDocumentService
             loadContent(document);
         }
 
-        throw new DocumentException(String.format("Cannot find document id.: '%s'", documentId.toString()));
+        throw new DocumentException(String.format("Document with id: '%s' cannot be found!", documentId.toString()), HttpStatus.NOT_FOUND);
     }
 
     @Override
