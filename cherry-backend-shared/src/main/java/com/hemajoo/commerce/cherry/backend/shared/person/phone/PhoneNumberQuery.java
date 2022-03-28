@@ -38,28 +38,28 @@ public class PhoneNumberQuery extends BaseEntityQuery
         super(EntityType.PHONE_NUMBER);
 
         fields.add(QueryField.builder()
-                .withName(PHONE_NUMBER_CATEGORY_TYPE)
-                .withType(DataType.ENUM)
+                .withFieldName(PHONE_NUMBER_CATEGORY_TYPE)
+                .withFieldType(DataType.ENUM)
                 .build());
         fields.add(QueryField.builder()
-                .withName(PHONE_NUMBER_COUNTRY_CODE)
-                .withType(DataType.STRING)
+                .withFieldName(PHONE_NUMBER_COUNTRY_CODE)
+                .withFieldType(DataType.STRING)
                 .build());
         fields.add(QueryField.builder()
-                .withName(PHONE_NUMBER_NUMBER)
-                .withType(DataType.STRING)
+                .withFieldName(PHONE_NUMBER_NUMBER)
+                .withFieldType(DataType.STRING)
                 .build());
         fields.add(QueryField.builder()
-                .withName(PHONE_NUMBER_IS_DEFAULT)
-                .withType(DataType.BOOLEAN)
+                .withFieldName(PHONE_NUMBER_IS_DEFAULT)
+                .withFieldType(DataType.BOOLEAN)
                 .build());
         fields.add(QueryField.builder()
-                .withName(PHONE_NUMBER_PHONE_TYPE)
-                .withType(DataType.ENUM)
+                .withFieldName(PHONE_NUMBER_PHONE_TYPE)
+                .withFieldType(DataType.ENUM)
                 .build());
         fields.add(QueryField.builder()
-                .withName(PHONE_NUMBER_PARENT_ID)
-                .withType(DataType.UUID)
+                .withFieldName(PHONE_NUMBER_PARENT_ID)
+                .withFieldType(DataType.UUID)
                 .build());
     }
 }

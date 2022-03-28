@@ -30,6 +30,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -49,7 +50,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext
 @Testcontainers // Not to be used to keep container alive after the tests!
 @SpringBootTest
@@ -67,15 +67,40 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     @Autowired
     private ServiceFactoryPerson servicePerson;
 
-    @BeforeAll
-    public void beforeAll() throws DocumentException
+    /**
+     * Prepare before each test.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to randomly generate test documents.
+     */
+    @BeforeEach
+    public void beforeEach() throws DocumentException
     {
+        // Not using a @TestInstance(TestInstance.Lifecycle.PER_CLASS) and an associated beforeAll / afterAll because of a bug with the Spring context!
         DocumentServer document;
 
         // Generate 100 test documents
         for (int i = 0; i < 100; i++)
         {
             document = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        }
+    }
+
+    /**
+     * Cleanup after each test.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to randomly generate test documents.
+     */
+    @AfterEach
+    public void afterEach() throws DocumentException
+    {
+        for (DocumentServer document : servicePerson.getDocumentService().findAll())
+        {
+            try
+            {
+                servicePerson.getDocumentService().deleteById(document.getId());
+            }
+            catch (EmptyResultDataAccessException e)
+            {
+                // Do nothing!
+            }
         }
     }
 
@@ -263,7 +288,7 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Query documents by inactive date between")
-    void testSearchDocumentByInactiveDateBetween() throws QueryConditionException
+    void testQueryDocumentByInactiveDateBetween() throws QueryConditionException
     {
         final ZonedDateTime DOCUMENT_DATE_LOW = ZonedDateTime.parse("2000-08-21 00:00:00.001 Europe/Paris", formatter);
         final Instant DOCUMENT_DATE_HIGH = Instant.now();
