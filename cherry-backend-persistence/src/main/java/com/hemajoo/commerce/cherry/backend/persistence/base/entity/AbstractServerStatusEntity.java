@@ -34,16 +34,6 @@ import java.util.Date;
 public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements IEntityStatus, IServerEntity
 {
     /**
-     * Property used to set a search criteria for the <b>status type</b> field.
-     */
-    public static final String FIELD_STATUS_TYPE = "statusType";
-
-    /**
-     * Property used to set a search criteria for the <b>since</b> field.
-     */
-    public static final String FIELD_SINCE = "since";
-
-    /**
      * Entity status.
      */
     @Getter

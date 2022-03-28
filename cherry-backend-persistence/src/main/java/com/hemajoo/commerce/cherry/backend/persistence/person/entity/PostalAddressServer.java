@@ -42,56 +42,6 @@ import javax.validation.constraints.NotNull;
 public class PostalAddressServer extends ServerEntity implements IPostalAddress, IServerEntity
 {
     /**
-     * Property used to set a search criteria for the <b>is default</b> field.
-     */
-    public static final String FIELD_IS_DEFAULT = "isDefault";
-
-    /**
-     * Property used to set a search criteria for the <b>address type</b> field.
-     */
-    public static final String FIELD_ADDRESS_TYPE = "addressType";
-
-    /**
-     * Property used to set a search criteria for the <b>category type</b> field.
-     */
-    public static final String FIELD_CATEGORY_TYPE = "categoryType";
-
-    /**
-     * Property used to set a search criteria for the <b>street name</b> field.
-     */
-    public static final String FIELD_STREET_NAME = "streetName";
-
-    /**
-     * Property used to set a search criteria for the <b>street number</b> field.
-     */
-    public static final String FIELD_STREET_NUMBER = "streetNumber";
-
-    /**
-     * Property used to set a search criteria for the <b>locality</b> field.
-     */
-    public static final String FIELD_LOCALITY = "locality";
-
-    /**
-     * Property used to set a search criteria for the <b>country code</b> field.
-     */
-    public static final String FIELD_COUNTRY_CODE = "countryCode";
-
-    /**
-     * Property used to set a search criteria for the <b>zip code</b> field.
-     */
-    public static final String FIELD_ZIP_CODE = "zipCode";
-
-    /**
-     * Property used to set a search criteria for the <b>area</b> field.
-     */
-    public static final String FIELD_AREA = "area";
-
-    /**
-     * Property used to set a search criteria for the <b>person identifier</b> field.
-     */
-    public static final String FIELD_PERSON_ID = "personId";
-
-    /**
      * Postal address street name.
      */
     @Getter

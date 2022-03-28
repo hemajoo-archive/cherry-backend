@@ -12,49 +12,44 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.shared.base.query.condition;
 
+import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.DataType;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NonNull;
 
 /**
- * Represents a <b>search criteria</b>.
+ * Represents a query <b>field</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class SearchCriteria
+public class QueryField
 {
     /**
-     * Criteria key.
+     * Field name.
      */
     @Getter
-    private final String key;
+    private final String fieldName;
 
     /**
-     * Criteria value.
+     * Field data type.
      */
     @Getter
-    @Setter
-    private Object value;
+    private final DataType fieldType;
 
     /**
-     * Criteria search operator.
+     * Entity type the field references.
      */
     @Getter
-    private final SearchOperation operation;
+    private final EntityType entityType;
 
-    /**
-     * Creates a new search criteria.
-     * @param key Criteria key.
-     * @param value Criteria value.
-     * @param operator Criteria operator.
-     */
     @Builder(setterPrefix = "with")
-    public SearchCriteria(String key, Object value, SearchOperation operator)
+    public QueryField(final @NonNull String fieldName, final @NonNull DataType fieldType, final EntityType entityType)
     {
-        this.key = key;
-        this.value = value;
-        this.operation = operator;
+        this.fieldName = fieldName;
+        this.fieldType = fieldType;
+        this.entityType = entityType;
     }
 }

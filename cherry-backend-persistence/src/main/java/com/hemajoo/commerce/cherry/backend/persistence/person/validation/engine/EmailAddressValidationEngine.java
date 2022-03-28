@@ -20,9 +20,10 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddres
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
 import lombok.NonNull;
 import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,9 @@ public final class EmailAddressValidationEngine
      * @param search Search email address object.
      * @throws EmailAddressException Thrown to indicate an error occurred while submitting a search email address object.
      */
-    public static void isSearchValid(final @NonNull EmailAddressSearch search) throws EmailAddressException
+    public static void isSearchValid(final @NonNull EmailAddressQuery search) throws EmailAddressException, QueryConditionException
     {
-        EmailAddressSearch reference = new EmailAddressSearch();
+        EmailAddressQuery reference = new EmailAddressQuery();
 
         if (EntityComparator.getJavers().compare(reference, search).getChangesByType(ValueChange.class).isEmpty())
         {

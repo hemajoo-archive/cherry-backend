@@ -29,9 +29,10 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
 import com.hemajoo.commerce.cherry.backend.shared.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -212,7 +213,7 @@ public class EmailAddressController
             @ApiResponse(responseCode = "400", description = "Missing or invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
-    public ResponseEntity<List<EmailAddressClient>> search(final @RequestBody @NotNull EmailAddressSearch search) throws EmailAddressException
+    public ResponseEntity<List<EmailAddressClient>> search(final @RequestBody @NotNull EmailAddressQuery search) throws EmailAddressException, QueryConditionException
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
@@ -237,7 +238,7 @@ public class EmailAddressController
             @ApiResponse(responseCode = "400", description = "Missing or invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/query")
-    public ResponseEntity<List<String>> query(final @NotNull EmailAddressSearch search) throws EmailAddressException
+    public ResponseEntity<List<String>> query(final @NotNull EmailAddressQuery search) throws EmailAddressException, QueryConditionException
     {
         EmailAddressValidationEngine.isSearchValid(search);
 

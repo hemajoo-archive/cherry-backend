@@ -45,23 +45,6 @@ import javax.validation.constraints.NotNull;
 public class EmailAddressServer extends ServerEntity implements IEmailAddress, IServerEntity
 {
     /**
-     * Property used to set a search criteria for the <b>email</b> field.
-     */
-    public static final String FIELD_EMAIL = "email";
-
-    /**
-     * Property used to set a search criteria for the <b>is default email</b> field.
-     */
-    public static final String FIELD_IS_DEFAULT = "isDefaultEmail";
-
-    /**
-     * Property used to set a search criteria for the <b>address type</b> field.
-     */
-    public static final String FIELD_ADDRESS_TYPE = "addressType";
-
-    //public static final String FIELD_PERSON         = "person";
-
-    /**
      * Email address.
      */
     @Getter

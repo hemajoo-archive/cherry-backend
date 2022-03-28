@@ -15,8 +15,8 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.test;
 
 import com.hemajoo.commerce.cherry.backend.persistence.document.content.IDocumentStoreFileSystem;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentRepository;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentRepository;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
 import lombok.Getter;
@@ -62,7 +62,7 @@ public abstract class AbstractDatabaseUnitTest extends AbstractBaseUnitTest
      * Document persistence service.
      */
     @Autowired
-    protected DocumentService documentService;
+    protected IDocumentService documentService;
 
     /**
      * Document content store.
@@ -74,7 +74,7 @@ public abstract class AbstractDatabaseUnitTest extends AbstractBaseUnitTest
      * Document repository.
      */
     @Autowired
-    protected DocumentRepository documentRepository;
+    protected IDocumentRepository documentRepository;
 
     /**
      * Content store base location.

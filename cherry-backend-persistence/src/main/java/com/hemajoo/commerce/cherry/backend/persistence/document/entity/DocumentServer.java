@@ -46,36 +46,6 @@ import java.io.InputStream;
 public class DocumentServer extends ServerEntity implements IDocumentServer
 {
     /**
-     * Property used to set a search criteria for the <b>extension</b> field.
-     */
-    public static final String FIELD_EXTENSION = "extension";
-
-    /**
-     * Property used to set a search criteria for the <b>filename</b> field.
-     */
-    public static final String FIELD_FILENAME = "filename";
-
-    /**
-     * Property used to set a search criteria for the <b>contentPath</b> field.
-     */
-    public static final String FIELD_CONTENT_PATH = "contentPath";
-
-    /**
-     * Property used to set a search criteria for the <b>contentLength</b> field.
-     */
-    public static final String FIELD_CONTENT_LENGTH = "contentLength";
-
-    /**
-     * Property used to set a search criteria for the <b>mimeType</b> field.
-     */
-    public static final String FIELD_MIMETYPE = "mimeType";
-
-    /**
-     * Property used to set a search criteria for the <b>tags</b> field.
-     */
-    public static final String FIELD_TAGS = "tags";
-
-    /**
      * Document type.
      */
     @Getter
@@ -170,10 +140,10 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
     /**
      * Document content.
      */
+    @Getter
     @Transient
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @Getter
     private transient InputStream content;
 
     /**

@@ -30,8 +30,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,36 +46,6 @@ import java.util.stream.Collectors;
 @EntityListeners(AuditingEntityListener.class)
 public class PersonServer extends ServerEntity implements IPersonServer, IServerEntity
 {
-    /**
-     * Minimal birthdate.
-     */
-    public static final LocalDate MIN_BIRTHDATE = LocalDate.of(1500, Month.JANUARY, 1);
-
-    /**
-     * Property used to set a search criteria for the <b>last name</b> field.
-     */
-    public static final String FIELD_LASTNAME = "lastName";
-
-    /**
-     * Property used to set a search criteria for the <b>first name</b> field.
-     */
-    public static final String FIELD_FIRSTNAME = "firstName";
-
-    /**
-     * Property used to set a search criteria for the <b>birth date</b> field.
-     */
-    public static final String FIELD_BIRTHDATE = "birthDate";
-
-    /**
-     * Property used to set a search criteria for the <b>gender type</b> field.
-     */
-    public static final String FIELD_GENDER_TYPE = "genderType";
-
-    /**
-     * Property used to set a search criteria for the <b>person type</b> field.
-     */
-    public static final String FIELD_PERSON_TYPE = "personType";
-
     /**
      * Person last name.
      */

@@ -43,41 +43,6 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ServerEntity extends AbstractServerStatusEntity implements IServerEntity
 {
-    /**
-     * Property used to set a search criteria for the <b>identifier</b> field.
-     */
-    public static final String FIELD_ID = "id";
-
-    /**
-     * Property used to set a search criteria for the <b>entity type</b> field.
-     */
-    public static final String FIELD_ENTITY_TYPE = "entityType";
-
-    /**
-     * Property used to set a search criteria for the <b>name</b> field.
-     */
-    public static final String FIELD_NAME = "name";
-
-    /**
-     * Property used to set a search criteria for the <b>description</b> field.
-     */
-    public static final String FIELD_DESCRIPTION = "description";
-
-    /**
-     * Property used to set a search criteria for the <b>reference</b> field.
-     */
-    public static final String FIELD_REFERENCE = "reference";
-
-    /**
-     * Property used to set a search criteria for the <b>parent</b> field.
-     */
-    public static final String FIELD_PARENT = "parent";
-
-    /**
-     * Property used to set a search criteria for the <b>parent type</b> field.
-     */
-    public static final String FIELD_PARENT_TYPE = "parentType";
-
 //    /**
 //     * Entity identifier.
 //     */

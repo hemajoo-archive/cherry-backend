@@ -14,95 +14,149 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
-
+import com.hemajoo.commerce.cherry.backend.persistence.document.content.DocumentStore;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.GenericSpecification;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentSearch;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentQuery;
+import lombok.Getter;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Document persistence service.
+ * Implementation of the document persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface DocumentService
+@Service
+public class DocumentService implements IDocumentService
 {
     /**
-     * Returns the entity manager.
-     * @return Entity manager.
+     * Document repository.
      */
-    EntityManager getEntityManager();
+    @Getter
+    @Autowired
+    private IDocumentRepository documentRepository;
 
     /**
-     * Returns the underlying repository.
-     * @return Document repository.
+     * Document store.
      */
-    DocumentRepository getRepository();
+    @Autowired
+    private DocumentStore documentStore;
 
     /**
-     * Returns the number of documents.
-     * @return Number of documents.
+     * Entity manager.
      */
-    Long count();
+    @Getter
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    /**
-     * Finds a document given its identifier.
-     * @param id Document identifier.
-     * @return Document if found, null otherwise.
-     * @throws DocumentException raised if the given document id has not been found!
-     */
-    DocumentServer findById(UUID id) throws DocumentException;
+    @Override
+    public IDocumentRepository getRepository()
+    {
+        return documentRepository;
+    }
 
-    /**
-     * Saves a document.
-     * @param document Document to save.
-     * @return Saved document.
-     * @throws DocumentException Raised if an error occurred while trying to save the document.
-     */
-    DocumentServer save(DocumentServer document) throws DocumentException;
+    @Override
+    public Long count()
+    {
+        return documentRepository.count();
+    }
 
-    /**
-     * Saves and flush a document.
-     * @param document Document.
-     * @return Saved document.
-     */
-    DocumentServer saveAndFlush(DocumentServer document);
+    @Override
+    public DocumentServer findById(UUID id)
+    {
+        DocumentServer document = documentRepository.findById(id).orElse(null);
 
-    /**
-     * Deletes a document given its identifier.
-     * @param id Document identifier.
-     * @throws DocumentException Raised if an error occurred while trying to delete the document.
-     */
-    void deleteById(UUID id) throws DocumentException;
+        if (document != null)
+        {
+            loadContent(document);
+        }
 
-    /**
-     * Returns all the documents.
-     * @return List of documents.
-     */
-    List<DocumentServer> findAll();
+        return document;
+    }
 
-    /**
-     * Loads the content (media file) of the document.
-     * @param document Document.
-     * @throws DocumentException Raised if an error occurred while trying to load the document.
-     */
-    void loadContent(DocumentServer document) throws DocumentException;
+    @Transactional
+    @Override
+    public DocumentServer save(DocumentServer document)
+    {
+        // Save the content file, if one exist and not already saved!
+        if (document.getContent() != null && document.getContentId() == null)
+        {
+            document = (DocumentServer) documentStore.getStore().setContent(document, document.getContent());
+        }
 
-    /**
-     * Loads the content (media file) of the document.
-     * @param documentId Document identifier.
-     * @throws DocumentException Raised if an error occurred while trying to load the document.
-     */
-    void loadContent(UUID documentId) throws DocumentException;
+        document = documentRepository.save(document);
 
-    /**
-     * Searches for documents given some criteria.
-     * @param search Search object.
-     * @return List of documents matching the given criteria.
-     */
-    List<DocumentServer> search(final @NonNull DocumentSearch search);
+        return document;
+    }
+
+    @Override
+    public DocumentServer saveAndFlush(DocumentServer document)
+    {
+        return documentRepository.saveAndFlush(document);
+    }
+
+    @Override
+    public void deleteById(UUID id)
+    {
+        DocumentServer document = findById(id);
+
+        // If a content file is associated, then delete it!
+        if (document != null && document.getContentId() != null)
+        {
+            documentStore.getStore().unsetContent(document);
+        }
+
+        documentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<DocumentServer> findAll()
+    {
+        List<DocumentServer> documents = documentRepository.findAll();
+        documents.forEach(this::loadContent);
+
+        return documents;
+    }
+
+    @Override
+    public void loadContent(DocumentServer document)
+    {
+        document.setContent(documentStore.getStore().getContent(document));
+    }
+
+    @Override
+    public void loadContent(UUID documentId) throws DocumentException
+    {
+        DocumentServer document = findById(documentId);
+        if (document != null)
+        {
+            loadContent(document);
+        }
+
+        throw new DocumentException(String.format("Cannot find document id.: '%s'", documentId.toString()));
+    }
+
+    @Override
+    public List<DocumentServer> search(@NonNull DocumentQuery search) throws QueryConditionException
+    {
+        List<DocumentServer> documents;
+
+        GenericSpecification<DocumentServer> specification = (GenericSpecification<DocumentServer>) search.getSpecification();
+
+        documents = documentRepository.findAll(specification);
+        documents.forEach(this::loadContent);
+
+        return documents;
+    }
 }
+
