@@ -192,8 +192,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Query documents by their extension")
-    void testSearchDocumentByExtension() throws QueryConditionException
+    @DisplayName("Query documents by their extension equal to")
+    void testQueryDocumentByExtensionEqualTo() throws QueryConditionException
     {
         final String DOCUMENT_EXTENSION = "jpg";
 
@@ -230,8 +230,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by mime type")
-    void testSearchDocumentByMimeType() throws QueryConditionException
+    @DisplayName("Query documents by mime type equal to")
+    void testQueryDocumentByMimeTypeEqualTo() throws QueryConditionException
     {
         final String DOCUMENT_MIMETYPE = "text/plain";
 
@@ -262,7 +262,7 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by inactive date between")
+    @DisplayName("Query documents by inactive date between")
     void testSearchDocumentByInactiveDateBetween() throws QueryConditionException
     {
         final ZonedDateTime DOCUMENT_DATE_LOW = ZonedDateTime.parse("2000-08-21 00:00:00.001 Europe/Paris", formatter);
@@ -293,8 +293,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by filename matching")
-    void testSearchDocumentByFilenameMatching() throws QueryConditionException
+    @DisplayName("Query documents by filename matching")
+    void testQueryDocumentByFilenameMatching() throws QueryConditionException
     {
         final String FILENAME_PATTERN = "license";
 
@@ -319,8 +319,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by content length between")
-    void testSearchDocumentByContentLengthBetween() throws QueryConditionException
+    @DisplayName("Query documents by content length between")
+    void testQueryDocumentByContentLengthBetween() throws QueryConditionException
     {
         final Long CONTENT_LENGTH_LOW = 34000L;
         final Long CONTENT_LENGTH_HIGH = 35000L;
@@ -347,8 +347,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by content length greater than or equal")
-    void testSearchDocumentByContentLengthGreaterThanOrEqual() throws QueryConditionException
+    @DisplayName("Query documents by content length greater than or equal")
+    void testQueryDocumentByContentLengthGreaterThanOrEqual() throws QueryConditionException
     {
         final Long CONTENT_LENGTH_LOW = 35000L;
 
@@ -373,8 +373,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by their document type")
-    void testSearchDocumentByDocumentType() throws QueryConditionException
+    @DisplayName("Query documents by their document type equal to")
+    void testQueryDocumentByDocumentTypeEqualTo() throws QueryConditionException
     {
         final DocumentType DOCUMENT_TYPE = DocumentType.DOCUMENT_INVOICE;
 
@@ -399,8 +399,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Search documents by their status type")
-    void testSearchDocumentByStatusType() throws QueryConditionException
+    @DisplayName("Query documents by their status type equal to")
+    void testQueryDocumentByStatusTypeEqualTo() throws QueryConditionException
     {
         final StatusType DOCUMENT_STATUS = StatusType.INACTIVE;
 
