@@ -12,14 +12,14 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.base.search.criteria;
+package com.hemajoo.commerce.cherry.backend.shared.base.query.condition;
 
 /**
- * Enumeration representing the several possible criteria <b>search operation</b> types.
+ * Enumeration representing the several possible query <b>operator</b> types.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum SearchOperation //TODO Rename as Operator type
+public enum QueryOperatorType
 {
     /**
      * Operator is <b>Greater Than</b>.
@@ -74,5 +74,10 @@ public enum SearchOperation //TODO Rename as Operator type
     /**
      * Operator is <b>Equal Object UUID</b>.
      */
-    EQUAL_OBJECT_UUID
+    EQUAL_OBJECT_UUID,
+
+    /**
+     * Value should be <b>between</b> low and high values.
+     */
+    BETWEEN;
 }

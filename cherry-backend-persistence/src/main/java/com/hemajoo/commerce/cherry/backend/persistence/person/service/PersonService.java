@@ -14,23 +14,20 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
-import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
-import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.PersonSearch;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonQuery;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -64,7 +61,7 @@ public class PersonService implements IPersonService
      */
     @Autowired
     @Getter
-    private DocumentService documentService;
+    private IDocumentService documentService;
 
 //    /**
 //     * Postal address service.
@@ -165,84 +162,9 @@ public class PersonService implements IPersonService
     }
 
     @Override
-    public List<PersonServer> search(@NonNull PersonSearch person)
+    public List<PersonServer> search(@NonNull PersonQuery search) throws QueryConditionException
     {
-        GenericSpecification<PersonServer> specification = new GenericSpecification<>();
-
-        // Inherited fields
-        if (person.getCreatedBy() != null)
-        {
-            specification.add(new SearchCriteria(
-                    AbstractServerAuditEntity.FIELD_CREATED_BY,
-                    person.getCreatedBy(),
-                    SearchOperation.MATCH));
-        }
-
-        if (person.getModifiedBy() != null)
-        {
-            specification.add(new SearchCriteria(
-                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
-                    person.getModifiedBy(),
-                    SearchOperation.MATCH));
-        }
-
-        if (person.getId() != null)
-        {
-            specification.add(new SearchCriteria(
-                    PersonServer.FIELD_ID,
-                    person.getId(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (person.getPersonType() != null)
-        {
-            specification.add(new SearchCriteria(
-                    PersonServer.FIELD_PERSON_TYPE,
-                    person.getPersonType(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (person.getStatusType() != null)
-        {
-            specification.add(new SearchCriteria(
-                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
-                    person.getStatusType(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (person.getGenderType() != null)
-        {
-            specification.add(new SearchCriteria(
-                    PersonServer.FIELD_GENDER_TYPE,
-                    person.getGenderType(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (person.getBirthDate() != null)
-        {
-            specification.add(new SearchCriteria(
-                    PersonServer.FIELD_BIRTHDATE,
-                    person.getBirthDate(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (person.getLastName() != null)
-        {
-            specification.add(new SearchCriteria(
-                    PersonServer.FIELD_LASTNAME,
-                    person.getLastName(),
-                    SearchOperation.MATCH));
-        }
-
-        if (person.getFirstName() != null)
-        {
-            specification.add(new SearchCriteria(
-                    PersonServer.FIELD_FIRSTNAME,
-                    person.getFirstName(),
-                    SearchOperation.MATCH));
-        }
-
-        return personRepository.findAll(specification);
+        return personRepository.findAll((Specification<PersonServer>) search.getSpecification());
     }
 
     @Override

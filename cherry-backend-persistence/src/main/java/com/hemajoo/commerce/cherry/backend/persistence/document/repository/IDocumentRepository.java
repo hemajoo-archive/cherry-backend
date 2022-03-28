@@ -27,7 +27,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface DocumentRepository extends JpaRepository<DocumentServer, UUID>, JpaSpecificationExecutor<DocumentServer>
+public interface IDocumentRepository extends JpaRepository<DocumentServer, UUID>, JpaSpecificationExecutor<DocumentServer>
 {
     /**
      * Returns a list of documents belonging to the given owner identifier.

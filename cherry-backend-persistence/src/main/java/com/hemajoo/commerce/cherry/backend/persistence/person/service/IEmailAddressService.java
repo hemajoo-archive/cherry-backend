@@ -17,9 +17,10 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
 import lombok.NonNull;
 
 import java.util.List;
@@ -120,5 +121,5 @@ public interface IEmailAddressService
      * @param emailAddress Email address search object containing the predicates.
      * @return List of email addresses matching the given predicates.
      */
-    List<EmailAddressServer> search(final @NonNull EmailAddressSearch emailAddress);
+    List<EmailAddressServer> search(final @NonNull EmailAddressQuery emailAddress) throws QueryConditionException;
 }

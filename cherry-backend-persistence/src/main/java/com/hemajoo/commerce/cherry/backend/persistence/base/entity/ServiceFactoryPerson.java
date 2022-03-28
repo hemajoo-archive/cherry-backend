@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPhoneNumberService;
@@ -43,7 +43,7 @@ public class ServiceFactoryPerson
      */
     @Getter
     @Autowired
-    private DocumentService documentService;
+    private IDocumentService documentService;
 
     /**
      * Email persistence service.

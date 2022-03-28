@@ -38,6 +38,11 @@ public final class DocumentRandomizer extends AbstractEntityRandomizer
     private static final EnumRandomGenerator DOCUMENT_TYPE_GENERATOR = new EnumRandomGenerator(DocumentType.class).exclude(DocumentType.UNSPECIFIED);
 
     /**
+     * Test media type enumeration generator.
+     */
+    private static final EnumRandomGenerator TEST_MEDIA_TYPE_GENERATOR = new EnumRandomGenerator(TestMediaType.class);
+
+    /**
      * Generates a new random persistent document.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * @return Random document.
@@ -54,7 +59,7 @@ public final class DocumentRandomizer extends AbstractEntityRandomizer
         }
 
         entity.setName(FAKER.name().title());
-        entity.setContent("./media/android-10.jpg");
+        entity.setContent(((TestMediaType) TEST_MEDIA_TYPE_GENERATOR.gen()).getPath());
         entity.setTags(FAKER.elderScrolls().creature());
         entity.setDocumentType((DocumentType) DOCUMENT_TYPE_GENERATOR.gen());
 
@@ -78,7 +83,7 @@ public final class DocumentRandomizer extends AbstractEntityRandomizer
         }
 
         entity.setName(FAKER.name().title());
-        entity.setContent("./media/android-10.jpg");
+        entity.setContent(((TestMediaType) TEST_MEDIA_TYPE_GENERATOR.gen()).getPath());
         entity.setTags(FAKER.elderScrolls().creature());
         entity.setDocumentType((DocumentType) DOCUMENT_TYPE_GENERATOR.gen());
 

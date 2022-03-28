@@ -15,21 +15,16 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerAuditEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
-import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchCriteria;
-import com.hemajoo.commerce.cherry.backend.shared.base.search.criteria.SearchOperation;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -37,6 +32,7 @@ import org.javers.core.diff.Diff;
 import org.javers.core.diff.changetype.ReferenceChange;
 import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -70,7 +66,7 @@ public class EmailAddressService implements IEmailAddressService
      * Document (content store) service.
      */
     @Autowired
-    private DocumentService documentService;
+    private IDocumentService documentService;
 
     @Override
     public EmailAddressRepository getRepository()
@@ -169,83 +165,9 @@ public class EmailAddressService implements IEmailAddressService
     }
 
     @Override
-    public List<EmailAddressServer> search(final @NonNull EmailAddressSearch search)
+    public List<EmailAddressServer> search(final @NonNull EmailAddressQuery search) throws QueryConditionException
     {
-        GenericSpecification<EmailAddressServer> specification = new GenericSpecification<>();
-
-        // Inherited fields
-        if (search.getCreatedBy() != null)
-        {
-            specification.add(new SearchCriteria(
-                    AbstractServerAuditEntity.FIELD_CREATED_BY,
-                    search.getCreatedBy(),
-                    SearchOperation.MATCH));
-        }
-        if (search.getModifiedBy() != null)
-        {
-            specification.add(new SearchCriteria(
-                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
-                    search.getModifiedBy(),
-                    SearchOperation.MATCH));
-        }
-
-        if (search.getId() != null)
-        {
-            specification.add(new SearchCriteria(
-                    ServerEntity.FIELD_ID,
-                    UUID.fromString(search.getId().toString()),
-                    SearchOperation.EQUAL));
-        }
-
-        if (search.getIsDefaultEmail() != null)
-        {
-            specification.add(new SearchCriteria(
-                    EmailAddressServer.FIELD_IS_DEFAULT,
-                    search.getIsDefaultEmail(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (search.getAddressType() != null)
-        {
-            specification.add(new SearchCriteria(
-                    EmailAddressServer.FIELD_ADDRESS_TYPE,
-                    search.getAddressType(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (search.getStatusType() != null)
-        {
-            specification.add(new SearchCriteria(
-                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
-                    search.getStatusType(),
-                    SearchOperation.EQUAL));
-        }
-
-        if (search.getEmail() != null)
-        {
-            specification.add(new SearchCriteria(
-                    EmailAddressServer.FIELD_EMAIL,
-                    search.getEmail(),
-                    SearchOperation.MATCH));
-        }
-
-//        if (search.getPersonId() != null)
-//        {
-//            specification.add(new SearchCriteria(
-//                    ServerEmailAddressEntity.FIELD_PERSON,
-//                    search.getPersonId(),
-//                    SearchOperation.EQUAL_OBJECT_UUID));
-//        }
-
-//        if (specification.count() == 0)
-//        {
-//            specification.add(new SearchCriteria(
-//                    ServerEmailAddressEntity.FIELD_PERSON,
-//                    "00000000-0000-0000-0000-000000000000",
-//                    SearchOperation.EQUAL_OBJECT_UUID));
-//        }
-
-        return emailAddressRepository.findAll(specification);
+        return emailAddressRepository.findAll((Specification<EmailAddressServer>) search.getSpecification());
     }
 
     /**
@@ -282,27 +204,27 @@ public class EmailAddressService implements IEmailAddressService
         {
             switch (change.getPropertyName())
             {
-                case EmailAddressServer.FIELD_EMAIL:
+                case EmailAddressQuery.EMAIL_ADDRESS_EMAIL:
                     target.setEmail(source.getEmail());
                     break;
 
-                case EmailAddressServer.FIELD_ADDRESS_TYPE:
+                case EmailAddressQuery.EMAIL_ADDRESS_TYPE:
                     target.setAddressType(source.getAddressType());
                     break;
 
-                case EmailAddressServer.FIELD_DESCRIPTION:
-                    target.setDescription(source.getDescription());
-                    break;
+//                case EmailAddressServer.FIELD_DESCRIPTION:
+//                    target.setDescription(source.getDescription());
+//                    break;
+//
+//                case EmailAddressServer.FIELD_STATUS_TYPE:
+//                    target.setStatusType(source.getStatusType());
+//                    break;
+//
+//                case EmailAddressServer.FIELD_REFERENCE:
+//                    target.setReference(source.getReference());
+//                    break;
 
-                case EmailAddressServer.FIELD_STATUS_TYPE:
-                    target.setStatusType(source.getStatusType());
-                    break;
-
-                case EmailAddressServer.FIELD_REFERENCE:
-                    target.setReference(source.getReference());
-                    break;
-
-                case EmailAddressServer.FIELD_IS_DEFAULT:
+                case EmailAddressQuery.EMAIL_ADDRESS_IS_DEFAULT:
                     target.setIsDefaultEmail(source.getIsDefaultEmail());
                     break;
 

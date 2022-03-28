@@ -22,8 +22,11 @@ import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
 import java.security.SecureRandom;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Abstract entity randomizer.
@@ -66,6 +69,10 @@ public abstract class AbstractEntityRandomizer
      */
     public static void populateBaseFields(final @NonNull ServerEntity parent)
     {
+        final Instant dateEnd = Instant.now();
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS z");
+        final ZonedDateTime zonedDateTime = ZonedDateTime.parse("1970-01-01 00:00:00.001 Europe/Paris", formatter);
+
         String description = FAKER.hitchhikersGuideToTheGalaxy().marvinQuote();
         if (description.length() > 255)
         {
@@ -74,10 +81,14 @@ public abstract class AbstractEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
+        if (parent.getStatusType() == StatusType.INACTIVE)
+        {
+            parent.setSince(FAKER.date().between(Date.from(zonedDateTime.toInstant()), Date.from(dateEnd)));
+        }
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS)); // Created in the previous 100 days
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS)); // Modified in the last hour
+        parent.setCreatedDate(FAKER.date().between(Date.from(zonedDateTime.toInstant()), Date.from(dateEnd)));
+        parent.setModifiedDate(FAKER.date().between(parent.getCreatedDate(), Date.from(dateEnd)));
     }
 
     /**
@@ -86,6 +97,10 @@ public abstract class AbstractEntityRandomizer
      */
     public static void populateBaseFields(final @NonNull EntityClient parent)
     {
+        final Instant dateEnd = Instant.now();
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS z");
+        final ZonedDateTime zonedDateTime = ZonedDateTime.parse("1970-01-01 00:00:00.001 Europe/Paris", formatter);
+
         String description = FAKER.hitchhikersGuideToTheGalaxy().marvinQuote();
         if (description.length() > 255)
         {
@@ -94,10 +109,14 @@ public abstract class AbstractEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
+        if (parent.getStatusType() == StatusType.INACTIVE)
+        {
+            parent.setSince(FAKER.date().between(Date.from(zonedDateTime.toInstant()), Date.from(dateEnd)));
+        }
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS)); // Created in the previous 100 days
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS)); // Modified in the last hour
+        parent.setCreatedDate(FAKER.date().between(Date.from(zonedDateTime.toInstant()), Date.from(dateEnd)));
+        parent.setModifiedDate(FAKER.date().between(parent.getCreatedDate(), Date.from(dateEnd)));
     }
 
     /**

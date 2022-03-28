@@ -42,36 +42,6 @@ import javax.validation.constraints.NotNull;
 public class PhoneNumberServer extends ServerEntity implements IPhoneNumber, IServerEntity
 {
     /**
-     * Property used to set a search criteria for the <b>is default</b> field.
-     */
-    public static final String FIELD_IS_DEFAULT = "isDefault";
-
-    /**
-     * Property used to set a search criteria for the <b>number</b> field.
-     */
-    public static final String FIELD_NUMBER = "number";
-
-    /**
-     * Property used to set a search criteria for the <b>country code</b> field.
-     */
-    public static final String FIELD_COUNTRY_CODE = "countryCode";
-
-    /**
-     * Property used to set a search criteria for the <b>phone type</b> field.
-     */
-    public static final String FIELD_PHONE_TYPE = "phoneType";
-
-    /**
-     * Property used to set a search criteria for the <b>category type</b> field.
-     */
-    public static final String FIELD_PHONE_CATEGORY_TYPE = "categoryType";
-
-    /**
-     * Property used to set a search criteria for the <b>person identifier</b> field.
-     */
-    public static final String FIELD_PERSON_ID = "personId";
-
-    /**
      * Phone number.
      */
     @Getter

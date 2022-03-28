@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.DocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
@@ -43,7 +43,7 @@ public class EntityFactory
      * Document repository.
      */
     @Autowired
-    private DocumentService documentService;
+    private IDocumentService documentService;
 
     /**
      * Creates a server entity given its entity type and its identifier.
