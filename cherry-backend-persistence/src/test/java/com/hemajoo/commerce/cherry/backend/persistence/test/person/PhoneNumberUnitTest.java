@@ -104,7 +104,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a phone number with several documents")
-    void testCreatePhoneNumberWithSeveralDocument() throws DocumentContentException, DocumentException
+    void testCreatePhoneNumberWithSeveralDocument() throws DocumentException
     {
         List<DocumentServer> documents = new ArrayList<>();
         for (int i = 0; i < 5; i++)
@@ -115,7 +115,10 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
         PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         PhoneNumberServer phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
-        documents.forEach(phoneNumber::addDocument);
+        for (DocumentServer document : documents)
+        {
+            phoneNumber.addDocument(document);
+        }
         person.addPhoneNumber(phoneNumber);
 
         LOGGER.info(String.format("Saving phone number: %s", phoneNumber.getIdentity()));

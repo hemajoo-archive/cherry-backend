@@ -125,7 +125,10 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
         PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         EmailAddressServer emailAddress = EmailAddressRandomizer.generateServerEntity(false);
-        documents.forEach(emailAddress::addDocument);
+        for (DocumentServer document : documents)
+        {
+            emailAddress.addDocument(document);
+        }
         person.addEmailAddress(emailAddress);
         emailAddress = servicePerson.getEmailAddressService().save(emailAddress);
 

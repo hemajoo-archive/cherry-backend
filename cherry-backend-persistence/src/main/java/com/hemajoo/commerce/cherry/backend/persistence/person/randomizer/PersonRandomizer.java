@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
@@ -79,7 +80,7 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static PersonServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PersonServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
         var entity = new PersonServer();
         DocumentServer document;

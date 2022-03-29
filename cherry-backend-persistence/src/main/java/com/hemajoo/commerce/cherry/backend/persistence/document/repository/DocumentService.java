@@ -123,12 +123,12 @@ public class DocumentService implements IDocumentService
         // If a content file is associated, then delete it!
         if (document.getContentId() != null)
         {
-            documentStore.getStore().unsetContent(document);
             LOGGER.debug(String.format("Successfully deleted document content with id: '%s'", document.getContentId()));
+            documentStore.getStore().unsetContent(document);
         }
 
-        documentRepository.deleteById(id);
         LOGGER.debug(String.format("Successfully deleted document with id: '%s'", document.getId()));
+        documentRepository.deleteById(id);
     }
 
     @Override

@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressCategoryType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.postal.PostalAddressClient;
@@ -84,7 +85,7 @@ public final class PostalAddressRandomizer extends AbstractEntityRandomizer
      * @return Postal address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static PostalAddressServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PostalAddressServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
         var entity = new PostalAddressServer();
         DocumentServer document;
