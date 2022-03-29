@@ -17,6 +17,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
@@ -158,8 +159,9 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
      * Creates a new document.
      * @param owner Document owner.
      * @param documentType Document type.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to add a document to another document.
      */
-    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType)
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType) throws DocumentException
     {
         super(EntityType.DOCUMENT);
 
@@ -174,9 +176,9 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
      * @param owner Document owner.
      * @param documentType Document type.
      * @param filename File name.
-     * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
+     * @throws DocumentException Thrown in case an error occurred while initializing the document.
      */
-    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentException
     {
         this(owner, documentType);
 
@@ -192,9 +194,9 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
      * @param owner Document owner.
      * @param documentType Document type.
      * @param file File.
-     * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
+     * @throws DocumentException Thrown in case an error occurred while initializing the document.
      */
-    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentException
     {
         this(owner, documentType);
 
@@ -210,9 +212,9 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
      * @param owner Document owner.
      * @param documentType Document type.
      * @param multiPartFile Multipart file.
-     * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
+     * @throws DocumentException Thrown in case an error occurred while initializing the document.
      */
-    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public DocumentServer(final @NonNull ServerEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentException
     {
         this(owner, documentType);
 
@@ -225,7 +227,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
 
     /**
      * Sets the document content.
-     * @param filename File name of the media file to store as the document contant.
+     * @param filename File name of the media file to store as the document content.
      * @throws DocumentContentException Raised when an error occurred while trying to set the document content.
      */
     public final void setContent(final @NonNull String filename) throws DocumentContentException
@@ -247,7 +249,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
 
     /**
      * Sets the document content.
-     * @param file File representing the media file to store as the document contant.
+     * @param file File representing the media file to store as the document content.
      * @throws DocumentContentException Raised when an error occurred while trying to set the document content.
      */
     public final void setContent(final @NonNull File file) throws DocumentContentException
@@ -267,7 +269,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
 
     /**
      * Sets the document content.
-     * @param inputStream Input stream of the file representing the media file to store as the document contant.
+     * @param inputStream Input stream of the file representing the media file to store as the document content.
      */
     public final void setContent(final InputStream inputStream)
     {

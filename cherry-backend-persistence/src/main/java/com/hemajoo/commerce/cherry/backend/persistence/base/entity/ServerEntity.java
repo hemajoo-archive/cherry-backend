@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.GenericGenerator;
@@ -136,9 +137,15 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
     /**
      * Adds a document to this entityDocumentEntity.
      * @param document Document.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to add a document to another document.
      */
-    public final void addDocument(final @NonNull DocumentServer document)
+    public final void addDocument(final @NonNull DocumentServer document) throws DocumentException
     {
+        if (entityType == EntityType.DOCUMENT && document.getEntityType() == EntityType.DOCUMENT)
+        {
+            throw new DocumentException("Cannot add a document to another document!");
+        }
+
         if (documents == null)
         {
             documents = new ArrayList<>();

@@ -41,6 +41,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the <b>document</b> service class.
@@ -120,8 +121,8 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Create a document being parent of another document")
-    void testCreateDocumentOwningDocument() throws DocumentException
+    @DisplayName("Ensure we cannot set a document as being the parent of another document")
+    void testSetDocumentAsParentOfDocument() throws DocumentException
     {
         DocumentServer parent = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
         DocumentServer child = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
@@ -139,12 +140,9 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
                 .as("Child document identifier should not be null!")
                 .isNotNull();
 
-        parent.addDocument(child);
-        parent = servicePerson.getDocumentService().save(parent);
-
-        assertThat(parent.getDocuments().size())
-                .as("Parent document list should not be empty!")
-                .isNotZero();
+        assertThrows(DocumentException.class, () -> {
+            parent.addDocument(child);
+        });
     }
 
     @Test

@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
@@ -79,7 +80,7 @@ public final class PhoneNumberRandomizer extends AbstractEntityRandomizer
      * @return Phone number.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static PhoneNumberServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PhoneNumberServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
         var entity = new PhoneNumberServer();
         DocumentServer document;
