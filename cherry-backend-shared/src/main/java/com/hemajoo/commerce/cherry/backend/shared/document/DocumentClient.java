@@ -96,23 +96,27 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     @Setter
     private String contentPath;
 
-    /**
-     * Document owner identity.
-     */
-    @Getter
-    private EntityIdentity owner;
+//    /**
+//     * Document owner identity.
+//     */
+//    @Getter
+//    private EntityIdentity owner;
 
-    @ToString.Exclude
     @Getter
+    @Transient
     @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private transient InputStream content;
 
     /**
      * Multipart file.
      */
-    @EqualsAndHashCode.Exclude
     @Getter
     @Transient
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private transient MultipartFile multiPartFile; // Only stored until the content of the file is loaded into the content store.
 
     /**
@@ -135,16 +139,16 @@ public class DocumentClient extends EntityClient implements IDocumentClient
 
     /**
      * Creates a new document.
-     * @param owner Document owner identity.
+     * @param parentIdentity Parent identity.
      * @param documentType Document type.
      */
-    public DocumentClient(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType)
+    public DocumentClient(final @NonNull EntityIdentity parentIdentity, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
         setActive();
         this.documentType = documentType;
-        this.owner = owner;
+        setParent(parentIdentity);
     }
 
     /**
@@ -332,9 +336,9 @@ public class DocumentClient extends EntityClient implements IDocumentClient
                 : (outputPath + File.separator + end);
     }
 
-    @Override
-    public final void setOwner(EntityIdentity owner)
-    {
-        this.owner = owner;
-    }
+//    @Override
+//    public final void setOwner(EntityIdentity owner)
+//    {
+//        this.owner = owner;
+//    }
 }

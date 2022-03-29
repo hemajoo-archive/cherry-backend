@@ -30,9 +30,9 @@ import java.util.UUID;
 public interface IDocumentRepository extends JpaRepository<DocumentServer, UUID>, JpaSpecificationExecutor<DocumentServer>
 {
     /**
-     * Returns a list of documents belonging to the given owner identifier.
-     * @param id Owner identifier.
+     * Returns a list of documents belonging to the given parent identifier.
+     * @param id Parent identifier.
      * @return List of documents.
      */
-    List<DocumentServer> findByOwnerId(UUID id);
+    List<DocumentServer> findByParentId(UUID id);
 }

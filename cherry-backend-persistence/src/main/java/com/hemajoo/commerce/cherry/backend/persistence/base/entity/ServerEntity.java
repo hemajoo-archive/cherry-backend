@@ -152,7 +152,7 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
         }
 
         documents.add(document);
-        document.setOwner(this);
+        document.setParent(this);
     }
 
     /**
@@ -182,7 +182,7 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
      */
     public void setParent(final ServerEntity parent) throws RuntimeException
     {
-        if (parent != null && parent.getId() == this.getId())
+        if (parent == this)
         {
             throw new RuntimeException("Cannot set itself as parent!");
         }

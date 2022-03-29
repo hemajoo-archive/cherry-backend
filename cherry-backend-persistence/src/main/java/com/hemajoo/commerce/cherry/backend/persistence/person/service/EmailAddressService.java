@@ -188,8 +188,8 @@ public class EmailAddressService implements IEmailAddressService
         {
             LOGGER.info(String.format("Cannot save document content id: %s for owner of type: %s, identifier: %s due to: %s",
                     document.getContentId(),
-                    document.getOwner().getEntityType(),
-                    document.getOwner().getId(),
+                    document.getParent().getEntityType(),
+                    document.getParent().getId(),
                     e.getMessage()), e);
             throw new DocumentException(e.getMessage());
         }

@@ -80,14 +80,12 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
     void testCreatePhoneNumberWithOneDocument() throws DocumentContentException, DocumentException
     {
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
-        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
-
+        PersonServer person = PersonRandomizer.generateServerEntity(false);
         PhoneNumberServer phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
+
         phoneNumber.addDocument(document);
         person.addPhoneNumber(phoneNumber);
-
-        LOGGER.info(String.format("Saving phone number: %s", phoneNumber.getIdentity()));
-        phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
+        person = servicePerson.getPersonService().save(person);
 
         assertThat(phoneNumber)
                 .as("Phone number should not be null!")

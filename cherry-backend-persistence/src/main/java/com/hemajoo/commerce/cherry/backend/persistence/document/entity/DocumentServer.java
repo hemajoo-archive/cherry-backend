@@ -129,14 +129,14 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
     @Setter
     private String contentPath; //TODO Not yet filled!
 
-    /**
-     * Document owner.
-     */
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @Getter
-    @OneToOne(targetEntity = ServerEntity.class, fetch = FetchType.EAGER)
-    private ServerEntity owner;
+//    /**
+//     * Document owner.
+//     */
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @Getter
+//    @OneToOne(targetEntity = ServerEntity.class, fetch = FetchType.EAGER)
+//    private ServerEntity owner;
 
     /**
      * Document content.
@@ -167,7 +167,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
 
         setActive();
         this.documentType = documentType;
-        this.owner = owner;
+        setParent(owner);
         owner.addDocument(this);
     }
 
@@ -357,10 +357,10 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
                 ? (outputPath + end)
                 : (outputPath + File.separator + end);
     }
-
-    @Override
-    public void setOwner(ServerEntity owner)
-    {
-        this.owner = owner;
-    }
+//
+//    @Override
+//    public void setOwner(ServerEntity owner)
+//    {
+//        this.owner = owner;
+//    }
 }

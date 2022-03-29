@@ -128,18 +128,18 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerDocumentWithOwner() throws DocumentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        DocumentServer owner = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        DocumentServer server = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         DocumentClient client = DocumentRandomizer.generateClientEntity(true);
-        client.setOwner(owner.getIdentity());
+        client.setParent(server.getIdentity());
 
-        DocumentServer server = converterDocument.fromClientToServer(client);
+        DocumentServer other = converterDocument.fromClientToServer(client);
 
-        assertThat(server)
+        assertThat(other)
                 .as("Server document should not be null!")
                 .isNotNull();
 
-        assertThat(server.getOwner())
+        assertThat(other.getParent())
                 .as("Server document owner should not be null!")
                 .isNotNull();
     }
@@ -150,7 +150,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerDocumentWithNonExistingOwner() throws DocumentException
     {
         DocumentClient client = DocumentRandomizer.generateClientEntity(true);
-        client.setOwner(new EntityIdentity(EntityType.PERSON,UUID.randomUUID()));
+        client.setParent(new EntityIdentity(EntityType.PERSON,UUID.randomUUID()));
 
         // If the owner of the client document to convert does not exist, ensure an exception is raised!
         assertThatThrownBy(() -> converterDocument.fromClientToServer(client))

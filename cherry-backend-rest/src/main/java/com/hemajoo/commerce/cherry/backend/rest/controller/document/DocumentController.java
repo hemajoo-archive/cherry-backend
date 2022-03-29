@@ -16,10 +16,12 @@ package com.hemajoo.commerce.cherry.backend.rest.controller.document;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
+import com.hemajoo.commerce.cherry.backend.persistence.document.converter.DocumentConverter;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,6 +76,28 @@ public class DocumentController
     }
 
     /**
+     * Retrieves a document given its identifier.
+     * @param id Document identifier.
+     * @return Document matching the given identifier.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to retrieve a document.
+     */
+    @Operation(summary = "Retrieve a document")
+    @GetMapping("/get/{id}")
+    public ResponseEntity<DocumentClient> get(
+            @Parameter(description = "Document identifier", required = true)
+            @NotNull @PathVariable String id) throws DocumentException
+    {
+        DocumentServer document = servicePerson.getDocumentService().findById(UUID.fromString(id));
+
+        if (document == null)
+        {
+            throw new DocumentException(String.format("Document with id: '%s' cannot be found!", id), HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(new DocumentConverter().fromServerToClient(document));
+    }
+
+    /**
      * Service to create a random document.
      * @param personId Person identifier being the parent of the document to create.
      * @return Response.
@@ -88,7 +112,7 @@ public class DocumentController
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
 
         PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(personId));
-        document.setOwner(person);
+        document.setParent(person);
         document = servicePerson.getDocumentService().save(document);
 
         return ResponseEntity.ok(String.format("Successfully saved document with id: '%s', with content id: '%s'", document.getId(), document.getContentId()));
@@ -152,7 +176,7 @@ public class DocumentController
             document.setReference(reference);
             document.setTags(tags);
             document.setStatusType(StatusType.ACTIVE);
-            document.setOwner(person);
+            document.setParent(person);
             servicePerson.getDocumentService().save(document);
         }
         catch (Exception e)
