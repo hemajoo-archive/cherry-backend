@@ -35,7 +35,7 @@ public final class DocumentRandomizer extends AbstractEntityRandomizer
     /**
      * Document type enumeration generator.
      */
-    private static final EnumRandomGenerator DOCUMENT_TYPE_GENERATOR = new EnumRandomGenerator(DocumentType.class).exclude(DocumentType.UNSPECIFIED);
+    private static final EnumRandomGenerator DOCUMENT_TYPE_GENERATOR = new EnumRandomGenerator(DocumentType.class).exclude(DocumentType.UNKNOWN);
 
     /**
      * Test media type enumeration generator.
