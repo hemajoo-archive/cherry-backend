@@ -14,7 +14,6 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
-import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
 
 /**
@@ -24,15 +23,15 @@ import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityClient;
  */
 public interface IDocumentClient extends IDocument, IEntityClient
 {
-    /**
-     * Returns the document owner.
-     * @return Document owner.
-     */
-    EntityIdentity getOwner();
-
-    /**
-     * Sets the document owner.
-     * @param owner Document owner.
-     */
-    void setOwner(final EntityIdentity owner);
+//    /**
+//     * Returns the document owner.
+//     * @return Document owner.
+//     */
+//    EntityIdentity getOwner();
+//
+//    /**
+//     * Sets the document owner.
+//     * @param owner Document owner.
+//     */
+//    void setOwner(final EntityIdentity owner);
 }
