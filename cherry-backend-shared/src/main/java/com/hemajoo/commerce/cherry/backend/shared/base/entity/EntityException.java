@@ -14,6 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
+import com.hemajoo.commerce.cherry.backend.commons.exception.CherryException;
+import lombok.NonNull;
+import org.springframework.http.HttpStatus;
+
 import java.io.Serial;
 
 /**
@@ -21,7 +25,7 @@ import java.io.Serial;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EntityException extends Exception
+public class EntityException extends CherryException
 {
     /**
      * Default serialization identifier.
@@ -50,10 +54,31 @@ public class EntityException extends Exception
     /**
      * Thrown to indicate that an error occurred with an <b>entity</b>.
      * @param message Message describing the error being the cause of the raised exception.
+     * @param statusCode Http status code.
+     */
+    public EntityException(final @NonNull String message, final HttpStatus statusCode)
+    {
+        super(message, statusCode);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with an <b>entity</b>.
+     * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent {@link Exception}.
      */
     public EntityException(final String message, final Exception exception)
     {
         super(message, exception);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with an <b>entity</b>.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param exception Parent {@link Exception}.
+     * @param statusCode Http status code.
+     */
+    public EntityException(final @NonNull String message, final @NonNull Exception exception, final HttpStatus statusCode)
+    {
+        super(message, exception, statusCode);
     }
 }

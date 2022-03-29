@@ -26,9 +26,9 @@ import java.util.Arrays;
 public enum DocumentType
 {
     /**
-     * <b>Unspecified</b> document type.
+     * <b>Unknown</b> document type.
      */
-    UNSPECIFIED,
+    UNKNOWN,
 
     /**
      * <b>Generic</b> document type.
