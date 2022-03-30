@@ -26,13 +26,34 @@ import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryFiel
  */
 public class PhoneNumberQuery extends BaseEntityQuery
 {
+    /**
+     * Field: <b>isDefault</b> of a <b>phone number</b> entity.
+     */
     public static final String PHONE_NUMBER_IS_DEFAULT = "isDefault";
-    public static final String PHONE_NUMBER_NUMBER = "number";
-    public static final String PHONE_NUMBER_COUNTRY_CODE = "countryCode";
-    public static final String PHONE_NUMBER_PHONE_TYPE = "phoneType";
-    public static final String PHONE_NUMBER_CATEGORY_TYPE = "categoryType";
-    public static final String PHONE_NUMBER_PARENT_ID = "parentId";
 
+    /**
+     * Field: <b>number</b> of a <b>phone number</b> entity.
+     */
+    public static final String PHONE_NUMBER_NUMBER = "number";
+
+    /**
+     * Field: <b>countryCode</b> of a <b>phone number</b> entity.
+     */
+    public static final String PHONE_NUMBER_COUNTRY_CODE = "countryCode";
+
+    /**
+     * Field: <b>phoneType</b> of a <b>phone number</b> entity.
+     */
+    public static final String PHONE_NUMBER_PHONE_TYPE = "phoneType";
+
+    /**
+     * Field: <b>categoryType</b> of a <b>phone number</b> entity.
+     */
+    public static final String PHONE_NUMBER_CATEGORY_TYPE = "categoryType";
+
+    /**
+     * Creates a new query object for the <b>phone number</b> entity.
+     */
     public PhoneNumberQuery()
     {
         super(EntityType.PHONE_NUMBER);
@@ -40,6 +61,7 @@ public class PhoneNumberQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(PHONE_NUMBER_CATEGORY_TYPE)
                 .withFieldType(DataType.ENUM)
+                .withClassType(PhoneNumberCategoryType.class)
                 .build());
         fields.add(QueryField.builder()
                 .withFieldName(PHONE_NUMBER_COUNTRY_CODE)
@@ -56,10 +78,7 @@ public class PhoneNumberQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(PHONE_NUMBER_PHONE_TYPE)
                 .withFieldType(DataType.ENUM)
-                .build());
-        fields.add(QueryField.builder()
-                .withFieldName(PHONE_NUMBER_PARENT_ID)
-                .withFieldType(DataType.UUID)
+                .withClassType(PhoneNumberType.class)
                 .build());
     }
 }

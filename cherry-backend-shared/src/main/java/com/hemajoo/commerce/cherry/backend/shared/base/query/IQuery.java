@@ -25,4 +25,10 @@ public interface IQuery
      * @return Specification object.
      */
     GenericSpecification<?> getSpecification();
+
+    /**
+     * Validates the conditions of the query object.
+     * @throws QueryConditionException Thrown to indicate an error occurred when validating the conditions of a query.
+     */
+    void validate() throws QueryConditionException;
 }

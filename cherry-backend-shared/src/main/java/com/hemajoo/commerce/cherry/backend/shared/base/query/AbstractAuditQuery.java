@@ -14,12 +14,13 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryCondition;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryField;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryOperatorType;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
@@ -33,20 +34,40 @@ import java.util.List;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@Data
 @Log4j2
 public abstract class AbstractAuditQuery implements IQuery, Serializable
 {
+    /**
+     * Field: <b>createdDate</b> of an entity.
+     */
+    @JsonIgnore
     public static final String BASE_CREATED_DATE = "createdDate";
+
+    /**
+     * Field: <b>modifiedDate</b> of an entity.
+     */
+    @JsonIgnore
     public static final String BASE_MODIFIED_DATE = "modifiedDate";
+
+    /**
+     * Field: <b>createdBy</b> of an entity.
+     */
+    @JsonIgnore
     public static final String BASE_CREATED_BY = "createdBy";
+
+    /**
+     * Field: <b>modifiedBy</b> of an entity.
+     */
+    @JsonIgnore
     public static final String BASE_MODIFIED_BY = "modifiedBy";
 
-    @Getter
-    private final EntityType entityType;
+    private EntityType entityType = null;
 
     /**
      * Available fields that can be queried.
      */
+    @JsonIgnore
     protected final List<QueryField> fields = new ArrayList<>();
 
     /**
@@ -120,17 +141,26 @@ public abstract class AbstractAuditQuery implements IQuery, Serializable
         }
     }
 
+    @JsonIgnore
     @Override
     public final GenericSpecification<?> getSpecification()
     {
         GenericSpecification<?> specification = new GenericSpecification<>();
+        QueryField field;
 
         for (QueryCondition condition : conditions)
         {
-            specification.add(condition);
+            field = fields.stream().filter(f -> f.getFieldName().equals(condition.getField())).findAny().orElse(null);
+            specification.add(condition, field);
         }
 
         return specification;
+    }
+
+    @Override
+    public void validate() throws QueryConditionException
+    {
+        // TODO Implement checks of the conditions...
     }
 
     /**
@@ -139,8 +169,33 @@ public abstract class AbstractAuditQuery implements IQuery, Serializable
      */
     public AbstractAuditQuery(final @NonNull EntityType entityType)
     {
+        super();
+
         this.entityType = entityType;
 
+        fields.add(QueryField.builder()
+                .withFieldName(BASE_CREATED_DATE)
+                .withFieldType(DataType.DATE)
+                .build());
+        fields.add(QueryField.builder()
+                .withFieldName(BASE_MODIFIED_DATE)
+                .withFieldType(DataType.DATE)
+                .build());
+        fields.add(QueryField.builder()
+                .withFieldName(BASE_CREATED_BY)
+                .withFieldType(DataType.STRING)
+                .build());
+        fields.add(QueryField.builder()
+                .withFieldName(BASE_MODIFIED_BY)
+                .withFieldType(DataType.STRING)
+                .build());
+    }
+
+    /**
+     * Creates a new abstract audit query instance.
+     */
+    public AbstractAuditQuery()
+    {
         fields.add(QueryField.builder()
                 .withFieldName(BASE_CREATED_DATE)
                 .withFieldType(DataType.DATE)

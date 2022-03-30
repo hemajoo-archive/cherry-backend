@@ -16,40 +16,50 @@ package com.hemajoo.commerce.cherry.backend.shared.base.query.condition;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.DataType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
 /**
  * Represents a query <b>field</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@NoArgsConstructor
 public class QueryField
 {
     /**
      * Field name.
      */
     @Getter
-    private final String fieldName;
+    @Setter
+    private String fieldName;
 
     /**
      * Field data type.
      */
     @Getter
-    private final DataType fieldType;
+    @Setter
+    private DataType fieldType;
+
+    /**
+     * Field class type.
+     */
+    @Getter
+    @Setter
+    private Class<?> fieldClassType;
 
     /**
      * Entity type the field references.
      */
     @Getter
-    private final EntityType entityType;
+    @Setter
+    private EntityType entityType;
 
     @Builder(setterPrefix = "with")
-    public QueryField(final @NonNull String fieldName, final @NonNull DataType fieldType, final EntityType entityType)
+    public QueryField(final @NonNull String fieldName, final @NonNull DataType fieldType, final Class<?> classType, final EntityType entityType)
     {
         this.fieldName = fieldName;
         this.fieldType = fieldType;
+        this.fieldClassType = classType;
         this.entityType = entityType;
     }
 }

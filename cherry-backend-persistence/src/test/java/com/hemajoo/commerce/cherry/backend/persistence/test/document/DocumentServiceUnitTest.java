@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.test.document;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
@@ -216,7 +217,7 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Query documents by their extension equal to")
-    void testQueryDocumentByExtensionEqualTo() throws QueryConditionException
+    void testQueryDocumentByExtensionEqualTo() throws QueryConditionException, JsonProcessingException
     {
         final String DOCUMENT_EXTENSION = "jpg";
 
@@ -423,7 +424,7 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Query documents by their status type equal to")
-    void testQueryDocumentByStatusTypeEqualTo() throws QueryConditionException
+    void testQueryDocumentByStatusTypeEqualTo() throws QueryConditionException, JsonProcessingException
     {
         final StatusType DOCUMENT_STATUS = StatusType.INACTIVE;
 

@@ -18,6 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.BaseEntityQuery;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.DataType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryField;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 
 /**
  * Represents a <b>query</b> object for issuing queries on email addresses.
@@ -26,13 +27,23 @@ import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryFiel
  */
 public final class EmailAddressQuery extends BaseEntityQuery
 {
+    /**
+     * Field: <b>email</b> of an <b>email address</b> entity.
+     */
     public static final String EMAIL_ADDRESS_EMAIL = "email";
-    public static final String EMAIL_ADDRESS_IS_DEFAULT = "isDefaultEmail";
-    public static final String EMAIL_ADDRESS_TYPE = "addressType";
-    public static final String EMAIL_ADDRESS_PARENT_ID = "parentId";
 
     /**
-     * Creates a new <b>email address</b> search instance.
+     * Field: <b>isDefault</b> of an <b>email address</b> entity.
+     */
+    public static final String EMAIL_ADDRESS_IS_DEFAULT = "isDefault";
+
+    /**
+     * Field: <b>addressType</b> of an <b>email address</b> entity.
+     */
+    public static final String EMAIL_ADDRESS_TYPE = "addressType";
+
+    /**
+     * Creates a new <b>email address</b> query object.
      */
     public EmailAddressQuery()
     {
@@ -49,10 +60,7 @@ public final class EmailAddressQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(EMAIL_ADDRESS_TYPE)
                 .withFieldType(DataType.ENUM)
-                .build());
-        fields.add(QueryField.builder()
-                .withFieldName(EMAIL_ADDRESS_PARENT_ID)
-                .withFieldType(DataType.UUID)
+                .withClassType(AddressType.class)
                 .build());
     }
 }
