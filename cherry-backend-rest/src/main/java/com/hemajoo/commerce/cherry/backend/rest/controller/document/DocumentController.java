@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.rest.controller.document;
 
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityFactory;
@@ -221,23 +222,43 @@ public class DocumentController
     }
 
     /**
-     * Search for documents given some criteria.
+     * Search for documents matching the given query conditions.
      * @param query Document query object.
      * @return List of matching documents.
-     * @throws QueryConditionException Thrown to indicate an error occurred while querying for documents.
+     * @throws QueryConditionException Thrown to indicate an error occurred while searching for documents.
      */
-    @Operation(summary = "Query for documents", description = "Query for documents matching given criteria.")
+    @Operation(summary = "Search for documents", description = "Search for documents matching the query conditions.")
     @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
-    public ResponseEntity<List<DocumentClient>> query(final @RequestBody @NotNull DocumentQuery query) throws QueryConditionException
+    public ResponseEntity<List<DocumentClient>> search(final @RequestBody @NotNull DocumentQuery query) throws QueryConditionException
     {
         query.validate();
 
-        List<DocumentClient> documents = servicePerson.getDocumentService().search(query)
+        List<DocumentClient> list = servicePerson.getDocumentService().search(query)
                 .stream()
                 .map(element -> converterDocument.fromServerToClient(element))
                 .toList();
 
-        return ResponseEntity.ok(documents);
+        return ResponseEntity.ok(list);
+    }
+
+    /**
+     * Queries for documents matching the given query conditions.
+     * @param query Document query object.
+     * @return List of matching documents.
+     * @throws QueryConditionException Thrown to indicate an error occurred while querying for documents.
+     */
+    @Operation(summary = "Queries for documents", description = "Queries for documents matching the query conditions.")
+    @PatchMapping(value = "/query", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
+    public ResponseEntity<List<EntityIdentity>> query(final @RequestBody @NotNull DocumentQuery query) throws QueryConditionException
+    {
+        query.validate();
+
+        List<EntityIdentity> list = servicePerson.getDocumentService().search(query)
+                .stream()
+                .map(element -> converterDocument.fromServerToIdentity(element))
+                .toList();
+
+        return ResponseEntity.ok(list);
     }
 
     /**
