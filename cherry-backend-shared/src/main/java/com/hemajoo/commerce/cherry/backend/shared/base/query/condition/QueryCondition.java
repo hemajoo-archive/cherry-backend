@@ -14,10 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.query.condition;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Singular;
+import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
@@ -29,6 +26,8 @@ import java.util.List;
  * @version 1.0.0
  */
 @Log4j2
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder(setterPrefix = "with")
 public final class QueryCondition
 {
@@ -36,12 +35,14 @@ public final class QueryCondition
      * Field's name.
      */
     @Getter
-    private final String field;
+    @Setter
+    private String field;
 
     /**
      * List of values.
      */
     @Getter
+    @Setter
     @Singular // For chaining of arguments
     private List<Object> values;
 
@@ -49,7 +50,8 @@ public final class QueryCondition
      * Operator type.
      */
     @Getter
-    private final QueryOperatorType operator;
+    @Setter
+    private QueryOperatorType operator;
 
     /**
      * Sets the value for the given index.

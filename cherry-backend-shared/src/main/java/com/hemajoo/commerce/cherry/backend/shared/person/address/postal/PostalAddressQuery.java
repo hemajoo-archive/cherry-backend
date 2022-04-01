@@ -18,6 +18,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.BaseEntityQuery;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.DataType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryField;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 
 /**
  * Represents a <b>query</b> object for issuing queries on postal addresses.
@@ -26,19 +27,53 @@ import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryFiel
  */
 public class PostalAddressQuery extends BaseEntityQuery
 {
+    /**
+     * Field: <b>isDefault</b> of a <b>postal address</b> entity.
+     */
     public static final String POSTAL_ADDRESS_IS_DEFAULT = "isDefault";
-    public static final String POSTAL_ADDRESS_TYPE = "addressType";
-    public static final String POSTAL_ADDRESS_CATEGORY_TYPE = "categoryType";
-    public static final String POSTAL_ADDRESS_STREET_NAME = "streetName";
-    public static final String POSTAL_ADDRESS_STREET_NUMBER = "streetNumber";
-    public static final String POSTAL_ADDRESS_LOCALITY = "locality";
-    public static final String POSTAL_ADDRESS_COUNTRY_CODE = "countryCode";
-    public static final String POSTAL_ADDRESS_ZIP_CODE = "zipCode";
-    public static final String POSTAL_ADDRESS_AREA = "area";
-    public static final String POSTAL_ADDRESS_PARENT_ID = "personId";
 
     /**
-     * Creates a new <b>postal address</b> search instance.
+     * Field: <b>addressType</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_TYPE = "addressType";
+
+    /**
+     * Field: <b>categoryType</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_CATEGORY_TYPE = "categoryType";
+
+    /**
+     * Field: <b>streetName</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_STREET_NAME = "streetName";
+
+    /**
+     * Field: <b>streetNumber</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_STREET_NUMBER = "streetNumber";
+
+    /**
+     * Field: <b>locality</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_LOCALITY = "locality";
+
+    /**
+     * Field: <b>countryCode</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_COUNTRY_CODE = "countryCode";
+
+    /**
+     * Field: <b>zipCode</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_ZIP_CODE = "zipCode";
+
+    /**
+     * Field: <b>area</b> of a <b>postal address</b> entity.
+     */
+    public static final String POSTAL_ADDRESS_AREA = "area";
+
+    /**
+     * Creates a new <b>postal address</b> query object.
      */
     public PostalAddressQuery()
     {
@@ -51,10 +86,12 @@ public class PostalAddressQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(POSTAL_ADDRESS_TYPE)
                 .withFieldType(DataType.ENUM)
+                .withClassType(AddressType.class)
                 .build());
         fields.add(QueryField.builder()
                 .withFieldName(POSTAL_ADDRESS_CATEGORY_TYPE)
                 .withFieldType(DataType.ENUM)
+                .withClassType(PostalAddressCategoryType.class)
                 .build());
         fields.add(QueryField.builder()
                 .withFieldName(POSTAL_ADDRESS_STREET_NAME)
@@ -79,10 +116,6 @@ public class PostalAddressQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(POSTAL_ADDRESS_AREA)
                 .withFieldType(DataType.STRING)
-                .build());
-        fields.add(QueryField.builder()
-                .withFieldName(POSTAL_ADDRESS_PARENT_ID)
-                .withFieldType(DataType.UUID)
                 .build());
     }
 }

@@ -26,10 +26,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.Docum
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
+import com.hemajoo.commerce.cherry.backend.shared.document.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,6 +47,7 @@ import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -70,8 +69,17 @@ public class DocumentController
     @Autowired
     private ServiceFactoryPerson servicePerson;
 
+    /**
+     * Entity factory.
+     */
     @Autowired
     private EntityFactory factory;
+
+    /**
+     * Document converter.
+     */
+    @Autowired
+    private DocumentConverter converterDocument;
 
     /**
      * Service to count the number of documents.
@@ -212,6 +220,32 @@ public class DocumentController
         return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
     }
 
+    /**
+     * Search for documents given some criteria.
+     * @param query Document query object.
+     * @return List of matching documents.
+     * @throws QueryConditionException Thrown to indicate an error occurred while querying for documents.
+     */
+    @Operation(summary = "Query for documents", description = "Query for documents matching given criteria.")
+    @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
+    public ResponseEntity<List<DocumentClient>> query(final @RequestBody @NotNull DocumentQuery query) throws QueryConditionException
+    {
+        query.validate();
+
+        List<DocumentClient> documents = servicePerson.getDocumentService().search(query)
+                .stream()
+                .map(element -> converterDocument.fromServerToClient(element))
+                .toList();
+
+        return ResponseEntity.ok(documents);
+    }
+
+    /**
+     * Uploads a document.
+     * @param file File to upload.
+     * @return Document server containing the uploaded file.
+     * @throws IOException Thrown to indicate an error occurred when trying to upload a document.
+     */
     private DocumentServer uploadDocument(MultipartFile file) throws IOException
     {
         DocumentServer document = new DocumentServer();

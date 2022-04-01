@@ -15,6 +15,9 @@
 package com.hemajoo.commerce.cherry.backend.shared.base.query;
 
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryCondition;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryField;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -22,16 +25,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents a generic specification that embeds query criteria to be applied to a {@code JPA} repository to retrieve records matching the given set of criteria.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@NoArgsConstructor
+@Data
 public final class GenericSpecification<T> implements Specification<T>
 {
     /**
@@ -42,7 +44,7 @@ public final class GenericSpecification<T> implements Specification<T>
     /**
      * List of search criteria.
      */
-    private final List<QueryCondition> list = new ArrayList<>();
+    private List<QueryCondition> list = new ArrayList<>();
 
     @Override
     public Predicate toPredicate(@NotNull Root<T> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder)
@@ -151,14 +153,39 @@ public final class GenericSpecification<T> implements Specification<T>
     }
 
     /**
-     * Adds a search criteria to the list.
-     * @param criteria Criteria to add.
+     * Adds a search condition to the list of the specification predicates.
+     * @param condition Condition to add.
+     * @param field Field the condition belongs to.
      */
-    public void add(QueryCondition criteria)
+    public void add(final QueryCondition condition, final QueryField field)
     {
-        if (criteria != null && (criteria.getValues().get(0) != null || criteria.getValues().get(1) != null))
+        List<Enum<?>> values = new ArrayList<>();
+
+        if (field != null && field.getFieldType() == DataType.ENUM)
         {
-            list.add(criteria);
+            for (Object value : condition.getValues())
+            {
+                if (value instanceof String)
+                {
+                    for (Object eValue : field.getFieldClassType().getEnumConstants())
+                    {
+                        if (eValue.toString().equals(value))
+                        {
+                            values.add((Enum<?>) eValue);
+                        }
+                    }
+                }
+            }
+
+            if (!values.isEmpty())
+            {
+                condition.setValues(Collections.singletonList(values));
+            }
+        }
+
+        if (condition != null && (condition.getValues().get(0) != null || condition.getValues().get(1) != null))
+        {
+            list.add(condition);
         }
     }
 

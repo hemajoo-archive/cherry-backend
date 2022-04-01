@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.BaseEntityQuery;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.DataType;
@@ -26,13 +27,28 @@ import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryFiel
  */
 public class DocumentQuery extends BaseEntityQuery
 {
+    @JsonIgnore
     public static final String DOCUMENT_EXTENSION = "extension";
+
+    @JsonIgnore
     public static final String DOCUMENT_FILENAME = "filename";
+
+    @JsonIgnore
     public static final String DOCUMENT_CONTENT_PATH = "contentPath";
+
+    @JsonIgnore
     public static final String DOCUMENT_CONTENT_LENGTH = "contentLength";
+
+    @JsonIgnore
     public static final String DOCUMENT_TYPE = "documentType";
+
+    @JsonIgnore
     public static final String DOCUMENT_MIMETYPE = "mimeType";
+
+    @JsonIgnore
     public static final String DOCUMENT_TAGS = "tags";
+
+    @JsonIgnore
     public static final String DOCUMENT_OWNER = "owner";
 
     /**
@@ -57,6 +73,7 @@ public class DocumentQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(DOCUMENT_TYPE)
                 .withFieldType(DataType.ENUM)
+                .withClassType(DocumentType.class)
                 .build());
         fields.add(QueryField.builder()
                 .withFieldName(DOCUMENT_CONTENT_LENGTH)
