@@ -177,6 +177,44 @@ public class DocumentController
     }
 
     /**
+     * Update a document parent.
+     * @param documentId Document identifier to update.
+     * @param parentType Parent entity type.
+     * @param parentId Parent entity identifier.
+     * @return Response.
+     * @throws EntityException Thrown to indicate an error occurred while trying to update a document parent.
+     */
+    @Operation(summary = "Update a document parent", description = "Update a document parent.", tags = { "Update endpoints" })
+    @PutMapping("/update/parent/{documentId}")
+    public ResponseEntity<String> updateParent(
+            @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
+            @PathVariable UUID documentId,
+            @Parameter(name = "parentType", description = "Parent entity type.", required = true)
+            @RequestParam EntityType parentType,
+            @Parameter(name = "parentId", description = "Parent entity identifier (UUID)", required = true)
+            @RequestParam UUID parentId) throws EntityException
+    {
+        EntityIdentity identity = EntityIdentity.from(parentType, parentId);
+
+        IServerEntity parent = factory.from(identity);
+        if (parent == null)
+        {
+            return new ResponseEntity<>(String.format("%s not found!", identity), HttpStatus.NOT_FOUND);
+        }
+
+        DocumentServer document = servicePerson.getDocumentService().findById(documentId);
+        if (document == null)
+        {
+            return new ResponseEntity<>(String.format("Document with id: '%s' not found!", documentId), HttpStatus.NOT_FOUND);
+        }
+
+        document.setParent((ServerEntity) parent);
+        servicePerson.getDocumentService().save(document);
+
+        return ResponseEntity.ok(String.format("%s has parent set to: %s", document.getIdentity(), parent.getIdentity()));
+    }
+
+    /**
      * Delete a document given its identifier.
      * @param documentId Document identifier.
      * @return Response.
