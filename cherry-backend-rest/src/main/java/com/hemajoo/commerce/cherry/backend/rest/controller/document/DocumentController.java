@@ -174,7 +174,7 @@ public class DocumentController
 
         servicePerson.getDocumentService().updateMetadata(document);
 
-        return ResponseEntity.ok(String.format("Document with id: '%s' updated successfully.", id));
+        return ResponseEntity.ok(String.format("%s metadata updated successfully", document.getIdentity()));
     }
 
     /**
