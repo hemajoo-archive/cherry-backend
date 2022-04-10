@@ -53,11 +53,11 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller providing service endpoints to manage the document entity.
+ * <b>REST controller</b> exposing endpoints to manage the document entities.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Tag(name = "Document")
+@Tag(name = "Document REST controller", description = "Set of REST-API endpoints to manage the document entities.")
 @Validated
 @RestController
 @RequestMapping("/api/v1/document")
@@ -95,9 +95,9 @@ public class DocumentController
     }
 
     /**
-     * Retrieves a document given its identifier.
+     * Retrieve a document given its identifier.
      * @param id Document identifier.
-     * @return Document matching the given identifier.
+     * @return Document matching the given document identifier.
      * @throws DocumentException Thrown to indicate an error occurred when trying to retrieve a document.
      */
     @Operation(summary = "Retrieve a document")
@@ -117,7 +117,7 @@ public class DocumentController
     }
 
     /**
-     * Creates a random document for the given parent entity.
+     * Create a random document for the given parent entity.
      * @param parentType Parent entity type.
      * @param parentId Parent entity identifier.
      * @return Response.
@@ -157,20 +157,19 @@ public class DocumentController
 
     /**
      * Update a document metadata.
-     * @param id Document identifier to update.
+     * @param documentId Document identifier to update.
      * @param document Document (metadata) to update.
      * @return Response.
-     * @throws DocumentException Thrown to indicate an error occurred while trying to update a document metadata.
+     * @throws EntityException Thrown to indicate an error occurred while trying to update a document metadata.
      */
     @Operation(summary = "Update a document metadata")
-    @PutMapping("/update/metadata/{id}")
-    //@Transactional
+    @PutMapping("/update/metadata/{documentId}")
     public ResponseEntity<String> updateMetadata(
-            @Parameter(name = "id", description = "Document identifier (UUID)", required = true)
-            @PathVariable String id,
+            @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
+            @PathVariable String documentId,
             @RequestBody DocumentClient document) throws EntityException
     {
-        document.setId(UUID.fromString(id));
+        document.setId(UUID.fromString(documentId));
 
         servicePerson.getDocumentService().updateMetadata(document);
 
@@ -178,20 +177,20 @@ public class DocumentController
     }
 
     /**
-     * Deletes a document given its identifier.
-     * @param id Document identifier.
+     * Delete a document given its identifier.
+     * @param documentId Document identifier.
      * @return Response.
-     * @throws DocumentException Thrown to indicate an error occurred when trying to delete a document.
+     * @throws EntityException Thrown to indicate an error occurred when trying to delete a document.
      */
     @Operation(summary = "Delete a document")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{documentId}")
     public ResponseEntity<String> delete(
-            @Parameter(description = "Document identifier (UUID)", required = true)
-            @NotNull @PathVariable String id) throws DocumentException
+            @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
+            @NotNull @PathVariable String documentId) throws EntityException
     {
-        servicePerson.getDocumentService().deleteById(UUID.fromString(id));
+        servicePerson.getDocumentService().deleteById(UUID.fromString(documentId));
 
-        return ResponseEntity.ok(String.format("Document with identifier: '%s' has been deleted successfully!", id));
+        return ResponseEntity.ok(String.format("Document id: '%s' deleted successfully!", documentId));
     }
 
     /**
@@ -283,7 +282,7 @@ public class DocumentController
     }
 
     /**
-     * Queries for documents matching the given query conditions.
+     * Query for documents matching the given query conditions.
      * @param query Document query object.
      * @return List of matching documents.
      * @throws QueryConditionException Thrown to indicate an error occurred while querying for documents.
@@ -303,7 +302,7 @@ public class DocumentController
     }
 
     /**
-     * Uploads a document.
+     * Upload a document (multipart file).
      * @param file File to upload.
      * @return Document server containing the uploaded file.
      * @throws IOException Thrown to indicate an error occurred when trying to upload a document.

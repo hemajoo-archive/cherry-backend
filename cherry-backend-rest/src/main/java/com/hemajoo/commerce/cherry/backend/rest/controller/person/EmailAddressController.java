@@ -57,7 +57,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Tag(name = "Email Addresses")
+@Tag(name = "Email Address REST controller", description = "Set of REST-API endpoints to manage the email address entities.")
 @ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressService.class })
 //@GroupSequence( { EmailAddressController.class, BasicValidation.class, ExtendedValidation.class } )
 @Validated
