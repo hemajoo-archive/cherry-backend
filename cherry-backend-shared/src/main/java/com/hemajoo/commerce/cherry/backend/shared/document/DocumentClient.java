@@ -129,8 +129,6 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     public DocumentClient()
     {
         super(EntityType.DOCUMENT);
-
-        setActive();
     }
 
     /**
@@ -142,7 +140,6 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     {
         super(EntityType.DOCUMENT);
 
-        setActive();
         this.documentType = documentType;
         setParent(parentIdentity);
     }

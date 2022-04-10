@@ -117,13 +117,13 @@ public class DocumentService implements IDocumentService
 
     @Transactional
     @Override
-    public DocumentServer update(final @NonNull DocumentServer document) throws DocumentException, EntityException
+    public DocumentServer update(final @NonNull DocumentServer document) throws EntityException
     {
         return save(document);
     }
 
     @Override
-    public DocumentServer updateMetadata(final @NonNull DocumentClient document) throws DocumentException, EntityException
+    public DocumentServer updateMetadata(final @NonNull DocumentClient document) throws EntityException
     {
         DocumentServer serverDocument = documentRepository.findById(document.getId()).orElse(null);
         if (serverDocument == null)
@@ -133,17 +133,17 @@ public class DocumentService implements IDocumentService
 
         DocumentClient original =  converter.fromServerToClient(serverDocument);
 
-        LOGGER.debug(String.format("Start detecting changes on properties for entity: %s", document.getIdentity()));
+        LOGGER.debug(String.format("%s detecting changes on properties...", document.getIdentity()));
         List<ValueChange> changes = filterDocumentChanges(getPropertyChanges(original, document), DocumentFilterMetadata.build());
         if (!changes.isEmpty())
         {
             applyPropertyChanges(serverDocument, changes);
             serverDocument = documentRepository.save(serverDocument);
-            LOGGER.debug(String.format("Updated %s", document.getIdentity()));
+            LOGGER.debug(String.format("%s updated successfully", document.getIdentity()));
         }
         else
         {
-            LOGGER.debug(String.format("No change detected on properties for entity: %s", document.getIdentity()));
+            LOGGER.debug(String.format("%s no change detected on properties!", document.getIdentity()));
         }
 
         return serverDocument;
@@ -167,7 +167,7 @@ public class DocumentService implements IDocumentService
      * @throws EntityException Thrown to indicate an error occurred when trying to connect retrieve an entity.
      * @throws DocumentException Thrown to indicate an error occurred when trying to apply changes on document properties.
      */
-    private void applyPropertyChanges(final @NonNull DocumentServer documentServer, final @NonNull List<ValueChange> changes) throws EntityException, DocumentException
+    private void applyPropertyChanges(final @NonNull DocumentServer documentServer, final @NonNull List<ValueChange> changes) throws EntityException
     {
         for (ValueChange change : changes)
         {

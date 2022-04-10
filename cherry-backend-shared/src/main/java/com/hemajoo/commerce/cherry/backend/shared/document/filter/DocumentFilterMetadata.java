@@ -25,34 +25,40 @@ import com.hemajoo.commerce.cherry.backend.shared.base.filter.AbstractFilter;
 public class DocumentFilterMetadata extends AbstractFilter
 {
     /**
-     * Filter for the document metadata name.
+     * Filter for the document metadata: name.
      */
     @JsonIgnore
     public static final String DOCUMENT_METADATA_NAME = "name";
 
     /**
-     * Filter for the document metadata description.
+     * Filter for the document metadata: description.
      */
     @JsonIgnore
     public static final String DOCUMENT_METADATA_DESCRIPTION = "description";
 
     /**
-     * Filter for the document metadata reference.
+     * Filter for the document metadata: reference.
      */
     @JsonIgnore
     public static final String DOCUMENT_METADATA_REFERENCE = "reference";
 
     /**
-     * Filter for the document metadata type.
+     * Filter for the document metadata: document type.
      */
     @JsonIgnore
     public static final String DOCUMENT_METADATA_TYPE = "documentType";
 
     /**
-     * Filter for the document metadata tags.
+     * Filter for the document metadata: tags.
      */
     @JsonIgnore
     public static final String DOCUMENT_METADATA_TAGS = "tags";
+
+    /**
+     * Filter for the document metadata: status type.
+     */
+    @JsonIgnore
+    public static final String DOCUMENT_METADATA_STATUS_TYPE = "statusType";
 
     /**
      * Creates a new <b>document metadata</b> filter object.
@@ -64,6 +70,7 @@ public class DocumentFilterMetadata extends AbstractFilter
         filters.add(DOCUMENT_METADATA_REFERENCE);
         filters.add(DOCUMENT_METADATA_DESCRIPTION);
         filters.add(DOCUMENT_METADATA_NAME);
+        filters.add(DOCUMENT_METADATA_STATUS_TYPE);
     }
 
     public static DocumentFilterMetadata build()

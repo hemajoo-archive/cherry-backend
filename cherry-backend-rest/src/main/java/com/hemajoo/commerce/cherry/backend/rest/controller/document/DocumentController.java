@@ -166,16 +166,10 @@ public class DocumentController
     @PutMapping("/update/metadata/{id}")
     //@Transactional
     public ResponseEntity<String> updateMetadata(
-            //@Parameter(name = "id", description = "Document identifier (UUID)", required = true)
+            @Parameter(name = "id", description = "Document identifier (UUID)", required = true)
             @PathVariable String id,
-            @RequestBody DocumentClient document) throws DocumentException, EntityException
+            @RequestBody DocumentClient document) throws EntityException
     {
-//        DocumentServer documentServer = servicePerson.getDocumentService().findById(UUID.fromString(id));
-//        if (documentServer == null)
-//        {
-//            return new ResponseEntity<>(String.format("Document with id: '%s' not found!", id), HttpStatus.NOT_FOUND);
-//        }
-
         document.setId(UUID.fromString(id));
 
         servicePerson.getDocumentService().updateMetadata(document);

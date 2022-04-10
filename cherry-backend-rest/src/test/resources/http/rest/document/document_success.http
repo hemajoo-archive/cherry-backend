@@ -16,7 +16,7 @@ GET http://{{host}}/api/v1/document/count
 
 ###
 // Retrieve a document
-GET http://{{host}}/api/v1/document/get/2b0aea52-4b54-4025-b7fd-43c72d00d8d3
+GET http://{{host}}/api/v1/document/get/26fdbf7a-28e2-4699-a981-9246f40859cc
 
 
 
@@ -144,8 +144,23 @@ DELETE http://{{host}}/api/v1/document/delete/096b0444-a7e1-4f57-a3a0-6d7d451fc0
 ###
 // Update a document metadata: name
 PUT http://{{host}}/api/v1/document/update/metadata/84b6f89a-d1bb-4aca-a8f2-2b82a6444892
+Content-Type: application/json
 
 {
   "name": "Updated document name",
   "description": "Updated description"
+}
+
+###
+// Update a document metadata
+PUT http://{{host}}/api/v1/document/update/metadata/26fdbf7a-28e2-4699-a981-9246f40859cc
+Content-Type: application/json
+
+{
+  "name": "Borderlands 2",
+  "description": "Borderlands 2 is a 2012 first-person shooter video game developed by Gearbox Software and published by 2K Games. Taking place five years following the events of Borderlands (2009).",
+  "reference": "https://en.wikipedia.org/wiki/Borderlands_2",
+  "tags": "Game, Sci-Fi, Videa, First Person Shooter",
+  "statusType": "ACTIVE",
+  "documentType": "DOCUMENT_GENERIC"
 }
