@@ -163,7 +163,11 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
 
         this.parent = parent;
         this.parentType = parent != null ? parent.getEntityType() : null;
-        LOGGER.debug(String.format("%s has parent set to: %s", getIdentity(), parent.getIdentity()));
+
+        if (parent != null)
+        {
+            LOGGER.debug(String.format("%s has parent set to: %s", getIdentity(), parent.getIdentity()));
+        }
     }
 
     @Override
