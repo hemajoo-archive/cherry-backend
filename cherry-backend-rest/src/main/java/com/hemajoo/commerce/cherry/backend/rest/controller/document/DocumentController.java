@@ -87,7 +87,7 @@ public class DocumentController
      * Service to count the number of documents.
      * @return Number of documents.
      */
-    @Operation(summary = "Count the total number of documents")
+    @Operation(summary = "Count the documents.", description = "Count the total number of documents.", tags = { "Count endpoints" })
     @GetMapping("/count")
     public long count()
     {
@@ -100,8 +100,8 @@ public class DocumentController
      * @return Document matching the given document identifier.
      * @throws DocumentException Thrown to indicate an error occurred when trying to retrieve a document.
      */
-    @Operation(summary = "Retrieve a document")
-    @GetMapping("/get/{id}")
+    @Operation(summary = "Retrieve a document.", description = "Retrieve a document information given its identifier.", tags = { "Get endpoints" })
+    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DocumentClient> get(
             @Parameter(description = "Document identifier", required = true)
             @NotNull @PathVariable String id) throws DocumentException
@@ -123,7 +123,7 @@ public class DocumentController
      * @return Response.
      * @throws DocumentContentException Thrown to indicate an error occurred while trying to create a random document.
      */
-    @Operation(summary = "Create a new random document")
+    @Operation(summary = "Create a new random document.", description = "Create a new random document given the parent entity this document will belong to.", tags = { "Create endpoints" })
     @PostMapping("/random")
     public ResponseEntity<String> random(
             @Parameter(name = "parentType", description = "Parent entity type", required = true)
@@ -162,7 +162,7 @@ public class DocumentController
      * @return Response.
      * @throws EntityException Thrown to indicate an error occurred while trying to update a document metadata.
      */
-    @Operation(summary = "Update a document metadata")
+    @Operation(summary = "Update a document", description = "Update a document metadata information.", tags = { "Update endpoints" })
     @PutMapping("/update/metadata/{documentId}")
     public ResponseEntity<String> updateMetadata(
             @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
@@ -182,7 +182,7 @@ public class DocumentController
      * @return Response.
      * @throws EntityException Thrown to indicate an error occurred when trying to delete a document.
      */
-    @Operation(summary = "Delete a document")
+    @Operation(summary = "Delete a document.", description = "Delete a document given its identifier.", tags = { "Delete endpoints" })
     @DeleteMapping("/delete/{documentId}")
     public ResponseEntity<String> delete(
             @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
@@ -205,7 +205,7 @@ public class DocumentController
      * @return Response message.
      * @throws DocumentException Thrown to indicate an error occurred with the document type specified.
      */
-    @Operation(summary = "Upload a document")
+    @Operation(summary = "Upload a document.", description = "Upload a document and its content as a multipart file.", tags = { "Upload endpoints" })
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> upload(@RequestPart("file") MultipartFile file,
                                          @RequestParam(required = false) String name,
@@ -214,7 +214,7 @@ public class DocumentController
                                          @RequestParam(required = false) String tags,
                                          @RequestParam DocumentType documentType,
                                          @RequestParam EntityType parentType,
-                                         @NotNull @RequestParam String parentId) throws DocumentException, EntityException
+                                         @NotNull @RequestParam String parentId) throws EntityException
     {
         DocumentServer document;
 
@@ -262,6 +262,26 @@ public class DocumentController
     }
 
     /**
+     * Retrieve the documents belonging to the given parent entity.
+     * @param parentId Parent entity identifier.
+     * @return List of matching documents.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the parent's documents
+     */
+    @Operation(summary = "Retrieve the documents of a parent entity.", description = "Retrieve the documents belonging to a given parent entity identifier.")
+    @GetMapping(value = "/parent/{parentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<DocumentClient>> getParentDocuments(
+            @Parameter(name = "parentId", description = "Parent entity identifier (UUID).", required = true)
+            @PathVariable UUID parentId) throws EntityException
+    {
+        List<DocumentClient> list = servicePerson.getDocumentService().findByParentId(parentId.toString())
+                .stream()
+                .map(element -> converterDocument.fromServerToClient(element))
+                .toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    /**
      * Search for documents matching the given query conditions.
      * @param query Document query object.
      * @return List of matching documents.
@@ -287,7 +307,7 @@ public class DocumentController
      * @return List of matching documents.
      * @throws QueryConditionException Thrown to indicate an error occurred while querying for documents.
      */
-    @Operation(summary = "Queries for documents", description = "Queries for documents matching the query conditions.")
+    @Operation(summary = "Query for documents", description = "Query for documents matching a given query object containing conditions.", tags = { "Query endpoints" })
     @PatchMapping(value = "/query", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
     public ResponseEntity<List<EntityIdentity>> query(final @RequestBody @NotNull DocumentQuery query) throws QueryConditionException
     {

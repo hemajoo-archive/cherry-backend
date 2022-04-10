@@ -164,3 +164,16 @@ Content-Type: application/json
   "statusType": "ACTIVE",
   "documentType": "DOCUMENT_GENERIC"
 }
+
+
+
+###
+
+// ################################################
+// PARENT
+// ################################################
+
+###
+// Get the documents belonging to a parent entity identifier
+GET http://{{host}}/api/v1/document/parent/5de1cb62-e65a-4293-9b25-1fe29cf15569
+
