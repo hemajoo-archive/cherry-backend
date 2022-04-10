@@ -14,15 +14,19 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.IDocumentServer;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.javers.core.metamodel.annotation.DiffIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -40,7 +44,7 @@ import java.util.UUID;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "ENTITY")
+//@Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ServerEntity extends AbstractServerStatusEntity implements IServerEntity
 {
@@ -57,6 +61,7 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
     /**
      * Entity identifier.
      */
+    @DiffIgnore
     @Getter
     @Setter
     @Id
@@ -99,7 +104,15 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
     private String reference;
 
     /**
-     * Documents associated with this entity.
+     * Tags.
+     */
+    @Getter
+    @Setter
+    @Column(name = "TAGS")
+    private String tags;
+
+    /**
+     * Documents.
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -107,7 +120,7 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
     private List<DocumentServer> documents = null;
 
     /**
-     * The entity (parent) this entity (child) belongs to.
+     * The parent entity.
      */
     @Getter
     @ToString.Exclude
@@ -134,31 +147,32 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
         this.entityType = type;
     }
 
-    /**
-     * Adds a document to this entityDocumentEntity.
-     * @param document Document.
-     * @throws DocumentException Thrown to indicate an error occurred when trying to add a document to another document.
-     */
-    public final void addDocument(final @NonNull DocumentServer document) throws DocumentException
+    @Override
+    public final EntityIdentity getIdentity()
     {
-        if (entityType == EntityType.DOCUMENT && document.getEntityType() == EntityType.DOCUMENT)
-        {
-            throw new DocumentException("Cannot add a document to another document!");
-        }
-
-        if (documents == null)
-        {
-            documents = new ArrayList<>();
-        }
-
-        documents.add(document);
-        document.setParent(this);
+        return EntityIdentity.from(entityType, id);
     }
 
-    /**
-     * Returns the documents associated to this entity.
-     * @return List of documents.
-     */
+    @Override
+    public void setParent(final ServerEntity parent) throws EntityException
+    {
+        if (parent == this)
+        {
+            throw new EntityException("Cannot set itself as parent!");
+        }
+
+        this.parent = parent;
+        this.parentType = parent != null ? parent.getEntityType() : null;
+    }
+
+    @Override
+    public final int getDocumentCount()
+    {
+        return documents.size();
+    }
+
+    @JsonIgnore
+    @Override
     public List<DocumentServer> getDocuments()
     {
         if (entityType == EntityType.MEDIA)
@@ -170,24 +184,58 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
     }
 
     @Override
-    public final EntityIdentity getIdentity()
+    public final boolean existDocument(final @NonNull IDocumentServer document)
     {
-        return new EntityIdentity(id, entityType);
+        return existDocument(document.getId());
     }
 
-    /**
-     * Sets the parent entity this entity belongs to.
-     * @param parent Parent entity.
-     * @throws RuntimeException Thrown to indicate an error occurred while trying to set the parent entity.
-     */
-    public void setParent(final ServerEntity parent) throws RuntimeException
+    @Override
+    public final boolean existDocument(final UUID documentId)
     {
-        if (parent == this)
+        if (documentId != null)
         {
-            throw new RuntimeException("Cannot set itself as parent!");
+            return documents.stream().anyMatch(doc -> doc.getId().equals(documentId));
         }
 
-        this.parent = parent;
-        this.parentType = parent != null ? parent.getEntityType() : null;
+        return false; // Random documents do not have a UUID assigned yet by the database!
+    }
+
+    @Override
+    public final void addDocument(final @NonNull IDocumentServer document) throws DocumentException
+    {
+        if (entityType == EntityType.DOCUMENT && document.getEntityType() == EntityType.DOCUMENT)
+        {
+            throw new DocumentException("Cannot add a document to another document!");
+        }
+
+        if (documents == null)
+        {
+            documents = new ArrayList<>();
+        }
+
+        if (!existDocument(document))
+        {
+            documents.add((DocumentServer) document);
+            try
+            {
+                document.setParent(this);
+            }
+            catch (EntityException e)
+            {
+                throw new DocumentException(e);
+            }
+        }
+    }
+
+    @Override
+    public final void removeDocument(@NonNull IDocumentServer document)
+    {
+        removeDocument(document.getId());
+    }
+
+    @Override
+    public final void removeDocument(@NonNull UUID documentId)
+    {
+        documents.removeIf(doc -> doc.getId().equals(documentId));
     }
 }

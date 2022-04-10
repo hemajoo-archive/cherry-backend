@@ -25,7 +25,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.EmailAd
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import org.javers.core.diff.Diff;
@@ -107,7 +107,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     @SuppressWarnings("java:S5977")
     final void testConvertIdentityToServerEmailAddressNotExisting()
     {
-        EntityIdentity identity = new EntityIdentity(UUID.randomUUID(), EntityType.EMAIL_ADDRESS);
+        EntityIdentity identity = EntityIdentity.from(EntityType.EMAIL_ADDRESS, UUID.randomUUID());
 
         assertThatThrownBy(() -> converterEmailAddress.fromIdentityToServer(identity))
                 .isInstanceOf(EntityException.class);
@@ -131,7 +131,7 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerEmailAddressWithNonExistentOwner()
     {
         EmailAddressClient client = EmailAddressRandomizer.generateClientEntity(true);
-        client.setParent(new EntityIdentity(EntityType.EMAIL_ADDRESS,UUID.randomUUID()));
+        client.setParent(EntityIdentity.from(EntityType.EMAIL_ADDRESS,UUID.randomUUID()));
 
         // If the owner of the client email address to convert does not exist, ensure an exception is thrown!
         assertThatThrownBy(() -> converterEmailAddress.fromClientToServer(client))

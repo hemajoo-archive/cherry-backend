@@ -155,7 +155,6 @@
         <dependency>
             <groupId>org.javers</groupId>
             <artifactId>javers-core</artifactId>
-            <version>6.5.2</version>
         </dependency>
 
         <!-- Cherry - Backend Commons: https://github.com/ressec/cherry-backend

@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddres
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonQuery;
 import lombok.NonNull;
 

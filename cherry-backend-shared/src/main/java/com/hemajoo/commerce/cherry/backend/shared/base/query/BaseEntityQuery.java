@@ -65,6 +65,12 @@ public class BaseEntityQuery extends AbstractStatusQuery
     public static final String BASE_PARENT_ID = "parentId";
 
     /**
+     * Field: <b>parent</b> of an entity.
+     */
+    @JsonIgnore
+    public static final String BASE_PARENT = "parent";
+
+    /**
      * Field: <b>parentType</b> of an entity.
      */
     @JsonIgnore
@@ -135,7 +141,7 @@ public class BaseEntityQuery extends AbstractStatusQuery
                 .withFieldType(DataType.ENUM)
                 .build());
         fields.add(QueryField.builder()
-                .withFieldName(BASE_PARENT_ID)
+                .withFieldName(BASE_PARENT)
                 .withFieldType(DataType.UUID)
                 .build());
         fields.add(QueryField.builder()

@@ -1,0 +1,12 @@
+{
+  "entityType": "DOCUMENT",
+  "conditions":
+  [
+    {
+      "field": "statusType",
+      "values":
+      [ "ACTIVE" ],
+      "operator": "EQUAL"
+    }
+  ]
+}

@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServe
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IEmailAddressService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
@@ -84,7 +85,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to check.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressId(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
+    public void validateEmailAddressId(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException, DocumentException
     {
         validateEmailAddressId(emailAddress.getId());
     }
@@ -96,7 +97,7 @@ public final class EmailAddressValidationEngine
      * @param id Email address identifier.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressId(final @NonNull UUID id) throws EmailAddressException
+    public void validateEmailAddressId(final @NonNull UUID id) throws EmailAddressException, DocumentException
     {
         if (serviceEmailAddress.findById(id) == null)
         {
@@ -173,7 +174,7 @@ public final class EmailAddressValidationEngine
      * @param emailAddress Email address to update.
      * @throws EmailAddressException Thrown to indicate an error occurred when trying to validate an email address.
      */
-    public void validateEmailForUpdate(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException
+    public void validateEmailForUpdate(final @NonNull EmailAddressClient emailAddress) throws EmailAddressException, DocumentException
     {
         validateEmailAddressId(emailAddress.getId());
         validateEmailEntityType(emailAddress.getEntityType());

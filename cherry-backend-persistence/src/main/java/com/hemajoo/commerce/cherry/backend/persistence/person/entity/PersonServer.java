@@ -19,6 +19,7 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
@@ -246,7 +247,15 @@ public class PersonServer extends ServerEntity implements IPersonServer, IServer
                     emailAddress.getParent().getId()));
         }
 
-        emailAddress.setParent(this);
+        try
+        {
+            emailAddress.setParent(this);
+        }
+        catch (EntityException e)
+        {
+            throw new EmailAddressException(e);
+        }
+
         emailAddresses.add(emailAddress);
     }
 
@@ -391,9 +400,9 @@ public class PersonServer extends ServerEntity implements IPersonServer, IServer
     /**
      * Removes an email address.
      * @param email Email address to remove.
-     * @throws EmailAddressException Thrown to indicate an error occurred when trying to remove an email address.
+     * @throws EntityException Thrown to indicate an error occurred when trying to remove an email address.
      */
-    public final void removeEmailAddress(final @NonNull EmailAddressServer email) throws EmailAddressException
+    public final void removeEmailAddress(final @NonNull EmailAddressServer email) throws EntityException
     {
         email.setParent(null);
         emailAddresses.remove(email);

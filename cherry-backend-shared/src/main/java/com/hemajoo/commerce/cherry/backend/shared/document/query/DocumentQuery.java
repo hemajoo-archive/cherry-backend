@@ -12,13 +12,14 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.document;
+package com.hemajoo.commerce.cherry.backend.shared.document.query;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.BaseEntityQuery;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.DataType;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryField;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 
 /**
  * Represents a <b>query</b> object for issuing queries on documents.
@@ -47,9 +48,6 @@ public class DocumentQuery extends BaseEntityQuery
 
     @JsonIgnore
     public static final String DOCUMENT_TAGS = "tags";
-
-    @JsonIgnore
-    public static final String DOCUMENT_OWNER = "owner";
 
     /**
      * Creates a new <b>query</b> instance for the documents.
@@ -86,10 +84,6 @@ public class DocumentQuery extends BaseEntityQuery
         fields.add(QueryField.builder()
                 .withFieldName(DOCUMENT_TAGS)
                 .withFieldType(DataType.STRING)
-                .build());
-        fields.add(QueryField.builder()
-                .withFieldName(DOCUMENT_OWNER)
-                .withFieldType(DataType.UUID)
                 .build());
     }
 }

@@ -117,7 +117,7 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
     @Override
     public final EntityIdentity getIdentity()
     {
-        return new EntityIdentity(id, entityType);
+        return new EntityIdentity(entityType, id);
     }
 
     /**

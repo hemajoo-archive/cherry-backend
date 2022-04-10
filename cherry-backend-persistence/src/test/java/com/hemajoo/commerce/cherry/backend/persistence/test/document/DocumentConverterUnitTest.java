@@ -22,8 +22,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.converter.Docume
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,7 +92,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Convert an identity to a server document")
-    final void testConvertIdentityToServerDocument() throws DocumentException
+    final void testConvertIdentityToServerDocument() throws EntityException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
         DocumentServer reference = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
@@ -117,15 +118,15 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     @SuppressWarnings("java:S5977")
     final void testConvertIdentityToServerDocumentNotExisting()
     {
-        EntityIdentity identity = new EntityIdentity(UUID.randomUUID(), EntityType.DOCUMENT);
+        EntityIdentity identity = EntityIdentity.from(EntityType.DOCUMENT, UUID.randomUUID());
 
         assertThatThrownBy(() -> converterDocument.fromIdentityToServer(identity))
-                .isInstanceOf(DocumentException.class);
+                .isInstanceOf(EntityException.class);
     }
 
     @Test
     @DisplayName("Convert a client document with a owner to a server document")
-    final void testConvertClientToServerDocumentWithOwner() throws DocumentException
+    final void testConvertClientToServerDocumentWithOwner() throws EntityException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
         DocumentServer server = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
@@ -154,7 +155,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
         // If the owner of the client document to convert does not exist, ensure an exception is raised!
         assertThatThrownBy(() -> converterDocument.fromClientToServer(client))
-                .isInstanceOf(DocumentException.class);
+                .isInstanceOf(EntityException.class);
     }
 
     @Test
@@ -181,7 +182,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Convert a list of client documents to a list of server documents")
-    final void testConvertClientToServerDocumentList() throws DocumentException
+    final void testConvertClientToServerDocumentList() throws EntityException
     {
         List<DocumentClient> clients = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -230,7 +231,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Copy a server document")
-    final void testCopyServerDocument() throws DocumentException
+    final void testCopyServerDocument() throws EntityException
     {
         DocumentServer document = DocumentRandomizer.generateServerEntity(true);
         DocumentServer copy = DocumentConverter.copy(document);
@@ -247,7 +248,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Copy a server document")
-    final void testCopyClientDocument() throws DocumentException
+    final void testCopyClientDocument() throws EntityException
     {
         DocumentClient document = DocumentRandomizer.generateClientEntity(true);
         DocumentClient copy = DocumentConverter.copy(document);

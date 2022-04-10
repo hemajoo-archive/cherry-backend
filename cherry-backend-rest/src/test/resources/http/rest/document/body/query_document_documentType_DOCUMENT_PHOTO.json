@@ -1,0 +1,12 @@
+{
+  "entityType": "DOCUMENT",
+  "conditions":
+  [
+    {
+      "field": "documentType",
+      "values":
+      [ "DOCUMENT_PHOTO" ],
+      "operator": "EQUAL"
+    }
+  ]
+}

@@ -12,7 +12,7 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.document;
+package com.hemajoo.commerce.cherry.backend.shared.document.exception;
 
 import java.io.Serial;
 

@@ -18,23 +18,11 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.IServerEntity
 import com.hemajoo.commerce.cherry.backend.shared.document.IDocument;
 
 /**
- * Behavior of a server document entity.
+ * A server <b>document</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface IDocumentServer extends IDocument, IServerEntity
 {
-//    /**
-//     * Returns the owner entity of this document.
-//     * @param <T> Type of the owner.
-//     * @return Owner entity.
-//     */
-//    <T extends ServerEntity> T getOwner();
-//
-//    /**
-//     * Sets the owner entity of this document.
-//     * @param <T> Type of the owner.
-//     * @param owner Owner entity.
-//     */
-//    <T extends ServerEntity> void setOwner(final T owner);
+    // Marker interface
 }

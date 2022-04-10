@@ -18,8 +18,8 @@ import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberException;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -53,9 +53,9 @@ public abstract class AbstractPhoneNumberMapper
      * @param context Context object.
      * @param entityManager Entity manager.
      * @return Client phone number entity.
-     * @throws PhoneNumberException Thrown to indicate an error occurred while trying to convert a phone number entity.
+     * @throws EntityException Thrown to indicate an error occurred while trying to convert a phone number entity.
      */
-    public abstract PhoneNumberServer fromClientToServer(PhoneNumberClient entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws PhoneNumberException;
+    public abstract PhoneNumberServer fromClientToServer(PhoneNumberClient entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
 
     /**
      * Maps from a server phone number entity to a client phone number entity.
@@ -70,16 +70,16 @@ public abstract class AbstractPhoneNumberMapper
      * @param entity Server phone number entity.
      * @param context Context object.
      * @return Copy of the server phone number entity.
-     * @throws PhoneNumberException Thrown to indicate an error occurred while trying to copy a phone number entity.
+     * @throws EntityException Thrown to indicate an error occurred while trying to copy a phone number entity.
      */
-    public abstract PhoneNumberServer copy(PhoneNumberServer entity, @Context CycleAvoidingMappingContext context) throws PhoneNumberException;
+    public abstract PhoneNumberServer copy(PhoneNumberServer entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 
     /**
      * Copy a client phone number entity.
      * @param entity Client phone number entity.
      * @param context Context object.
      * @return Copy of the client phone number entity.
-     * @throws PhoneNumberException Thrown to indicate an error occurred while trying to copy a phone number entity.
+     * @throws EntityException Thrown to indicate an error occurred while trying to copy a phone number entity.
      */
-    public abstract PhoneNumberClient copy(PhoneNumberClient entity, @Context CycleAvoidingMappingContext context) throws PhoneNumberException;
+    public abstract PhoneNumberClient copy(PhoneNumberClient entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 }
