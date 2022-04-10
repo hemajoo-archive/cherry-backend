@@ -1,0 +1,12 @@
+{
+  "entityType": "DOCUMENT",
+  "conditions":
+  [
+    {
+      "field": "extension",
+      "values":
+      [ "jpg" ],
+      "operator": "EQUAL"
+    }
+  ]
+}

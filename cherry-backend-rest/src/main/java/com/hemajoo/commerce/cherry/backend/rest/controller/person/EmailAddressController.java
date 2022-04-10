@@ -30,6 +30,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.validation.validat
 import com.hemajoo.commerce.cherry.backend.shared.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
@@ -40,6 +41,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -49,14 +51,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * REST controller providing service endpoints to manage the email addresses.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Tag(name = "Email Addresses")
+@Tag(name = "Email Address REST controller", description = "Set of REST-API endpoints to manage the email address entities.")
 @ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressService.class })
 //@GroupSequence( { EmailAddressController.class, BasicValidation.class, ExtendedValidation.class } )
 @Validated
@@ -105,11 +106,17 @@ public class EmailAddressController
     @GetMapping("/get/{id}")
     public ResponseEntity<EmailAddressClient> get(
             @Parameter(description = "Email address identifier", required = true)
-            @Valid @ValidEmailAddressId // Handles email id validation automatically, need both annotations!
+            /*@Valid @ValidEmailAddressId*/ // Handles email id validation automatically, need both annotations!
             @NotNull
-            @PathVariable String id)
+            @PathVariable String id) throws DocumentException
     {
         EmailAddressServer serverEmailAddress = servicePerson.getEmailAddressService().findById(UUID.fromString(id));
+
+        if (serverEmailAddress == null)
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmailAddress));
     }
 
@@ -159,29 +166,21 @@ public class EmailAddressController
      * Service to update an email address.
      * @param email Email address to update.
      * @return Updated email address.
-     * @throws EmailAddressException Thrown to indicate an error occurred while trying to update an email address.
+     * @throws EntityException Thrown to indicate an error occurred while trying to update an email address.
      */
     @Operation(summary = "Update an email address"/*, notes = "Update an email address given the new values."*/)
     @PutMapping("/update")
     //@Transactional
     public ResponseEntity<EmailAddressClient> update(
-            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody EmailAddressClient email) throws EmailAddressException
+            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody EmailAddressClient email) throws EntityException
     {
-        try
-        {
-            //emailAddressRuleEngine.validateEmailAddressId(email);
-            validationEmailAddress.validateEmailForUpdate(email);
+        validationEmailAddress.validateEmailForUpdate(email);
 
-            EmailAddressServer source = converterEmailAddress.fromClientToServer(email);
-            EmailAddressServer updated = servicePerson.getEmailAddressService().update(source);
-            EmailAddressClient client = converterEmailAddress.fromServerToClient(updated);
+        EmailAddressServer source = converterEmailAddress.fromClientToServer(email);
+        EmailAddressServer updated = servicePerson.getEmailAddressService().update(source);
+        EmailAddressClient client = converterEmailAddress.fromServerToClient(updated);
 
-            return ResponseEntity.ok(client);
-        }
-        catch (EntityException e)
-        {
-            throw new EmailAddressException(e);
-        }
+        return ResponseEntity.ok(client);
     }
 
     /**
@@ -220,7 +219,7 @@ public class EmailAddressController
         List<EmailAddressClient> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element))
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(clients);
     }
@@ -245,7 +244,7 @@ public class EmailAddressController
         List<EmailAddressClient> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element))
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(GenericEntityConverter.toIdList(clients));
     }

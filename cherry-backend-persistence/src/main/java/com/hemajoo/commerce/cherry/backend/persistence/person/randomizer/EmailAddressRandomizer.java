@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentS
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import lombok.experimental.UtilityClass;

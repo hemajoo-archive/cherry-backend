@@ -35,7 +35,6 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-//@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
 @Log4j2
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -71,17 +70,6 @@ public class EmailAddressServer extends ServerEntity implements IEmailAddress, I
     @Column(name = "ADDRESS_TYPE")
     private AddressType addressType;
 
-//    /**
-//     * The person identifier this email address belongs to.
-//     */
-//    @Getter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @JsonIgnoreProperties
-//    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "PERSON_ID", nullable = true)
-//    private ServerPersonEntity person;
-
     /**
      * Creates a new persistent email address.
      */
@@ -89,17 +77,4 @@ public class EmailAddressServer extends ServerEntity implements IEmailAddress, I
     {
         super(EntityType.EMAIL_ADDRESS);
     }
-
-//    @Override
-//    public void setParent(ServerBaseEntity parent) throws EmailAddressException
-//    {
-//        try
-//        {
-//            super.setParent(parent);
-//        }
-//        catch (Exception e)
-//        {
-//            throw new EmailAddressException(e);
-//        }
-//    }
 }

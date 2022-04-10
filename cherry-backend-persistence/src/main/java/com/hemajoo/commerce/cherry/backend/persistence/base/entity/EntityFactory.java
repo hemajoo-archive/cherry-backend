@@ -14,20 +14,21 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
+import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PostalAddressServer;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 /**
@@ -40,22 +41,32 @@ import java.util.UUID;
 public class EntityFactory
 {
     /**
-     * Document repository.
+     * Entity manager.
      */
-    @Autowired
-    private IDocumentService documentService;
+    @Getter
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
-     * Creates a server entity given its entity type and its identifier.
+     * Retrieves a server entity given its identity.
+     * @param identity Entity identity.
+     * @return Server entity object.
+     * @throws EntityException Thrown to indicate an error occurred when trying to retrieve the server entity object.
+     */
+    public final IServerEntity from(final @NonNull EntityIdentity identity) throws EntityException
+    {
+        return from(identity.getEntityType(), identity.getId());
+    }
+
+    /**
+     * Retrieves a server entity given its type and its identifier.
      * @param type Entity type.
      * @param uuid Entity identifier.
      * @return Server entity object.
-     * @throws EntityException Thrown to indicate an error occurred when trying to create the server entity object.
+     * @throws EntityException Thrown to indicate an error occurred when trying to retrieve the server entity object.
      */
     public final IServerEntity from(final EntityType type, final @NonNull UUID uuid) throws EntityException
     {
-        EntityManager entityManager = documentService.getEntityManager();
-
         switch (type)
         {
             case PERSON:

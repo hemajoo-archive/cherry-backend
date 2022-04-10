@@ -14,7 +14,6 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,28 +34,30 @@ public abstract class AbstractEntityAuditClient implements IEntityAudit
     /**
      * Entity creation date.
      */
-    @JsonProperty("createdDate")
+    //@JsonProperty("createdDate")
     @Schema(hidden = true)
     private Date createdDate;
 
     /**
      * Entity modification date.
      */
-    @JsonProperty("modifiedDate")
+    //@JsonProperty("modifiedDate")
     @Schema(hidden = true)
     private Date modifiedDate;
 
     /**
      * Entity creation author.
      */
-    @JsonProperty("createdBy")
-    @Schema(name = "createdBy", description = "Person being the author of this entity.", required = false, example = "Henry.Jacobson@gmail.com")
+    //@JsonProperty("createdBy")
+//    @Schema(name = "createdBy", description = "User being the initial author of this entity.", required = false, hidden = true)
+    @Schema(hidden = true)
     private String createdBy;
 
     /**
      * Entity modification author.
      */
-    @JsonProperty("modifiedBy")
-    @Schema(name = "modifiedBy", description = "Last person having modified this entity.", required = false, example = "Henry.Jacobson@gmail.com")
+    //@JsonProperty("modifiedBy")
+//    @Schema(name = "modifiedBy", description = "User being the last who has modified this entity", required = false, hidden = true)
+    @Schema(hidden = true)
     private String modifiedBy;
 }

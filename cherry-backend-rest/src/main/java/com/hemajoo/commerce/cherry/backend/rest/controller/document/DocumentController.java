@@ -24,11 +24,13 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactor
 import com.hemajoo.commerce.cherry.backend.persistence.document.converter.DocumentConverter;
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
-import com.hemajoo.commerce.cherry.backend.shared.document.*;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.query.DocumentQuery;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,7 +45,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -52,11 +53,11 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller providing service endpoints to manage the document entity.
+ * <b>REST controller</b> exposing endpoints to manage the document entities.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Tag(name = "Document")
+@Tag(name = "Document REST controller", description = "Set of REST-API endpoints to manage the document entities.")
 @Validated
 @RestController
 @RequestMapping("/api/v1/document")
@@ -94,9 +95,9 @@ public class DocumentController
     }
 
     /**
-     * Retrieves a document given its identifier.
+     * Retrieve a document given its identifier.
      * @param id Document identifier.
-     * @return Document matching the given identifier.
+     * @return Document matching the given document identifier.
      * @throws DocumentException Thrown to indicate an error occurred when trying to retrieve a document.
      */
     @Operation(summary = "Retrieve a document")
@@ -116,41 +117,80 @@ public class DocumentController
     }
 
     /**
-     * Service to create a random document.
-     * @param personId Person identifier being the parent of the document to create.
+     * Create a random document for the given parent entity.
+     * @param parentType Parent entity type.
+     * @param parentId Parent entity identifier.
      * @return Response.
      * @throws DocumentContentException Thrown to indicate an error occurred while trying to create a random document.
      */
     @Operation(summary = "Create a new random document")
     @PostMapping("/random")
     public ResponseEntity<String> random(
-            @Parameter(name = "personId", description = "Person identifier (UUID) being the parent of the new document", required = true)
-            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentException
+            @Parameter(name = "parentType", description = "Parent entity type", required = true)
+            @NotNull @RequestParam EntityType parentType,
+            @Parameter(name = "parentId", description = "Parent entity identifier (UUID)", required = true)
+            @NotNull @RequestParam UUID parentId) throws DocumentException
     {
-        DocumentServer document = DocumentRandomizer.generateServerEntity(false);
+        IServerEntity parent;
 
-        PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(personId));
-        document.setParent(person);
-        document = servicePerson.getDocumentService().save(document);
+        EntityIdentity identity = EntityIdentity.from(parentType, parentId);
 
-        return ResponseEntity.ok(String.format("Successfully saved document with id: '%s', with content id: '%s'", document.getId(), document.getContentId()));
+        try
+        {
+            parent = factory.from(identity);
+            if (parent == null)
+            {
+                return new ResponseEntity<>(String.format("Parent entity: '%s' not found!", identity), HttpStatus.NOT_FOUND);
+            }
+
+            DocumentServer document = DocumentRandomizer.generateServerEntity(false);
+            document.setParent((ServerEntity) parent);
+            document = servicePerson.getDocumentService().save(document);
+
+            return ResponseEntity.ok(String.format("Saved document with id: '%s', with content id: '%s' and parent set to: '%s'", document.getId(), document.getContentId(), parent.getIdentity()));
+        }
+        catch (EntityException e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
-     * Deletes a document given its identifier.
-     * @param id Document identifier.
+     * Update a document metadata.
+     * @param documentId Document identifier to update.
+     * @param document Document (metadata) to update.
      * @return Response.
-     * @throws DocumentException Thrown to indicate an error occurred when trying to delete a document.
+     * @throws EntityException Thrown to indicate an error occurred while trying to update a document metadata.
+     */
+    @Operation(summary = "Update a document metadata")
+    @PutMapping("/update/metadata/{documentId}")
+    public ResponseEntity<String> updateMetadata(
+            @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
+            @PathVariable String documentId,
+            @RequestBody DocumentClient document) throws EntityException
+    {
+        document.setId(UUID.fromString(documentId));
+
+        servicePerson.getDocumentService().updateMetadata(document);
+
+        return ResponseEntity.ok(String.format("%s metadata updated successfully", document.getIdentity()));
+    }
+
+    /**
+     * Delete a document given its identifier.
+     * @param documentId Document identifier.
+     * @return Response.
+     * @throws EntityException Thrown to indicate an error occurred when trying to delete a document.
      */
     @Operation(summary = "Delete a document")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{documentId}")
     public ResponseEntity<String> delete(
-            @Parameter(description = "Document identifier (UUID)", required = true)
-            @NotNull @PathVariable String id) throws DocumentException
+            @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
+            @NotNull @PathVariable String documentId) throws EntityException
     {
-        servicePerson.getDocumentService().deleteById(UUID.fromString(id));
+        servicePerson.getDocumentService().deleteById(UUID.fromString(documentId));
 
-        return ResponseEntity.ok(String.format("Document with identifier: '%s' has been deleted successfully!", id));
+        return ResponseEntity.ok(String.format("Document id: '%s' deleted successfully!", documentId));
     }
 
     /**
@@ -242,7 +282,7 @@ public class DocumentController
     }
 
     /**
-     * Queries for documents matching the given query conditions.
+     * Query for documents matching the given query conditions.
      * @param query Document query object.
      * @return List of matching documents.
      * @throws QueryConditionException Thrown to indicate an error occurred while querying for documents.
@@ -262,7 +302,7 @@ public class DocumentController
     }
 
     /**
-     * Uploads a document.
+     * Upload a document (multipart file).
      * @param file File to upload.
      * @return Document server containing the uploaded file.
      * @throws IOException Thrown to indicate an error occurred when trying to upload a document.

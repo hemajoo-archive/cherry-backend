@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityClient;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
@@ -46,18 +48,18 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     private transient DocumentType documentType;
 
     /**
-     * Document file extension.
-     */
-    @Getter
-    @Setter
-    private String extension;
-
-    /**
      * Document tags.
      */
     @Getter
     @Setter
     private String tags;
+
+    /**
+     * Document file extension.
+     */
+    @Getter
+    @Setter
+    private String extension;
 
     /**
      * Document file name.
@@ -87,7 +89,7 @@ public class DocumentClient extends EntityClient implements IDocumentClient
      */
     @Getter
     @Setter
-    private String mimeType = "text/plain";
+    private String mimeType;
 
     /**
      * File path (in the content store).
@@ -95,12 +97,6 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     @Getter
     @Setter
     private String contentPath;
-
-//    /**
-//     * Document owner identity.
-//     */
-//    @Getter
-//    private EntityIdentity owner;
 
     @Getter
     @Transient
@@ -133,8 +129,6 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     public DocumentClient()
     {
         super(EntityType.DOCUMENT);
-
-        setActive();
     }
 
     /**
@@ -146,7 +140,6 @@ public class DocumentClient extends EntityClient implements IDocumentClient
     {
         super(EntityType.DOCUMENT);
 
-        setActive();
         this.documentType = documentType;
         setParent(parentIdentity);
     }
@@ -335,10 +328,4 @@ public class DocumentClient extends EntityClient implements IDocumentClient
                 ? (outputPath + end)
                 : (outputPath + File.separator + end);
     }
-
-//    @Override
-//    public final void setOwner(EntityIdentity owner)
-//    {
-//        this.owner = owner;
-//    }
 }

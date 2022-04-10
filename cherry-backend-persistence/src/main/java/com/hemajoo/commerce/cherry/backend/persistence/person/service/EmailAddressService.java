@@ -21,7 +21,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocu
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
@@ -81,13 +81,24 @@ public class EmailAddressService implements IEmailAddressService
     }
 
     @Override
-    public EmailAddressServer findById(UUID id)
+    public EmailAddressServer findById(UUID id) throws DocumentException
     {
-        return emailAddressRepository.findById(id).orElse(null);
+        EmailAddressServer emailAddress = emailAddressRepository.findById(id).orElse(null);
+        if (emailAddress != null)
+        {
+            for (DocumentServer document : findDocuments(id.toString()))
+            {
+                emailAddress.addDocument(document);
+            }
+        }
+
+        return emailAddress;
+
+//        return emailAddressRepository.findById(id).orElse(null);
     }
 
     @Override
-    public EmailAddressServer update(EmailAddressServer emailAddress) throws EmailAddressException
+    public EmailAddressServer update(EmailAddressServer emailAddress) throws EmailAddressException, DocumentException
     {
         EmailAddressServer original = findById(emailAddress.getId());
         return save(merge(emailAddress, original));
@@ -162,6 +173,12 @@ public class EmailAddressService implements IEmailAddressService
     public List<EmailAddressServer> findByParentId(final UUID parentId)
     {
         return emailAddressRepository.findByParentId(parentId);
+    }
+
+    @Override
+    public List<DocumentServer> findDocuments(final @NonNull String emailAddressId)
+    {
+        return documentService.findByParentId(emailAddressId);
     }
 
     @Override

@@ -16,12 +16,13 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.repository;
 
 
 import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentQuery;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.query.DocumentQuery;
 import lombok.NonNull;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,12 +33,6 @@ import java.util.UUID;
  */
 public interface IDocumentService
 {
-    /**
-     * Returns the entity manager.
-     * @return Entity manager.
-     */
-    EntityManager getEntityManager();
-
     /**
      * Returns the underlying repository.
      * @return Document repository.
@@ -57,6 +52,23 @@ public interface IDocumentService
      * @throws DocumentException raised if the given document id has not been found!
      */
     DocumentServer findById(UUID id) throws DocumentException;
+
+    /**
+     * Updates a document entity.
+     * @param document Document to update.
+     * @return Updated document.
+     * @throws DocumentException Thrown in case an error occurred while trying to update a document entity.
+     */
+    DocumentServer update(final DocumentServer document) throws DocumentException, EntityException;
+
+    /**
+     * Updates a document's metadata.
+     * @param document Client document containing the metadata information to update.
+     * @return Updated server document.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to update a document's metadata information.
+     * @throws EntityException
+     */
+    DocumentServer updateMetadata(@NonNull DocumentClient document) throws DocumentException, EntityException;
 
     /**
      * Saves a document.
@@ -106,4 +118,6 @@ public interface IDocumentService
      * @return List of documents matching the given criteria.
      */
     List<DocumentServer> search(final @NonNull DocumentQuery search) throws QueryConditionException;
+
+    List<DocumentServer> findByParentId(final @NonNull String parentId);
 }

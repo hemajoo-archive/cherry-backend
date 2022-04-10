@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.shared.document;
 
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntity;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 
 /**
  * Implementing this interface provides the behavior of a <b>document</b>.

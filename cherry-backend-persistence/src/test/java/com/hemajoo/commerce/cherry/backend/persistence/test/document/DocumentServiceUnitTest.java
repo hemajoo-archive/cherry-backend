@@ -23,9 +23,9 @@ import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgre
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryCondition;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryOperatorType;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentQuery;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.query.DocumentQuery;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.*;

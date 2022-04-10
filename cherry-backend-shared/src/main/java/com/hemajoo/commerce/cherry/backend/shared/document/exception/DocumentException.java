@@ -12,9 +12,9 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.backend.shared.document;
+package com.hemajoo.commerce.cherry.backend.shared.document.exception;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.CherryException;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 
@@ -26,7 +26,7 @@ import java.io.Serial;
  * @version 1.0.0
  */
 @SuppressWarnings("java:S110")
-public class DocumentException extends CherryException
+public class DocumentException extends EntityException
 {
     /**
      * Default serialization identifier.

@@ -16,12 +16,14 @@ package com.hemajoo.commerce.cherry.backend.persistence.document.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
+import org.javers.core.metamodel.annotation.DiffIgnore;
 import org.ressec.avocado.core.helper.FileHelper;
 import org.springframework.content.commons.annotations.ContentId;
 import org.springframework.content.commons.annotations.ContentLength;
@@ -63,14 +65,6 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
     private String extension;
 
     /**
-     * Document tags.
-     */
-    @Getter
-    @Setter
-    @Column(name = "TAGS")
-    private String tags;
-
-    /**
      * Document file name.
      */
     @Getter
@@ -81,6 +75,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
     /**
      * Multipart file.
      */
+    @DiffIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
@@ -90,6 +85,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
     /**
      * Base file name.
      */
+    @DiffIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
@@ -127,20 +123,12 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
      */
     @Getter
     @Setter
-    private String contentPath; //TODO Not yet filled!
-
-//    /**
-//     * Document owner.
-//     */
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @Getter
-//    @OneToOne(targetEntity = ServerEntity.class, fetch = FetchType.EAGER)
-//    private ServerEntity owner;
+    private String contentPath;
 
     /**
      * Document content.
      */
+    @DiffIgnore
     @Getter
     @Transient
     @ToString.Exclude
@@ -167,7 +155,16 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
 
         setActive();
         this.documentType = documentType;
-        setParent(owner);
+
+        try
+        {
+            setParent(owner);
+        }
+        catch (EntityException e)
+        {
+            throw new DocumentException(e);
+        }
+
         owner.addDocument(this);
     }
 
@@ -349,6 +346,7 @@ public class DocumentServer extends ServerEntity implements IDocumentServer
      * @param outputPath Output path and file name.
      * @return Document full path and file name.
      */
+    @DiffIgnore
     public final String getOutputFilename(final @NonNull String outputPath)
     {
         String end = getName() + "." + extension;

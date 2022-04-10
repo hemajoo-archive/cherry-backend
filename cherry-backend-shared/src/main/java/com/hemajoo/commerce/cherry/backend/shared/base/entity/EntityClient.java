@@ -15,7 +15,6 @@
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,16 +40,16 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
      */
     @Getter
     @Setter
-    @JsonProperty("uuid")
-    @Schema(name = "id", description = "Identifier")
+    //@JsonProperty("uuid")
+    @Schema(name = "id", description = "Entity identifier.")
     private UUID id;
 
     /**
      * Entity type.
      */
     @Setter
-    @JsonProperty("type")
-    @Schema(name = "entityType", description = "Entity type", example = "PERSON")
+    //@JsonProperty("entityType")
+    @Schema(hidden = true)
     private EntityType entityType;
 
     /**
@@ -58,8 +57,8 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
      */
     @Getter
     @Setter
-    @JsonProperty("name")
-    @Schema(name = "name", description = "Name")
+    //@JsonProperty("name")
+    @Schema(name = "name", description = "Entity name.")
     private String name;
 
     /**
@@ -67,8 +66,8 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
      */
     @Getter
     @Setter
-    @JsonProperty("description")
-    @Schema(name = "description", description = "Description")
+    //@JsonProperty("description")
+    @Schema(name = "description", description = "Entity description.")
     private String description;
 
     /**
@@ -76,15 +75,15 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
      */
     @Getter
     @Setter
-    @JsonProperty("reference")
-    @Schema(name = "reference", description = "Reference")
+    //@JsonProperty("reference")
+    @Schema(name = "reference", description = "Entity reference.")
     private String reference;
 
     /**
      * Entity documents.
      */
     @Setter
-    @JsonProperty("documents")
+    //@JsonProperty("documents")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Schema(hidden = true)
@@ -117,7 +116,7 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
     @Override
     public final EntityIdentity getIdentity()
     {
-        return new EntityIdentity(id, entityType);
+        return new EntityIdentity(entityType, id);
     }
 
     /**

@@ -19,6 +19,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntit
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.mapper.AbstractPersonMapper;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import org.springframework.stereotype.Component;
@@ -69,18 +70,11 @@ public final class PersonConverter
      * Converts from a client person entity to a server person entity.
      * @param client Client person entity.
      * @return Server person entity.
-     * @throws PersonException Thrown to indicate an error occurred when trying to convert a person.
+     * @throws EntityException Thrown to indicate an error occurred when trying to convert a person.
      */
-    public PersonServer fromClientToServer(PersonClient client) throws PersonException
+    public PersonServer fromClientToServer(PersonClient client) throws EntityException
     {
-        try
-        {
-            return AbstractPersonMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
-        }
-        catch (Exception e)
-        {
-            throw new PersonException(e);
-        }
+        return AbstractPersonMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
     }
 
     /**

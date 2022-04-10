@@ -17,7 +17,10 @@ package com.hemajoo.commerce.cherry.backend.commons.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.UUID;
 
@@ -28,7 +31,6 @@ import java.util.UUID;
  */
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 public class EntityIdentity implements Identity
 {
     /**
@@ -65,12 +67,17 @@ public class EntityIdentity implements Identity
 
     /**
      * Creates a new entity identity.
-     * @param id Entity identifier.
      * @param entityType Entity type.
+     * @param id Entity identifier.
      */
-    public EntityIdentity(final UUID id, final EntityType entityType)
+    public EntityIdentity(final EntityType entityType, final UUID id)
     {
-        this.id = id;
         this.entityType = entityType;
+        this.id = id;
+    }
+
+    public static EntityIdentity from(final EntityType type, final UUID id)
+    {
+        return new EntityIdentity(type, id);
     }
 }

@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServe
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,8 +39,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Tag(name = "Person", description = "REST APIs to manage the persons.")
-//@ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressServiceCore.class })
+@Tag(name = "Person REST controller", description = "Set of REST-API endpoints to manage the person entities.")
 @Validated
 @RestController
 @RequestMapping("/api/v1/person")

@@ -15,9 +15,11 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
@@ -50,7 +52,7 @@ public interface IEmailAddressService
      * @param id Email address identifier.
      * @return Email address.
      */
-    EmailAddressServer findById(UUID id);
+    EmailAddressServer findById(UUID id) throws DocumentException;
 
     /**
      * Updates the given server email address entity.
@@ -58,7 +60,7 @@ public interface IEmailAddressService
      * @return Updated server email address entity.
      * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
      */
-    EmailAddressServer update(final EmailAddressServer emailAddress) throws EmailAddressException;
+    EmailAddressServer update(final EmailAddressServer emailAddress) throws EmailAddressException, DocumentException;
 
     /**
      * Saves the given email address.
@@ -122,4 +124,7 @@ public interface IEmailAddressService
      * @return List of email addresses matching the given predicates.
      */
     List<EmailAddressServer> search(final @NonNull EmailAddressQuery emailAddress) throws QueryConditionException;
+
+    List<DocumentServer> findDocuments(final @NonNull String emailAddressId) throws QueryConditionException;
 }
+

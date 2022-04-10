@@ -1,0 +1,12 @@
+{
+  "entityType": "DOCUMENT",
+  "conditions":
+  [
+    {
+      "field": "mimeType",
+      "values":
+      [ "image/svg+xml" ],
+      "operator": "EQUAL"
+    }
+  ]
+}

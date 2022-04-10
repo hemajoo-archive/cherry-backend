@@ -1,0 +1,166 @@
+
+// ################################################
+// COUNT
+// ################################################
+
+###
+// Count the number of documents
+GET http://{{host}}/api/v1/document/count
+
+
+
+
+// ################################################
+// GET
+// ################################################
+
+###
+// Retrieve a document
+GET http://{{host}}/api/v1/document/get/26fdbf7a-28e2-4699-a981-9246f40859cc
+
+
+
+
+// ################################################
+// QUERY
+// ################################################
+
+###
+// Query for documents having a status set to 'ACTIVE'
+PATCH http://{{host}}/api/v1/document/query
+Content-Type: application/json
+
+< body/query_document_status_active.json
+
+###
+// Query for documents having a status set to 'INACTIVE'
+PATCH http://{{host}}/api/v1/document/query
+Content-Type: application/json
+
+< body/query_document_status_inactive.json
+
+###
+// Query for documents having an extension set to: 'jpg'
+PATCH http://{{host}}/api/v1/document/query
+Content-Type: application/json
+
+< body/query_document_extension_jpg.json
+
+###
+// Query for documents having a document type set to: 'DOCUMENT_PHOTO'
+PATCH http://{{host}}/api/v1/document/query
+Content-Type: application/json
+
+< body/query_document_documentType_DOCUMENT_PHOTO.json
+
+###
+// Query for documents having a document mime type set to: 'image/svg+xml'
+PATCH http://{{host}}/api/v1/document/query
+Content-Type: application/json
+
+< body/query_document_mimeType_svg+xml.json
+
+// ################################################
+// RANDOM
+// ################################################
+
+###
+// Create a random document with a PERSON as parent
+POST http://{{host}}/api/v1/document/random?parentType=PERSON&parentId=5de1cb62-e65a-4293-9b25-1fe29cf15569
+Content-Type: application/x-www-form-urlencoded
+
+###
+// Create a random document with an EMAIL_ADDRESS as parent
+POST http://{{host}}/api/v1/document/random?parentType=EMAIL_ADDRESS&parentId=da5cd068-ef4a-4037-a903-42087bc1d052
+
+
+
+// ################################################
+// UPLOAD
+// ################################################
+
+###
+// Upload a document
+POST http://{{host}}/api/v1/document/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="assets-tocreate-withnousers.txt"
+
+< /Users/ressec/Documents/assets-tocreate-withnousers.txt
+
+--boundary
+Content-Disposition: form-data; name="name"
+
+Test Document
+
+--boundary
+Content-Disposition: form-data; name="description"
+
+A test document
+
+--boundary
+Content-Disposition: form-data; name="reference"
+
+None
+
+--boundary
+Content-Disposition: form-data; name="tags"
+
+Demo
+
+--boundary
+Content-Disposition: form-data; name="documentType"
+
+DOCUMENT_GENERIC
+
+--boundary
+Content-Disposition: form-data; name="parentType"
+
+PERSON
+
+--boundary
+Content-Disposition: form-data; name="parentId"
+
+5cdd136b-ba82-4169-9768-c7c933f65aa6
+--boundary
+
+
+
+// ################################################
+// DELETE
+// ################################################
+
+###
+// Delete a document
+DELETE http://{{host}}/api/v1/document/delete/096b0444-a7e1-4f57-a3a0-6d7d451fc0ad
+
+
+
+// ################################################
+// UPDATE
+// ################################################
+
+###
+// Update a document metadata: name
+PUT http://{{host}}/api/v1/document/update/metadata/84b6f89a-d1bb-4aca-a8f2-2b82a6444892
+Content-Type: application/json
+
+{
+  "name": "Updated document name",
+  "description": "Updated description"
+}
+
+###
+// Update a document metadata
+PUT http://{{host}}/api/v1/document/update/metadata/26fdbf7a-28e2-4699-a981-9246f40859cc
+Content-Type: application/json
+
+{
+  "name": "Borderlands 2",
+  "description": "Borderlands 2 is a 2012 first-person shooter video game developed by Gearbox Software and published by 2K Games. Taking place five years following the events of Borderlands (2009).",
+  "reference": "https://en.wikipedia.org/wiki/Borderlands_2",
+  "tags": "Game, Sci-Fi, Videa, First Person Shooter",
+  "statusType": "ACTIVE",
+  "documentType": "DOCUMENT_GENERIC"
+}

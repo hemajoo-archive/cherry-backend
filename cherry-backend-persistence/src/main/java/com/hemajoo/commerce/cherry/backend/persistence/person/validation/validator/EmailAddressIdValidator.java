@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.backend.persistence.person.validation.valida
 
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidEmailAddressId;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -52,9 +52,9 @@ public class EmailAddressIdValidator implements ConstraintValidator<ValidEmailAd
 
             return true;
         }
-        catch (EmailAddressException e)
+        catch (EntityException e)
         {
-            context.buildConstraintViolationWithTemplate(e.getStatus() + "@@" + e.getMessage()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getStatusCode() + "@@" + e.getMessage()).addConstraintViolation();
             context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message
         }
 
