@@ -233,11 +233,11 @@ public class DocumentService implements IDocumentService
         if (document.getContent() != null && document.getContentId() == null)
         {
             document = (DocumentServer) documentStore.getStore().setContent(document, document.getContent());
-            LOGGER.debug(String.format("Successfully saved document content with id: '%s'", document.getId()));
+            LOGGER.debug(String.format("%s successfully saved with content id: '%s'", document.getIdentity(), document.getContentId()));
         }
 
         document = documentRepository.save(document);
-        LOGGER.debug(String.format("Successfully saved document with id: '%s'", document.getId()));
+        LOGGER.debug(String.format("%s saved successfully", document.getIdentity()));
 
         return document;
     }
