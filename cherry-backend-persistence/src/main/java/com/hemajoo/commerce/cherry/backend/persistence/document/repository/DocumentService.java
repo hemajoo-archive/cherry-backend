@@ -35,6 +35,8 @@ import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.tika.Tika;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.changetype.ValueChange;
@@ -42,7 +44,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -58,6 +63,11 @@ import static org.javers.core.diff.ListCompareAlgorithm.LEVENSHTEIN_DISTANCE;
 @Service
 public class DocumentService implements IDocumentService
 {
+    /**
+     * Tika object.
+     */
+    private static final Tika TIKA = new Tika();
+
     /**
      * Document repository.
      */
@@ -149,6 +159,69 @@ public class DocumentService implements IDocumentService
         return serverDocument;
     }
 
+    @Override
+    public DocumentServer uploadContent(final @NonNull DocumentServer document, final @NonNull MultipartFile file) throws EntityException
+    {
+        try
+        {
+            InputStream stream = new ByteArrayInputStream(file.getBytes());
+
+            document.setContent(stream);
+            document.setContentLength(file.getBytes().length);
+            document.setFilename(file.getOriginalFilename());
+            document.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
+            document.setMimeType(TIKA.detect(stream));
+
+            LOGGER.debug(String.format("Uploading file: '%s', size: '%s' to content store: '%s'", document.getFilename(), file.getSize(), documentStore.getSpringContentStoreType()));
+            documentStore.getStore().setContent(document, stream);
+            LOGGER.debug(String.format("File: '%s' uploaded successfully. Content id: '%s'", document.getFilename(), document.getContentId()));
+
+            LOGGER.debug(String.format("%s content set: '%s'", document.getIdentity(), document.getContentId()));
+            stream.close();
+
+            save(document);
+        }
+        catch (Exception e)
+        {
+            throw new DocumentException(e);
+        }
+
+        return document;
+    }
+
+    @Override
+    public DocumentServer updateContent(final @NonNull DocumentServer document, final @NonNull MultipartFile file) throws EntityException
+    {
+        try
+        {
+            InputStream stream = new ByteArrayInputStream(file.getBytes());
+
+            // Delete the old document content.
+            LOGGER.debug(String.format("%s content removed: '%s'", document.getIdentity(), document.getContentId()));
+            documentStore.getStore().unsetContent(document);
+
+            // Set the new document content.
+            document.setContentLength(file.getBytes().length);
+            document.setFilename(file.getOriginalFilename());
+            document.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
+            document.setMimeType(TIKA.detect(stream));
+
+            LOGGER.debug(String.format("Uploading file: '%s', size: '%s' to content store: '%s'", document.getFilename(), file.getSize(), documentStore.getSpringContentStoreType()));
+            documentStore.getStore().setContent(document, stream);
+            LOGGER.debug(String.format("File: '%s' uploaded successfully. Content id: '%s'", document.getFilename(), document.getContentId()));
+            save(document);
+            LOGGER.debug(String.format("%s content set: '%s'", document.getIdentity(), document.getContentId()));
+
+            stream.close();
+        }
+        catch (Exception e)
+        {
+            throw new DocumentException(e);
+        }
+
+        return document;
+    }
+
     /**
      * Retrieve the changes on properties between two client documents.
      * @param original Original client document.
@@ -225,7 +298,7 @@ public class DocumentService implements IDocumentService
         return filtered;
     }
 
-    @Transactional
+    //@Transactional
     @Override
     public DocumentServer save(DocumentServer document)
     {
@@ -279,9 +352,9 @@ public class DocumentService implements IDocumentService
     }
 
     @Override
-    public List<DocumentServer> findByParentId(final @NonNull String parentId)
+    public List<DocumentServer> findByParentId(final @NonNull UUID parentId)
     {
-        return documentRepository.findByParentId(UUID.fromString(parentId));
+        return documentRepository.findByParentId(parentId);
     }
 
     @Override

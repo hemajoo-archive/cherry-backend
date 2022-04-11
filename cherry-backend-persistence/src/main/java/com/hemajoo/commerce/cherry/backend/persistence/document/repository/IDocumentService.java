@@ -22,6 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.query.DocumentQuery;
 import lombok.NonNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,19 +35,19 @@ import java.util.UUID;
 public interface IDocumentService
 {
     /**
-     * Returns the underlying repository.
+     * Return the underlying repository.
      * @return Document repository.
      */
     IDocumentRepository getRepository();
 
     /**
-     * Returns the number of documents.
+     * Return the number of documents.
      * @return Number of documents.
      */
     Long count();
 
     /**
-     * Finds a document given its identifier.
+     * Find a document given its identifier.
      * @param id Document identifier.
      * @return Document if found, null otherwise.
      * @throws DocumentException raised if the given document id has not been found!
@@ -54,24 +55,41 @@ public interface IDocumentService
     DocumentServer findById(UUID id) throws DocumentException;
 
     /**
-     * Updates a document entity.
+     * Update a document entity.
      * @param document Document to update.
      * @return Updated document.
-     * @throws DocumentException Thrown in case an error occurred while trying to update a document entity.
+     * @throws EntityException Thrown in case an error occurred while updating a document entity.
      */
-    DocumentServer update(final DocumentServer document) throws DocumentException, EntityException;
+    DocumentServer update(final DocumentServer document) throws EntityException;
 
     /**
-     * Updates a document's metadata.
+     * Update a document metadata.
      * @param document Client document containing the metadata information to update.
      * @return Updated server document.
-     * @throws DocumentException Thrown to indicate an error occurred when trying to update a document's metadata information.
-     * @throws EntityException
+     * @throws EntityException Thrown to indicate an error occurred when updating a document metadata information.
      */
-    DocumentServer updateMetadata(@NonNull DocumentClient document) throws DocumentException, EntityException;
+    DocumentServer updateMetadata(@NonNull DocumentClient document) throws EntityException;
 
     /**
-     * Saves a document.
+     * Upload a document and its content.
+     * @param document Document.
+     * @param file File (document content).
+     * @return Document.
+     * @throws EntityException Thrown to indicate an error occurred when uploading a document content.
+     */
+    DocumentServer uploadContent(final @NonNull DocumentServer document, final @NonNull MultipartFile file) throws EntityException;
+
+    /**
+     * Update a document content.
+     * @param document Document.
+     * @param file File (document content).
+     * @return Document.
+     * @throws EntityException Thrown to indicate an error occurred when updating a document content.
+     */
+    DocumentServer updateContent(final @NonNull DocumentServer document, final @NonNull MultipartFile file) throws EntityException;
+
+    /**
+     * Save a document.
      * @param document Document to save.
      * @return Saved document.
      * @throws DocumentException Raised if an error occurred while trying to save the document.
@@ -79,45 +97,50 @@ public interface IDocumentService
     DocumentServer save(DocumentServer document) throws DocumentException;
 
     /**
-     * Saves and flush a document.
+     * Save and flush a document.
      * @param document Document.
      * @return Saved document.
      */
     DocumentServer saveAndFlush(DocumentServer document);
 
     /**
-     * Deletes a document given its identifier.
+     * Delete a document given its identifier.
      * @param id Document identifier.
      * @throws DocumentException Thrown in case the document to delete does not exist.
      */
     void deleteById(UUID id) throws DocumentException;
 
     /**
-     * Returns all the documents.
+     * Return all the documents.
      * @return List of documents.
      */
     List<DocumentServer> findAll();
 
     /**
-     * Loads the content (media file) of the document.
+     * Load the content (media file) of the document.
      * @param document Document.
      * @throws DocumentException Raised if an error occurred while trying to load the document.
      */
     void loadContent(DocumentServer document) throws DocumentException;
 
     /**
-     * Loads the content (media file) of the document.
+     * Load the content (media file) of the document.
      * @param documentId Document identifier.
      * @throws DocumentException Raised if an error occurred while trying to load the document.
      */
     void loadContent(UUID documentId) throws DocumentException;
 
     /**
-     * Searches for documents given some criteria.
+     * Search for documents given some criteria.
      * @param search Search object.
      * @return List of documents matching the given criteria.
      */
     List<DocumentServer> search(final @NonNull DocumentQuery search) throws QueryConditionException;
 
-    List<DocumentServer> findByParentId(final @NonNull String parentId);
+    /**
+     * Find the documents belonging to a given parent entity.
+     * @param parentId Parent entity identifier.
+     * @return List of documents.
+     */
+    List<DocumentServer> findByParentId(final @NonNull UUID parentId);
 }

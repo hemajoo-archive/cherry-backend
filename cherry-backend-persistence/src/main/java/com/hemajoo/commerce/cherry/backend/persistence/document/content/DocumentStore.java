@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.content;
 
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class DocumentStore
      * @return Content store.
      */
     @SuppressWarnings("java:S3740")
-    public final ContentStore getStore()
+    public final ContentStore<DocumentServer, String> getStore()
     {
         if (storeType == DocumentStoreType.UNKNOWN)
         {

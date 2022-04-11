@@ -34,10 +34,7 @@ import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +43,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,8 +57,6 @@ import java.util.UUID;
 @RequestMapping("/api/v1/document")
 public class DocumentController
 {
-    private static final Tika TIKA = new Tika();
-
     /**
      * Document service.
      */
@@ -162,7 +154,7 @@ public class DocumentController
      * @return Response.
      * @throws EntityException Thrown to indicate an error occurred while trying to update a document metadata.
      */
-    @Operation(summary = "Update a document", description = "Update a document metadata information.", tags = { "Update endpoints" })
+    @Operation(summary = "Update a document metadata", description = "Update a document metadata information.", tags = { "Update endpoints" })
     @PutMapping("/update/metadata/{documentId}")
     public ResponseEntity<String> updateMetadata(
             @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
@@ -174,6 +166,37 @@ public class DocumentController
         servicePerson.getDocumentService().updateMetadata(document);
 
         return ResponseEntity.ok(String.format("%s metadata updated successfully", document.getIdentity()));
+    }
+
+    /**
+     * Update a document content information.
+     * @param documentId Document identifier to update.
+     * @return Response.
+     * @throws EntityException Thrown to indicate an error occurred while trying to update a document content.
+     */
+    @Operation(summary = "Update a document content", description = "Update a document metadata information.", tags = { "Update endpoints" })
+    @PutMapping(path = "/update/content/{documentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateContent(
+            @RequestPart("file") MultipartFile file,
+            @Parameter(name = "documentId", description = "Document identifier (UUID)", required = true)
+            @PathVariable UUID documentId) throws EntityException
+    {
+        DocumentServer document = servicePerson.getDocumentService().findById(documentId);
+        if (document == null)
+        {
+            return new ResponseEntity<>(String.format("%s not found!", EntityIdentity.from(EntityType.DOCUMENT, documentId)), HttpStatus.NOT_FOUND);
+        }
+
+        try
+        {
+            servicePerson.getDocumentService().updateContent(document, file);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.ok(String.format("%s content set: '%s'", document.getIdentity(), document.getContentId()));
     }
 
     /**
@@ -232,7 +255,7 @@ public class DocumentController
     }
 
     /**
-     * Upload a new document with a content.
+     * Upload a new document and its content.
      * @param file File to upload.
      * @param name Document name (if blank, filename will be used).
      * @param description Document description (informative) and not mandatory.
@@ -254,7 +277,7 @@ public class DocumentController
                                          @RequestParam EntityType parentType,
                                          @NotNull @RequestParam String parentId) throws EntityException
     {
-        DocumentServer document;
+        DocumentServer document = new DocumentServer();
 
         if (file.isEmpty())
         {
@@ -271,32 +294,30 @@ public class DocumentController
             throw new DocumentException("Cannot set a document entity as parent!", HttpStatus.BAD_REQUEST);
         }
 
-        try
-        {
-            document = uploadDocument(file); // Upload document content
-        }
-        catch (Exception e)
-        {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
         IServerEntity parent = factory.from(parentType, UUID.fromString(parentId));
         if (parent == null)
         {
             throw new EntityException(String.format("Parent entity with type: '%s', with id: '%s' cannot be found!", parentType, parentId), HttpStatus.NOT_FOUND);
         }
 
-        document.setName(name != null ? name : file.getName());
-        document.setDescription(description);
-        document.setReference(reference);
-        document.setTags(tags);
-        document.setDocumentType(documentType);
-        document.setStatusType(StatusType.ACTIVE);
-        document.setParent((ServerEntity) parent);
-        servicePerson.getDocumentService().save(document);
+        try
+        {
+            document.setName(name != null ? name : file.getName());
+            document.setDescription(description);
+            document.setReference(reference);
+            document.setTags(tags);
+            document.setDocumentType(documentType);
+            document.setStatusType(StatusType.ACTIVE);
+            document.setParent((ServerEntity) parent);
 
-        String message = String.format("Successfully uploaded file: '%s', as document with id: '%s', with content id: '%s'", file.getOriginalFilename(), document.getId(), document.getContentId());
-        return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
+            document = servicePerson.getDocumentService().uploadContent(document, file);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(String.format("Document: %s created and content set to: '%s' uploaded", document.getIdentity(), document.getContentId()), HttpStatus.OK);
     }
 
     /**
@@ -311,7 +332,7 @@ public class DocumentController
             @Parameter(name = "parentId", description = "Parent entity identifier (UUID).", required = true)
             @PathVariable UUID parentId) throws EntityException
     {
-        List<DocumentClient> list = servicePerson.getDocumentService().findByParentId(parentId.toString())
+        List<DocumentClient> list = servicePerson.getDocumentService().findByParentId(parentId)
                 .stream()
                 .map(element -> converterDocument.fromServerToClient(element))
                 .toList();
@@ -357,28 +378,5 @@ public class DocumentController
                 .toList();
 
         return ResponseEntity.ok(list);
-    }
-
-    /**
-     * Upload a document (multipart file).
-     * @param file File to upload.
-     * @return Document server containing the uploaded file.
-     * @throws IOException Thrown to indicate an error occurred when trying to upload a document.
-     */
-    private DocumentServer uploadDocument(MultipartFile file) throws IOException
-    {
-        DocumentServer document = new DocumentServer();
-
-        InputStream stream = new ByteArrayInputStream(file.getBytes());
-
-        document.setContent(stream);
-        document.setContentLength(file.getBytes().length);
-        document.setFilename(file.getOriginalFilename());
-        document.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
-        document.setMimeType(TIKA.detect(stream));
-
-        stream.close();
-
-        return document;
     }
 }

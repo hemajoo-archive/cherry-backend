@@ -73,6 +73,10 @@ public class DocumentFilterMetadata extends AbstractFilter
         filters.add(DOCUMENT_METADATA_STATUS_TYPE);
     }
 
+    /**
+     * Build a document metadata filter.
+     * @return Document metadata filter.
+     */
     public static DocumentFilterMetadata build()
     {
         return new DocumentFilterMetadata();
