@@ -35,6 +35,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -338,6 +340,29 @@ public class DocumentController
                 .toList();
 
         return ResponseEntity.ok(list);
+    }
+
+    /**
+     * Download a document content.
+     * @param documentId Document identifier.
+     * @return Response.
+     * @throws EntityException Thrown to indicate an error occurred when downloading the document content.
+     */
+    @Operation(summary = "Download a document content", description = "Download a document content locally.")
+    @GetMapping(value = "/download/{documentId}")
+    public ResponseEntity<Resource> download(
+            final @PathVariable @NotNull UUID documentId) throws EntityException
+    {
+        DocumentServer document = servicePerson.getDocumentService().findById(documentId);
+        if (document == null)
+        {
+            return new ResponseEntity(String.format("%s not found!", EntityIdentity.from(EntityType.DOCUMENT, documentId)), HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(document.getMimeType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + document.getFilename() + "\"")
+                .body(servicePerson.getDocumentService().downloadContent(document));
     }
 
     /**

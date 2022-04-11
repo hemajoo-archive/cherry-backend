@@ -22,6 +22,7 @@ import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.query.DocumentQuery;
 import lombok.NonNull;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -87,6 +88,8 @@ public interface IDocumentService
      * @throws EntityException Thrown to indicate an error occurred when updating a document content.
      */
     DocumentServer updateContent(final @NonNull DocumentServer document, final @NonNull MultipartFile file) throws EntityException;
+
+    Resource downloadContent(final @NonNull DocumentServer document);
 
     /**
      * Save a document.
