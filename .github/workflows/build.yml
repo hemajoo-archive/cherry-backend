@@ -185,7 +185,7 @@ jobs:
           distribution: adopt
           server-id: 'github-ressec-maven'
           server-username: GH_RESSEC_USERNAME
-          server-password: GH_RESSEC_TOKEN
+          server-password: GH_RESSEC_TOKEN_PACKAGES_ALL
 
       - name: Cache Maven packages
         uses: actions/cache@v1
