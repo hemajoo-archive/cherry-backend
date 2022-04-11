@@ -184,9 +184,6 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-#          server-id: 'github-ressec-maven'
-#          server-username: GH_RESSEC_USERNAME
-#          server-password: GH_RESSEC_TOKEN_PACKAGES_ALL
 
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -208,9 +205,14 @@ jobs:
           echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
 
       - name: Deploy Artifacts
+        uses: s4u/maven-settings-action@v2.6.0
+        with:
+          servers: |
+            [{
+                "id": "ressec-github-maven",
+                "username": "${{ secrets.GH_RESSEC_USERNAME }}",
+                "password": "${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}"
+            }]
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
-          server-id: 'github-ressec-maven'
-          server-username: ${{ secrets.GH_RESSEC_USERNAME }}
-          server-password: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17
