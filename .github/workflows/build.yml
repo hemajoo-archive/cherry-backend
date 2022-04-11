@@ -165,7 +165,7 @@ jobs:
   deploy:
 
     name: Deploy Snapshot Artifacts
-    if: github.base_name == 'dev' && needs.build.result == 'success' && needs.codeql.result == 'success' && needs.sonar.result == 'success'
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     permissions:
       contents: read
