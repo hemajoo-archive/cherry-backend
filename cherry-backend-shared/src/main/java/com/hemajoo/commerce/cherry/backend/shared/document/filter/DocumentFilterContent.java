@@ -64,4 +64,13 @@ public class DocumentFilterContent extends AbstractFilter
         filters.add(DOCUMENT_CONTENT_PATH);
         filters.add(DOCUMENT_CONTENT_EXTENSION);
     }
+
+    /**
+     * Build a document content filter.
+     * @return Document content filter.
+     */
+    public static DocumentFilterContent build()
+    {
+        return new DocumentFilterContent();
+    }
 }

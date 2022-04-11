@@ -86,15 +86,13 @@ public class EmailAddressService implements IEmailAddressService
         EmailAddressServer emailAddress = emailAddressRepository.findById(id).orElse(null);
         if (emailAddress != null)
         {
-            for (DocumentServer document : findDocuments(id.toString()))
+            for (DocumentServer document : findDocuments(id))
             {
                 emailAddress.addDocument(document);
             }
         }
 
         return emailAddress;
-
-//        return emailAddressRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -176,7 +174,7 @@ public class EmailAddressService implements IEmailAddressService
     }
 
     @Override
-    public List<DocumentServer> findDocuments(final @NonNull String emailAddressId)
+    public List<DocumentServer> findDocuments(final @NonNull UUID emailAddressId)
     {
         return documentService.findByParentId(emailAddressId);
     }

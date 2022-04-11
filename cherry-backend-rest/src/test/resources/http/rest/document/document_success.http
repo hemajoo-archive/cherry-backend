@@ -165,7 +165,18 @@ Content-Type: application/json
   "documentType": "DOCUMENT_GENERIC"
 }
 
+###
+// Update a document content
+PUT http://{{host}}/api/v1/document/update/content/f192d300-7ec5-4434-9c1b-0c65f50d63f5
+Content-Type: application/json
 
+{
+  "extension": "jpg",
+  "filename": "android-20.jpg",
+  "length": 31256,
+  "mime": "image/jpeg",
+  "path": "/test/images"
+}
 
 ###
 
