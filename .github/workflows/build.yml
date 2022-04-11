@@ -159,6 +159,7 @@ jobs:
         env:
           GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
           GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
+          GH_RESSEC_TOKEN_PACKAGES_ALL: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -203,6 +204,7 @@ jobs:
       - name: Deploy Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_RESSEC_TOKEN_PACKAGES_ALL: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
           GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
           GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
         run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17
