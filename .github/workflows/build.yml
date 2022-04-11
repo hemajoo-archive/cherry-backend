@@ -136,7 +136,7 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-          server-id: github-ressec-maven
+          server-id: 'github-ressec-maven'
           server-username: GH_RESSEC_USERNAME
           server-password: GH_RESSEC_TOKEN
 
@@ -182,7 +182,7 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-          server-id: github-ressec-maven
+          server-id: 'github-ressec-maven'
           server-username: GH_RESSEC_USERNAME
           server-password: GH_RESSEC_TOKEN
 
