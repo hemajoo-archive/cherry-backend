@@ -199,12 +199,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Display branches references
-        run: |
-          echo 'GITHUB head branch reference >> ' ${GITHUB_HEAD_REF}
-          echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
-
-      - name: Deploy Artifacts
+      - name: Setup Maven settings.xml
         uses: s4u/maven-settings-action@v2.6.0
         with:
           servers: |
@@ -213,6 +208,13 @@ jobs:
                 "username": "${{ secrets.GH_RESSEC_USERNAME }}",
                 "password": "${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}"
             }]
+
+      - name: Info - Display branches references
+        run: |
+          echo 'GITHUB head branch reference >> ' ${GITHUB_HEAD_REF}
+          echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
+
+      - name: Deploy Snaphot Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17

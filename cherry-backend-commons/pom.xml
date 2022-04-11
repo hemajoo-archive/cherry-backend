@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
+        <groupId>com.hemajoo.commerce</groupId>
         <artifactId>cherry-backend-parent</artifactId>
-        <groupId>com.hemajoo.commerce.cherry.backend</groupId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../cherry-backend-parent/pom.xml</relativePath>
     </parent>
