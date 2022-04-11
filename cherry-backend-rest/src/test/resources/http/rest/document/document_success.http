@@ -9,7 +9,6 @@ GET http://{{host}}/api/v1/document/count
 
 
 
-
 // ################################################
 // GET
 // ################################################
@@ -17,7 +16,6 @@ GET http://{{host}}/api/v1/document/count
 ###
 // Retrieve a document
 GET http://{{host}}/api/v1/document/get/26fdbf7a-28e2-4699-a981-9246f40859cc
-
 
 
 
@@ -125,6 +123,21 @@ Content-Disposition: form-data; name="parentId"
 5cdd136b-ba82-4169-9768-c7c933f65aa6
 --boundary
 
+
+
+// ################################################
+// DOWNLOAD
+// ################################################
+
+###
+// Download a document content
+GET http://{{host}}/api/v1/document/download/dc0085ea-e536-4d86-a416-b4f5663dc090
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: attachment; filename=""
+
+--boundary
 
 
 // ################################################

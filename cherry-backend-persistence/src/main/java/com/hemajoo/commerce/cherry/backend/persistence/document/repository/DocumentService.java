@@ -41,6 +41,7 @@ import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -220,6 +221,12 @@ public class DocumentService implements IDocumentService
         }
 
         return document;
+    }
+
+    @Override
+    public Resource downloadContent(final @NonNull DocumentServer document)
+    {
+        return documentStore.getStore().getResource(document);
     }
 
     /**
