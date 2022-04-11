@@ -56,19 +56,19 @@
 
         <!-- Hemajoo's Cherry Backend dependencies -->
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-persistence</artifactId>
             <version>${project.version}</version>
         </dependency>

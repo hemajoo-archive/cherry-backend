@@ -161,7 +161,7 @@
              Hemajoo's Commerce Cherry common entities.
           -->
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-commons</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
@@ -171,7 +171,7 @@
              Hemajoo's Commerce Cherry shared data model.
           -->
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-shared</artifactId>
             <version>${project.version}</version>
         </dependency>

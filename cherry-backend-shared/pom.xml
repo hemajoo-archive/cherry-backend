@@ -24,7 +24,7 @@
 
         <!-- Hemajoo's Commerce - Cherry backend dependencies -->
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-commons</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
