@@ -166,6 +166,7 @@ jobs:
   deploy:
 
     name: Deploy Snapshot Artifacts
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -201,11 +202,14 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Display branches references
+        run: |
+          echo 'GITHUB head branch reference >> ' ${GITHUB_HEAD_REF}
+          echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
+
       - name: Deploy Artifacts
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
+          GH_RESSEC_USERNAME: ${{ secrets.GH_RESSEC_USERNAME }}
           GH_RESSEC_TOKEN_PACKAGES_ALL: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
-          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
         run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17
-        if: github.event.pull_request.base.ref == 'develop'
