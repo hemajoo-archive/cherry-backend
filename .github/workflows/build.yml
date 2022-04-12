@@ -216,5 +216,5 @@ jobs:
 
       - name: Deploy Snaphot Artifacts
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_GITHUB_MAVEN_TOKEN }}
         run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17

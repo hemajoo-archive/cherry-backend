@@ -141,12 +141,12 @@
         <repository>
             <id>github-ressec-maven</id>
             <url>https://maven.pkg.github.com/ressec/maven-repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
 
     </repositories>
