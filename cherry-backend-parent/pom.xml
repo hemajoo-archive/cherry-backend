@@ -107,7 +107,7 @@
 
         <!-- Sonar properties -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.language>java</sonar.language>
         <sonar.projectKey>ressec_cherry-backend</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
@@ -120,8 +120,8 @@
 
         <repository>
             <id>github-ressec-maven</id>
-            <name>GitHub ResseC - Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/ressec/maven-repo</url>
+            <name>GitHub Hemajoo Commerce - Maven Packages Registry</name>
+            <url>https://maven.pkg.github.com/hemajoo-commerce/maven-registry</url>
         </repository>
 
     </distributionManagement>
@@ -131,6 +131,7 @@
         <!-- Maven Central repository -->
         <repository>
             <id>central</id>
+            <name>Maven Central</name>
             <url>https://repo.maven.apache.org/maven2</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -140,7 +141,8 @@
         <!-- GitHub ResseC Maven repository -->
         <repository>
             <id>github-ressec-maven</id>
-            <url>https://maven.pkg.github.com/ressec/maven-repo</url>
+            <name>GitHub Hemajoo Commerce - Maven Packages Registry</name>
+            <url>https://maven.pkg.github.com/hemajoo-commerce/maven-registry</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
