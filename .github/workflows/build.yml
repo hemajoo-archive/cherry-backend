@@ -41,9 +41,9 @@ jobs:
         with:
           java-version: ${{ matrix.Java }}
           distribution: adopt
-          server-id: github-ressec-maven
-          server-username: GH_RESSEC_USERNAME
-          server-password: GH_RESSEC_TOKEN
+#          server-id: github-ressec-maven
+#          server-username: GH_RESSEC_USERNAME
+#          server-password: GH_RESSEC_TOKEN
 
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -54,9 +54,9 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B clean package -f cherry-backend-parent/pom.xml -Pjava-${{ matrix.Java }} -Pcherry-postgres-dev
-        env:
-          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
+#        env:
+#          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
+#          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
 
   codeql:
     name: CodeQL analysis
@@ -71,8 +71,6 @@ jobs:
       fail-fast: false
       matrix:
         language: [ java ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
-        # Learn more:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
 
     steps:
@@ -84,10 +82,6 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: ${{ matrix.language }}
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
-          # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
       # Step: Setup JDK
       - name: Setup JDK 17
@@ -95,26 +89,15 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-          server-id: github-ressec-maven
-          server-username: GH_RESSEC_USERNAME
-          server-password: GH_RESSEC_TOKEN
+#          server-id: github-ressec-maven
+#          server-username: GH_RESSEC_USERNAME
+#          server-password: GH_RESSEC_TOKEN
 
       - name: Build project with Maven
         run: mvn -B -Dmaven.test.skip=true clean package -f cherry-backend-parent/pom.xml -Pjava-17 # Skip tests as a parallel build is done that runs the tests
-        env:
-          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
-
-      # ℹ️ Command-line programs to run using the OS shell.
-      # 📚 https://git.io/JvXDl
-
-      # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
-      #    and modify them (or add more) to build your code if your project
-      #    uses a compiled language
-
-      #- run: |
-      #   make bootstrap
-      #   make release
+#        env:
+#          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
+#          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
 
       - name: Perform CodeQL analysis for language ${{ matrix.language }}
         uses: github/codeql-action/analyze@v1
@@ -136,9 +119,9 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-          server-id: 'github-ressec-maven'
-          server-username: GH_RESSEC_USERNAME
-          server-password: GH_RESSEC_TOKEN
+#          server-id: 'github-ressec-maven'
+#          server-username: GH_RESSEC_USERNAME
+#          server-password: GH_RESSEC_TOKEN
 
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -157,9 +140,9 @@ jobs:
       - name: Analyze with SonarCloud
         run: mvn -B verify sonar:sonar -f cherry-backend-parent/pom.xml -Pjava-17 -Pcherry-postgres-dev
         env:
-          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
-          GH_RESSEC_TOKEN_PACKAGES_ALL: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
+#          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
+#          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
+#          GH_RESSEC_TOKEN_PACKAGES_ALL: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -204,9 +187,14 @@ jobs:
         with:
           servers: |
             [{
-                "id": "ressec-github-maven",
-                "username": "${{ secrets.GH_RESSEC_USERNAME }}",
-                "password": "${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}"
+                "id": "github-ressec-maven-registry",
+                "username": "${{ secrets.READ_GITHUB_MAVEN_USER }}",
+                "password": "${{ secrets.READ_GITHUB_MAVEN_TOKEN }}"
+            },
+            {
+                "id": "github-hemajoo-commerce-maven-registry",
+                "username": "${{ secrets.DEPLOY_GITHUB_MAVEN_USER }}",
+                "password": "${{ secrets.DEPLOY_GITHUB_MAVEN_TOKEN }}"
             }]
 
       - name: Info - Display branches references

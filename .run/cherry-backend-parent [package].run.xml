@@ -17,7 +17,7 @@
           <option name="pomFileName" value="pom.xml" />
           <option name="profilesMap">
             <map>
-              <entry key="java-11" value="true" />
+              <entry key="java-17" value="true" />
               <entry key="cherry-postgres-dev" value="true" />
             </map>
           </option>

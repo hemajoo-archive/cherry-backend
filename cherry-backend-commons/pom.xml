@@ -48,7 +48,7 @@
 
         <!-- ResseC Generic Avocado -->
         <dependency>
-            <groupId>org.ressec</groupId>
+            <groupId>org.ressec.avocado</groupId>
             <artifactId>avocado-core</artifactId>
         </dependency>
 

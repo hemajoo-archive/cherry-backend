@@ -41,12 +41,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- ResseC Avocado dependencies -->
-        <dependency>
-            <groupId>org.ressec</groupId>
-            <artifactId>avocado-core</artifactId>
-        </dependency>
-
         <!-- Tika -->
         <dependency>
             <groupId>com.github.lafa.tikaNoExternal</groupId>
