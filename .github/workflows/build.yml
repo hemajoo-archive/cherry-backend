@@ -55,13 +55,13 @@ jobs:
           servers: |
             [{
                 "id": "github-ressec-maven-registry",
-                "username": "${{ secrets.READ_GITHUB_MAVEN_USER }}",
-                "password": "${{ secrets.READ_GITHUB_MAVEN_TOKEN }}"
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             },
             {
                 "id": "github-hemajoo-commerce-maven-registry",
-                "username": "${{ secrets.READ_GITHUB_MAVEN_USER }}",
-                "password": "${{ secrets.READ_GITHUB_MAVEN_TOKEN }}"
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
             }]
 
       - name: Build with Maven
