@@ -54,12 +54,12 @@ jobs:
         with:
           servers: |
             [{
-                "id": "github-ressec-maven-registry",
+                "id": "github.ressec.maven.registry",
                 "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
                 "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             },
             {
-                "id": "github-hemajoo-commerce-maven-registry",
+                "id": "github.hemajoo-commerce.maven.registry",
                 "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
                 "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
             }]
