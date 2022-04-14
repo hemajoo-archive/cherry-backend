@@ -41,9 +41,6 @@ jobs:
         with:
           java-version: ${{ matrix.Java }}
           distribution: adopt
-#          server-id: github-ressec-maven
-#          server-username: GH_RESSEC_USERNAME
-#          server-password: GH_RESSEC_TOKEN
 
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -54,9 +51,8 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B clean package -f cherry-backend-parent/pom.xml -Pjava-${{ matrix.Java }} -Pcherry-postgres-dev
-#        env:
-#          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-#          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   codeql:
     name: CodeQL analysis
@@ -89,15 +85,11 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-#          server-id: github-ressec-maven
-#          server-username: GH_RESSEC_USERNAME
-#          server-password: GH_RESSEC_TOKEN
 
       - name: Build project with Maven
         run: mvn -B -Dmaven.test.skip=true clean package -f cherry-backend-parent/pom.xml -Pjava-17 # Skip tests as a parallel build is done that runs the tests
-#        env:
-#          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-#          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Perform CodeQL analysis for language ${{ matrix.language }}
         uses: github/codeql-action/analyze@v1
@@ -119,9 +111,6 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-#          server-id: 'github-ressec-maven'
-#          server-username: GH_RESSEC_USERNAME
-#          server-password: GH_RESSEC_TOKEN
 
       - name: Cache Maven packages
         uses: actions/cache@v1
@@ -140,9 +129,6 @@ jobs:
       - name: Analyze with SonarCloud
         run: mvn -B verify sonar:sonar -f cherry-backend-parent/pom.xml -Pjava-17 -Pcherry-postgres-dev
         env:
-#          GH_RESSEC_USER: ${{ secrets.GH_RESSEC_USERNAME }}
-#          GH_RESSEC_TOKEN: ${{ secrets.GH_RESSEC_TOKEN }}
-#          GH_RESSEC_TOKEN_PACKAGES_ALL: ${{ secrets.GH_RESSEC_TOKEN_PACKAGES_ALL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -204,5 +190,5 @@ jobs:
 
       - name: Deploy Snaphot Artifacts
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_GITHUB_MAVEN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17
