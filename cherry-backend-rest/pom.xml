@@ -17,7 +17,7 @@
     <description>Hemajoo's Commerce - Cherry Backend REST module.</description>
 
     <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../code-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
