@@ -101,6 +101,21 @@ jobs:
           java-version: 17
           distribution: adopt
 
+      - name: Setup Maven settings.xml
+        uses: s4u/maven-settings-action@v2.6.0
+        with:
+          servers: |
+            [{
+                "id": "github.ressec.maven.registry",
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
+            },
+            {
+                "id": "github.hemajoo-commerce.maven.registry",
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
+            }]
+
       - name: Build project with Maven
         run: mvn -B -Dmaven.test.skip=true clean package -f cherry-backend-parent/pom.xml -Pjava-17 # Skip tests as a parallel build is done that runs the tests
         env:
@@ -140,6 +155,21 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
+      - name: Setup Maven settings.xml
+        uses: s4u/maven-settings-action@v2.6.0
+        with:
+          servers: |
+            [{
+                "id": "github.ressec.maven.registry",
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
+            },
+            {
+                "id": "github.hemajoo-commerce.maven.registry",
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
+            }]
 
       - name: Analyze with SonarCloud
         run: mvn -B verify sonar:sonar -f cherry-backend-parent/pom.xml -Pjava-17 -Pcherry-postgres-dev
