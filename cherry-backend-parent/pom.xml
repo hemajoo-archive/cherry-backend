@@ -112,7 +112,7 @@
         <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.projectName>Cherry Backend</sonar.projectName>
-        <sonar.organization>ressec-github</sonar.organization>
+        <sonar.organization>hemajoo-commerce</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
