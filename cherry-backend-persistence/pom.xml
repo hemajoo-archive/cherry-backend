@@ -17,7 +17,7 @@
     <description>Hemajoo's Commerce - Cherry Backend Persistence module.</description>
 
     <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../code-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -180,7 +180,7 @@
              General purpose library providing low level entities.
           -->
         <dependency>
-            <groupId>org.ressec</groupId>
+            <groupId>org.ressec.avocado</groupId>
             <artifactId>avocado-core</artifactId>
         </dependency>
 
