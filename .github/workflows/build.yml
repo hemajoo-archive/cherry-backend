@@ -49,6 +49,21 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Setup Maven settings.xml
+        uses: s4u/maven-settings-action@v2.6.0
+        with:
+          servers: |
+            [{
+                "id": "github-ressec-maven-registry",
+                "username": "${{ secrets.READ_GITHUB_MAVEN_USER }}",
+                "password": "${{ secrets.READ_GITHUB_MAVEN_TOKEN }}"
+            },
+            {
+                "id": "github-hemajoo-commerce-maven-registry",
+                "username": "${{ secrets.READ_GITHUB_MAVEN_USER }}",
+                "password": "${{ secrets.READ_GITHUB_MAVEN_TOKEN }}"
+            }]
+
       - name: Build with Maven
         run: mvn -B clean package -f cherry-backend-parent/pom.xml -Pjava-${{ matrix.Java }} -Pcherry-postgres-dev
         env:
