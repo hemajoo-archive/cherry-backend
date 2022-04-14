@@ -218,20 +218,20 @@ jobs:
         with:
           servers: |
             [{
-                "id": "github-ressec-maven-registry",
-                "username": "${{ secrets.READ_GITHUB_MAVEN_USER }}",
-                "password": "${{ secrets.READ_GITHUB_MAVEN_TOKEN }}"
+                "id": "github.ressec.maven.registry",
+                "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             },
             {
-                "id": "github-hemajoo-commerce-maven-registry",
-                "username": "${{ secrets.DEPLOY_GITHUB_MAVEN_USER }}",
-                "password": "${{ secrets.DEPLOY_GITHUB_MAVEN_TOKEN }}"
+                "id": "github.hemajoo-commerce.maven.registry",
+                "username": "${{ secrets.DEPLOY_MAVEN_REGISTRY_GITHUB_USER }}",
+                "password": "${{ secrets.DEPLOY_MAVEN_REGISTRY_GITHUB_USER }}"
             }]
 
-      - name: Info - Display branches references
-        run: |
-          echo 'GITHUB head branch reference >> ' ${GITHUB_HEAD_REF}
-          echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
+#      - name: Info - Display branches references
+#        run: |
+#          echo 'GITHUB head branch reference >> ' ${GITHUB_HEAD_REF}
+#          echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
 
       - name: Deploy Snaphot Artifacts
         env:
