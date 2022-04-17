@@ -8,7 +8,7 @@
         <groupId>com.hemajoo.commerce</groupId>
         <artifactId>cherry-backend-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../cherry-backend-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>cherry-backend-shared</artifactId>
