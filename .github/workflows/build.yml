@@ -65,7 +65,7 @@ jobs:
             }]
 
       - name: Build with Maven
-        run: mvn -B clean package -f cherry-backend-parent/pom.xml -Pjava-${{ matrix.Java }} -Pcherry-postgres-dev
+        run: mvn -B clean package -f cherry-backend/pom.xml -Pjava.${{ matrix.Java }} -Pcherry.postgres.dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -117,7 +117,7 @@ jobs:
             }]
 
       - name: Build project with Maven
-        run: mvn -B -Dmaven.test.skip=true clean package -f cherry-backend-parent/pom.xml -Pjava-17 # Skip tests as a parallel build is done that runs the tests
+        run: mvn -B -Dmaven.test.skip=true clean package -f cherry-backend/pom.xml -Pjava.17 # Skip tests as a parallel build is done that runs the tests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -172,7 +172,7 @@ jobs:
             }]
 
       - name: Analyze with SonarCloud
-        run: mvn -B verify sonar:sonar -f cherry-backend-parent/pom.xml -Pjava-17 -Pcherry-postgres-dev
+        run: mvn -B verify sonar:sonar -f cherry-backend/pom.xml -Pjava.17 -Pcherry.postgres.dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -233,7 +233,7 @@ jobs:
       #          echo 'GITHUB head branch reference >> ' ${GITHUB_HEAD_REF}
       #          echo 'GITHUB base branch reference >> ' ${GITHUB_BASE_REF}
 
-      - name: Deploy Snaphot Artifacts
+      - name: Deploy Snapshot Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend-parent/pom.xml -Pjava-17
+        run: mvn --batch-mode deploy -Dmaven.test.skip=true -f cherry-backend/pom.xml -Pjava.17
