@@ -6,9 +6,9 @@
 
     <parent>
         <groupId>com.hemajoo.commerce</groupId>
-        <artifactId>cherry-backend-parent</artifactId>
+        <artifactId>cherry-backend</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../cherry-backend-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>cherry-backend-rest</artifactId>
@@ -17,7 +17,7 @@
     <description>Hemajoo's Commerce - Cherry Backend REST module.</description>
 
     <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../code-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -75,7 +75,7 @@
 
         <!-- ResseC dependencies -->
         <dependency>
-            <groupId>org.ressec</groupId>
+            <groupId>org.ressec.avocado</groupId>
             <artifactId>avocado-core</artifactId>
         </dependency>
 

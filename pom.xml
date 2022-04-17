@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hemajoo.commerce</groupId>
-    <artifactId>cherry-backend-parent</artifactId>
+    <artifactId>cherry-backend</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Cherry Backend - Parent</name>
+    <name>Cherry Backend</name>
     <description>Hemajoo's Commerce - Cherry Backend Parent module.</description>
 
     <developers>
@@ -20,26 +20,26 @@
                 <role>Lead Developer</role>
             </roles>
             <name>Resse Christophe</name>
-            <url>https://github.com/ressec</url>
+            <url>https://github.com/hemajoo-commerce</url>
             <email>christophe.resse@gmail.com</email>
         </developer>
 
     </developers>
 
     <scm>
-        <url>https://github.com/ressec/cherry-backend</url>
-        <connection>scm:git:ssh://git@github.com/ressec/cherry-backend.git</connection>
+        <url>https://github.com/hemajoo-commerce/cherry-backend</url>
+        <connection>scm:git:ssh://git@github.com/hemajoo-commerce/cherry-backend.git</connection>
         <!--suppress UnresolvedMavenProperty -->
-        <developerConnection>scm:git:[push=]ssh://git@github.com/ressec/cherry-backend.git[fetch=]ssh://git@github.com/ressec/cherry-backend.git</developerConnection>
+        <developerConnection>scm:git:[push=]ssh://git@github.com/hemajoo-commerce/cherry-backend.git[fetch=]ssh://git@github.com/ressec/cherry-backend.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <modules>
-        <module>../cherry-backend-commons</module>
-        <module>../cherry-backend-shared</module>
-        <module>../cherry-backend-persistence</module>
-        <module>../cherry-backend-rest</module>
-        <module>../cherry-backend-coverage</module>
+        <module>cherry-backend-commons</module>
+        <module>cherry-backend-shared</module>
+        <module>cherry-backend-persistence</module>
+        <module>cherry-backend-rest</module>
+        <module>cherry-backend-coverage</module>
     </modules>
 
     <properties>
@@ -97,7 +97,7 @@
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
         <version.javers>3.1.0</version.javers>
         <version.testcontainers>1.16.3</version.testcontainers>
-        <version.db.h2>2.1.210</version.db.h2>
+        <version.db.h2>2.1.212</version.db.h2>
         <version.db.postgresql>42.3.3</version.db.postgresql>
         <version.spring.content>1.2.7</version.spring.content>
         <version.amazon.awssdk>2.17.100</version.amazon.awssdk>
@@ -109,17 +109,17 @@
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.language>java</sonar.language>
-        <sonar.projectKey>ressec_cherry-backend</sonar.projectKey>
+        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.projectName>Cherry Backend</sonar.projectName>
-        <sonar.organization>ressec-github</sonar.organization>
+        <sonar.organization>hemajoo-commerce</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <distributionManagement>
 
         <repository>
-            <id>github-ressec-maven</id>
+            <id>github.hemajoo-commerce.maven.registry</id>
             <name>GitHub Hemajoo Commerce - Maven Packages Registry</name>
             <url>https://maven.pkg.github.com/hemajoo-commerce/maven-registry</url>
         </repository>
@@ -138,11 +138,22 @@
             </snapshots>
         </repository>
 
-        <!-- GitHub ResseC Maven repository -->
         <repository>
-            <id>github-ressec-maven</id>
+            <id>github.ressec.maven.registry</id>
+            <name>GitHub ResseC - Maven Packages registry</name>
+            <url>https://maven.pkg.github.com/ressec/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>github.hemajoo-commerce.maven.registry</id>
             <name>GitHub Hemajoo Commerce - Maven Packages Registry</name>
-            <url>https://maven.pkg.github.com/hemajoo-commerce/maven-registry</url>
+            <url>https://maven.pkg.github.com/hemajoo-commerce/*</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -376,7 +387,7 @@
 
             <!-- Avocado: https://github.com/ressec/Avocado -->
             <dependency>
-                <groupId>org.ressec</groupId>
+                <groupId>org.ressec.avocado</groupId>
                 <artifactId>avocado-core</artifactId>
                 <version>${version.ressec.avocado}</version>
             </dependency>
@@ -598,7 +609,7 @@
 
         <profile>
             <!-- Note: This profile is used for the development of the solution using a H2 database -->
-            <id>cherry-h2-dev</id>
+            <id>cherry.h2.dev</id>
             <properties>
                 <server.port>8084</server.port>
                 <database.port>9092</database.port>
@@ -646,7 +657,7 @@
 
         <profile>
             <!-- Note: This profile is used for the development of the solution using a PostgreSQL database -->
-            <id>cherry-postgres-dev</id>
+            <id>cherry.postgres.dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -705,7 +716,7 @@
 
         <profile>
             <!-- Note: This profile is used for the user acceptance tests of the cherry solution using a PostgreSQL database -->
-            <id>cherry-postgres-uat</id>
+            <id>cherry.postgres.uat</id>
             <properties>
                 <database.port>5432</database.port>
                 <database.name>cherry</database.name>
@@ -751,7 +762,7 @@
 
         <profile>
             <!-- Note: This profile is used for the production of the cherry solution using a PostgreSQL database -->
-            <id>cherry-postgres-prod</id>
+            <id>cherry.postgres.prod</id>
             <properties>
                 <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
                 <database.port>5432</database.port>
@@ -796,60 +807,49 @@
         </profile>
 
         <profile>
-            <id>java-8</id>
-            <activation>
-                <jdk>8</jdk>
-            </activation>
+            <id>java.8</id>
             <properties>
                 <maven.compiler.release>8</maven.compiler.release>
             </properties>
         </profile>
 
         <profile>
-            <id>java-11</id>
-            <activation>
-                <jdk>11</jdk>
-            </activation>
+            <id>java.9</id>
+            <properties>
+                <maven.compiler.release>9</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.11</id>
             <properties>
                 <maven.compiler.release>11</maven.compiler.release>
             </properties>
         </profile>
 
         <profile>
-            <id>java-13</id>
-            <activation>
-                <jdk>13</jdk>
-            </activation>
+            <id>java.13</id>
             <properties>
                 <maven.compiler.release>13</maven.compiler.release>
             </properties>
         </profile>
 
         <profile>
-            <id>java-15</id>
-            <activation>
-                <jdk>15</jdk>
-            </activation>
+            <id>java.15</id>
             <properties>
                 <maven.compiler.release>15</maven.compiler.release>
             </properties>
         </profile>
 
         <profile>
-            <id>java-16</id>
-            <activation>
-                <jdk>16</jdk>
-            </activation>
+            <id>java.16</id>
             <properties>
                 <maven.compiler.release>16</maven.compiler.release>
             </properties>
         </profile>
 
         <profile>
-            <id>java-17</id>
-            <activation>
-                <jdk>17</jdk>
-            </activation>
+            <id>java.17</id>
             <properties>
                 <maven.compiler.release>17</maven.compiler.release>
             </properties>
