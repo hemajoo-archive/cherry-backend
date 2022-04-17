@@ -61,7 +61,7 @@ jobs:
             {
                 "id": "github.hemajoo-commerce.maven.registry",
                 "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
-                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             }]
 
       - name: Build with Maven
@@ -113,7 +113,7 @@ jobs:
             {
                 "id": "github.hemajoo-commerce.maven.registry",
                 "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
-                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             }]
 
       - name: Build project with Maven
@@ -168,7 +168,7 @@ jobs:
             {
                 "id": "github.hemajoo-commerce.maven.registry",
                 "username": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}",
-                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_USER }}"
+                "password": "${{ secrets.READ_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             }]
 
       - name: Analyze with SonarCloud
@@ -225,7 +225,7 @@ jobs:
             {
                 "id": "github.hemajoo-commerce.maven.registry",
                 "username": "${{ secrets.DEPLOY_MAVEN_REGISTRY_GITHUB_USER }}",
-                "password": "${{ secrets.DEPLOY_MAVEN_REGISTRY_GITHUB_USER }}"
+                "password": "${{ secrets.DEPLOY_MAVEN_REGISTRY_GITHUB_TOKEN }}"
             }]
 
       #      - name: Info - Display branches references
