@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hemajoo.commerce</groupId>
-    <artifactId>cherry-backend-parent</artifactId>
+    <artifactId>cherry-backend</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Cherry Backend - Parent</name>
+    <name>Cherry Backend</name>
     <description>Hemajoo's Commerce - Cherry Backend Parent module.</description>
 
     <developers>
