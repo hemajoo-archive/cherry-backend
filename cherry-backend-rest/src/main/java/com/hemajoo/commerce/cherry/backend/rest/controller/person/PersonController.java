@@ -16,15 +16,15 @@ package com.hemajoo.commerce.cherry.backend.rest.controller.person;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.backend.persistence.person.converter.PersonConverter;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,8 +39,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Api(tags = "Persons")
-//@ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressServiceCore.class })
+@Tag(name = "Person REST controller", description = "Set of REST-API endpoints to manage the person entities.")
 @Validated
 @RestController
 @RequestMapping("/api/v1/person")
@@ -68,7 +67,7 @@ public class PersonController
      * Service to count the number of persons.
      * @return Number of persons.
      */
-    @ApiOperation(value = "Count the number of persons")
+    @Operation(summary = "Count the number of persons")
     @GetMapping("/count")
     public long count()
     {
@@ -80,15 +79,15 @@ public class PersonController
      * @param id Email address identifier.
      * @return Email address matching the given identifier.
      */
-    @ApiOperation(value = "Retrieve an email address")
+    @Operation(summary = "Retrieve an email address")
     @GetMapping("/get/{id}")
-    public ResponseEntity<ClientPersonEntity> get(
-            @ApiParam(value = "Person identifier", required = true)
+    public ResponseEntity<PersonClient> get(
+            @Parameter(description = "Person identifier", required = true)
             @Valid @ValidPersonId // Handles person id validation automatically, need both annotations!
             @NotNull
             @PathVariable String id)
     {
-        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(id));
+        PersonServer person = servicePerson.getPersonService().findById(UUID.fromString(id));
         return ResponseEntity.ok(converterPerson.fromServerToClient(person));
     }
 
@@ -113,13 +112,13 @@ public class PersonController
     /**
      * Service to create a random person.
      * @return Randomly generated person.
-     * @throws EmailAddressException Thrown to indicate an error occurred while trying to create a random email address.
+     * @throws DocumentException Thrown to indicate an error occurred with a document while trying to create a random email address.
      */
-    @ApiOperation(value = "Create a new random person")
+    @Operation(summary = "Create a new random person")
     @PostMapping("/random")
-    public ResponseEntity<ClientPersonEntity> random() throws EmailAddressException
+    public ResponseEntity<PersonClient> random() throws DocumentException
     {
-        ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
+        PersonServer person = PersonRandomizer.generateServerEntity(false);
         person = servicePerson.getPersonService().save(person);
 
         return ResponseEntity.ok(converterPerson.fromServerToClient(person));
@@ -148,10 +147,10 @@ public class PersonController
      * @param id Person identifier.
      * @return Confirmation message.
      */
-    @ApiOperation(value = "Delete a person")
+    @Operation(summary = "Delete a person")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(
-            @ApiParam(value = "Person identifier (UUID)", required = true)
+            @Parameter(description = "Person identifier (UUID)", required = true)
             @NotNull @Valid @ValidPersonId @PathVariable String id)
     {
         servicePerson.getPersonService().deleteById(UUID.fromString(id));

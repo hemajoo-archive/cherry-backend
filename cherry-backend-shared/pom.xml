@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>cherry-backend-parent</artifactId>
-        <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+        <groupId>com.hemajoo.commerce</groupId>
+        <artifactId>cherry-backend</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../cherry-backend-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>cherry-backend-shared</artifactId>
@@ -17,14 +17,14 @@
     <description>Hemajoo's Commerce - Cherry Backend Shared module.</description>
 
     <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../code-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
 
         <!-- Hemajoo's Commerce - Cherry backend dependencies -->
         <dependency>
-            <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cherry-backend-commons</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
@@ -43,7 +43,7 @@
 
         <!-- ResseC Avocado dependencies -->
         <dependency>
-            <groupId>org.ressec</groupId>
+            <groupId>org.ressec.avocado</groupId>
             <artifactId>avocado-core</artifactId>
         </dependency>
 

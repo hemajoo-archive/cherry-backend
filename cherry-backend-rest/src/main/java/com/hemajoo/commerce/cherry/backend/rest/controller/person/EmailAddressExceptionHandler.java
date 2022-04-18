@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.rest.controller.person;
 
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

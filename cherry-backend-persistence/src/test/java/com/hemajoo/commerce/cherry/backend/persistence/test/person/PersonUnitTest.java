@@ -15,9 +15,11 @@
 package com.hemajoo.commerce.cherry.backend.persistence.test.person;
 
 import com.hemajoo.commerce.cherry.backend.persistence.base.entity.ServiceFactoryPerson;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.service.IPersonService;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for the person server class.
+ * Unit tests for the {@link PersonServer} and the {@link IPersonService}.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -47,9 +49,9 @@ class PersonUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a person")
-    void testCreatePerson()
+    void testCreatePerson() throws DocumentException
     {
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         assertThat(person)
                 .as("Person should not be null!")
@@ -62,9 +64,9 @@ class PersonUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Update a person")
-    void testUpdatePerson()
+    void testUpdatePerson() throws DocumentException
     {
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         assertThat(person)
                 .as("Person should not be null!")
@@ -78,7 +80,7 @@ class PersonUnitTest extends AbstractPostgresUnitTest
         person.setDescription("Test description for person: " + person.getId());
         person = servicePerson.getPersonService().saveAndFlush(person);
 
-        ServerPersonEntity updated = servicePerson.getPersonService().findById(person.getId());
+        PersonServer updated = servicePerson.getPersonService().findById(person.getId());
 
         assertThat(updated)
                 .as("Person should not be null!")
@@ -91,9 +93,9 @@ class PersonUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Delete a person")
-    void testDeletePerson()
+    void testDeletePerson() throws DocumentException
     {
-        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         assertThat(person)
                 .as("Person should not be null!")

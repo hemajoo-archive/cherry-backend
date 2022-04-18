@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.backend.rest.error;
 
+import com.hemajoo.commerce.cherry.backend.commons.exception.CherryException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
     public static ResponseEntity<String> handleExceptions(Exception exception, WebRequest request)
     {
         return ResponseEntity.badRequest().body(exception.getCause().getMessage());
+    }
+
+    @ExceptionHandler(CherryException.class)
+    @ResponseBody
+    @NotNull
+    public static ResponseEntity<String> handleCherryException(CherryException exception, WebRequest request)
+    {
+        return new ResponseEntity<>(exception.getMessage(), exception.getStatusCode());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

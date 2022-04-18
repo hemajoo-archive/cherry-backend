@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>cherry-backend-parent</artifactId>
-        <groupId>com.hemajoo.commerce.cherry.backend</groupId>
+        <groupId>com.hemajoo.commerce</groupId>
+        <artifactId>cherry-backend</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../cherry-backend-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>cherry-backend-commons</artifactId>
@@ -17,7 +17,7 @@
     <description>Hemajoo's Commerce - Cherry Backend Commons module.</description>
 
     <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../code-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -33,11 +33,11 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- Swagger -->
+        <!-- Automate generation of API documentation using Spring -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${version.swagger}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Lombok -->
@@ -48,7 +48,7 @@
 
         <!-- ResseC Generic Avocado -->
         <dependency>
-            <groupId>org.ressec</groupId>
+            <groupId>org.ressec.avocado</groupId>
             <artifactId>avocado-core</artifactId>
         </dependency>
 

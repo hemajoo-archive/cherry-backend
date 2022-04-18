@@ -32,8 +32,8 @@ public abstract class AbstractPostgresUnitTest
     /**
      * PostgresSQL docker container.
      */
-    @Container
     @Getter
+    @Container
     protected static final PostgreSQLContainer<?> POSTGRES_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:latest")
             .withUsername("postgres")
             .withPassword("postgres")
@@ -59,8 +59,8 @@ public abstract class AbstractPostgresUnitTest
         LOGGER.info(String.format("Container port number: %s", POSTGRES_SQL_CONTAINER.getFirstMappedPort()));
     }
 
-    static
-    {
-        POSTGRES_SQL_CONTAINER.start();
-    }
+//    static
+//    {
+//        POSTGRES_SQL_CONTAINER.start();
+//    }
 }

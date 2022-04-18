@@ -14,28 +14,33 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.document.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentType;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.type.DocumentType;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
 import java.util.UUID;
 
 /**
- * Document generator.
+ * Randomizer used to randomly generate <b>documents</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @UtilityClass
-public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
+public final class DocumentRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Document type enumeration generator.
      */
-    private static final EnumRandomGenerator DOCUMENT_TYPE_GENERATOR = new EnumRandomGenerator(DocumentType.class).exclude(DocumentType.UNSPECIFIED);
+    private static final EnumRandomGenerator DOCUMENT_TYPE_GENERATOR = new EnumRandomGenerator(DocumentType.class).exclude(DocumentType.UNKNOWN);
+
+    /**
+     * Test media type enumeration generator.
+     */
+    private static final EnumRandomGenerator TEST_MEDIA_TYPE_GENERATOR = new EnumRandomGenerator(TestMediaType.class);
 
     /**
      * Generates a new random persistent document.
@@ -43,10 +48,10 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static ServerDocumentEntity generateServerEntity(final boolean withRandomId) throws DocumentContentException
+    public static DocumentServer generateServerEntity(final boolean withRandomId) throws DocumentContentException
     {
-        var entity = new ServerDocumentEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new DocumentServer();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -54,7 +59,7 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
         }
 
         entity.setName(FAKER.name().title());
-        entity.setContent("./media/android-10.jpg");
+        entity.setContent(((TestMediaType) TEST_MEDIA_TYPE_GENERATOR.gen()).getPath());
         entity.setTags(FAKER.elderScrolls().creature());
         entity.setDocumentType((DocumentType) DOCUMENT_TYPE_GENERATOR.gen());
 
@@ -67,10 +72,10 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static ClientDocumentEntity generateClientEntity(final boolean withRandomId) throws DocumentContentException
+    public static DocumentClient generateClientEntity(final boolean withRandomId) throws DocumentContentException
     {
-        var entity = new ClientDocumentEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new DocumentClient();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -78,7 +83,7 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
         }
 
         entity.setName(FAKER.name().title());
-        entity.setContent("./media/android-10.jpg");
+        entity.setContent(((TestMediaType) TEST_MEDIA_TYPE_GENERATOR.gen()).getPath());
         entity.setTags(FAKER.elderScrolls().creature());
         entity.setDocumentType((DocumentType) DOCUMENT_TYPE_GENERATOR.gen());
 

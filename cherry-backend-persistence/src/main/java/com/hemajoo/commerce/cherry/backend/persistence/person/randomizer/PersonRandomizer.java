@@ -14,16 +14,17 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -35,7 +36,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PersonRandomizer extends AbstractBaseEntityRandomizer
+public final class PersonRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Person type enumeration generator.
@@ -52,10 +53,10 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * @return Random person.
      */
-    public static ServerPersonEntity generateServerEntity(final boolean withRandomId)
+    public static PersonServer generateServerEntity(final boolean withRandomId)
     {
-        var entity = new ServerPersonEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new PersonServer();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -79,11 +80,11 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPersonEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PersonServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
-        var entity = new ServerPersonEntity();
-        ServerDocumentEntity document;
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new PersonServer();
+        DocumentServer document;
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -111,10 +112,10 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Random person.
      */
-    public static ClientPersonEntity generateClientEntity(final boolean withRandomId)
+    public static PersonClient generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientPersonEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new PersonClient();
+        AbstractEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
         {
@@ -138,11 +139,11 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPersonEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PersonClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        ClientDocumentEntity document;
-        ClientPersonEntity entity = new ClientPersonEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        DocumentClient document;
+        PersonClient entity = new PersonClient();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -172,11 +173,11 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws EmailAddressException Raised in case an error occurred when trying to create an email address!
      */
-    public static ServerPersonEntity generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
+    public static PersonServer generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
     {
         var person = generateServerEntity(withRandomId);
 
-        int count = bound > 0 ? bound : AbstractBaseEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
+        int count = bound > 0 ? bound : AbstractEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
         for (var i = 0; i < count; i++)
         {
             person.addEmailAddress(EmailAddressRandomizer.generateServerEntity(withRandomId));
