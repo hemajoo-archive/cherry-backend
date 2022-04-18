@@ -15,15 +15,15 @@
 package com.hemajoo.commerce.cherry.backend.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.StatusEntity;
-import io.swagger.annotations.ApiModelProperty;
+import com.hemajoo.commerce.cherry.backend.shared.base.entity.IEntityStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Represents the base status part of a persistence entity of the {@code Cherry} data model.
+ * Represents an abstract implementation of the base <b>status</b> part of a server entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -31,11 +31,8 @@ import java.util.Date;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
-public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements StatusEntity, ServerEntity
+public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements IEntityStatus, IServerEntity
 {
-    public static final String FIELD_STATUS_TYPE    = "statusType";
-    public static final String FIELD_SINCE          = "since";
-
     /**
      * Entity status.
      */
@@ -49,7 +46,7 @@ public abstract class AbstractServerStatusEntity extends AbstractServerAuditEnti
      */
     @Getter
     @Setter
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "SINCE", length = 26)
     private Date since;

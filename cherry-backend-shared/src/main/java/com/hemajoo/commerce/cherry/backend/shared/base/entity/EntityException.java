@@ -14,63 +14,71 @@
  */
 package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 
-import com.hemajoo.commerce.cherry.backend.commons.exception.AbstractEntityUncheckedException;
-import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.backend.commons.exception.CherryException;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
+
+import java.io.Serial;
 
 /**
  * Checked exception thrown to indicate an error occurred with an <b>entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EntityException extends AbstractEntityUncheckedException
+public class EntityException extends CherryException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
      * Thrown to indicate that an error occurred with an <b>entity</b>.
-     * @param type Entity type.
      * @param exception Parent {@link Exception}.
-     * @param status {@link HttpStatus}.
      */
-    public EntityException(final EntityType type, final Exception exception, final HttpStatus status)
+    public EntityException(final Exception exception)
     {
-        super(type, exception, status);
+        super(exception);
     }
 
     /**
      * Thrown to indicate that an error occurred with an <b>entity</b>.
-     * @param type Entity type.
      * @param message Message describing the error being the cause of the raised exception.
      */
-    public EntityException(final EntityType type, final String message)
+    public EntityException(final String message)
     {
-        super(type, message, HttpStatus.BAD_REQUEST);
+        super(message);
     }
 
     /**
      * Thrown to indicate that an error occurred with an <b>entity</b>.
-     * @param type Entity type.
      * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
+     * @param statusCode Http status code.
      */
-    public EntityException(final EntityType type, final String message, final HttpStatus status)
+    public EntityException(final @NonNull String message, final HttpStatus statusCode)
     {
-        super(type, message, status);
+        super(message, statusCode);
     }
 
     /**
      * Thrown to indicate that an error occurred with an <b>entity</b>.
-     * @param type Entity type.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent {@link Exception}.
-     * @param status {@link HttpStatus}.
      */
-    public EntityException(final EntityType type, final String message, final Exception exception, final HttpStatus status)
+    public EntityException(final String message, final Exception exception)
     {
-        super(type, message, exception, status);
+        super(message, exception);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with an <b>entity</b>.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param exception Parent {@link Exception}.
+     * @param statusCode Http status code.
+     */
+    public EntityException(final @NonNull String message, final @NonNull Exception exception, final HttpStatus statusCode)
+    {
+        super(message, exception, statusCode);
     }
 }

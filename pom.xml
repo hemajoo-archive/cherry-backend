@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hemajoo.commerce</groupId>
+    <artifactId>cherry-backend</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Cherry Backend</name>
+    <description>Hemajoo's Commerce - Cherry Backend Parent module.</description>
+
+    <developers>
+
+        <developer>
+            <id>ressec</id>
+            <roles>
+                <role>Lead Developer</role>
+            </roles>
+            <name>Resse Christophe</name>
+            <url>https://github.com/hemajoo-commerce</url>
+            <email>christophe.resse@gmail.com</email>
+        </developer>
+
+    </developers>
+
+    <scm>
+        <url>https://github.com/hemajoo-commerce/cherry-backend</url>
+        <connection>scm:git:ssh://git@github.com/hemajoo-commerce/cherry-backend.git</connection>
+        <!--suppress UnresolvedMavenProperty -->
+        <developerConnection>scm:git:[push=]ssh://git@github.com/hemajoo-commerce/cherry-backend.git[fetch=]ssh://git@github.com/ressec/cherry-backend.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <modules>
+        <module>cherry-backend-commons</module>
+        <module>cherry-backend-shared</module>
+        <module>cherry-backend-persistence</module>
+        <module>cherry-backend-rest</module>
+        <module>cherry-backend-coverage</module>
+    </modules>
+
+    <properties>
+
+        <!-- Project properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.directory.benchmark>file://${basedir}/benchmark}</project.directory.benchmark>
+        <project.directory.run>${basedir}/run</project.directory.run>
+        <project.directory.data>${basedir}/data</project.directory.data>
+        <project.directory.log>${basedir}/log</project.directory.log>
+        <project.directory.db>${basedir}/db</project.directory.db>
+        <test.pattern.unit>**/*UnitTest.java</test.pattern.unit>
+        <test.pattern.integration>**/*IntegrationTest.java</test.pattern.integration>
+
+        <!-- Spring overriding properties -->
+        <log4j2.version>2.17.1</log4j2.version> <!-- Forces Spring to use log4j2 version 2.17.1 -->
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+
+        <!-- Maven plugins version properties. Last update on 2022/03/13 -->
+        <version.maven.plugin.compiler>3.10.1</version.maven.plugin.compiler>
+        <version.maven.plugin.jar>3.2.2</version.maven.plugin.jar>
+        <version.maven.plugin.javadoc>3.3.2</version.maven.plugin.javadoc>
+        <version.maven.plugin.source>3.2.1</version.maven.plugin.source>
+        <version.maven.plugin.scm>2.0.0-M1</version.maven.plugin.scm>
+        <version.maven.plugin.release>3.0.0-M5</version.maven.plugin.release>
+        <version.maven.plugin.site>3.11.0</version.maven.plugin.site>
+        <version.maven.plugin.project.info.reports>3.2.2</version.maven.plugin.project.info.reports>
+        <version.maven.plugin.surefire>3.0.0-M5</version.maven.plugin.surefire>
+        <version.maven.plugin.failsafe>3.0.0-M5</version.maven.plugin.failsafe>
+        <version.maven.plugin.flyway>8.5.2</version.maven.plugin.flyway>
+        <version.plugin.maven.docker>0.37.0</version.plugin.maven.docker>
+        <version.plugin.maven.sonarscource.scanner>3.9.1.2184</version.plugin.maven.sonarscource.scanner>
+        <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
+
+        <!-- Spring Boot properties -->
+        <version.spring.boot>2.6.4</version.spring.boot>
+
+        <!-- Dependencies version properties -->
+        <version.ressec.avocado>0.1.0</version.ressec.avocado>
+        <version.springdoc.openapi>1.6.6</version.springdoc.openapi>
+        <version.google.guava>31.1-jre</version.google.guava>
+        <version.junit.jupiter>5.8.2</version.junit.jupiter>
+        <version.junit.platform.launcher>1.6.2</version.junit.platform.launcher>
+        <version.javafaker>1.0.1</version.javafaker>
+        <version.apache.log4j>2.17.2</version.apache.log4j>
+        <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
+        <version.apache.commons.io>2.11.0</version.apache.commons.io>
+        <version.apache.commons.validator>1.7</version.apache.commons.validator>
+        <version.lombok>1.18.22</version.lombok>
+        <version.assertj>3.22.0</version.assertj>
+        <version.mapstruct>1.4.2.Final</version.mapstruct>
+        <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
+        <version.flyway>8.5.2</version.flyway>
+        <version.apache.tika>1.0.18</version.apache.tika>
+        <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
+        <version.javers>3.1.0</version.javers>
+        <version.testcontainers>1.16.3</version.testcontainers>
+        <version.db.h2>2.1.212</version.db.h2>
+        <version.db.postgresql>42.3.3</version.db.postgresql>
+        <version.spring.content>1.2.7</version.spring.content>
+        <version.amazon.awssdk>2.17.100</version.amazon.awssdk>
+
+        <!-- Flyway properties -->
+        <flyway.locations>classpath:/db/migration/h2</flyway.locations>
+
+        <!-- Sonar properties -->
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-backend-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.language>java</sonar.language>
+        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <sonar.projectName>Cherry Backend</sonar.projectName>
+        <sonar.organization>hemajoo-commerce</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
+
+    <distributionManagement>
+
+        <repository>
+            <id>github.hemajoo-commerce.maven.registry</id>
+            <name>GitHub Hemajoo Commerce - Maven Packages Registry</name>
+            <url>https://maven.pkg.github.com/hemajoo-commerce/maven-registry</url>
+        </repository>
+
+    </distributionManagement>
+
+    <repositories>
+
+        <!-- Maven Central repository -->
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>github.ressec.maven.registry</id>
+            <name>GitHub ResseC - Maven Packages registry</name>
+            <url>https://maven.pkg.github.com/ressec/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>github.hemajoo-commerce.maven.registry</id>
+            <name>GitHub Hemajoo Commerce - Maven Packages Registry</name>
+            <url>https://maven.pkg.github.com/hemajoo-commerce/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+    </repositories>
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <!-- Log4J2 -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j2.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Project Spring Framework -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.spring.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${version.spring.boot}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring.boot}</version>
+                <type>maven-plugin</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${version.spring.boot}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+            <!-- Provides everything you need to write JUnit 5 Jupiter tests. -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.junit.jupiter}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <version>${version.junit.platform.launcher}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${version.assertj}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Project Lombok: https://projectlombok.org/ -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${version.lombok}</version>
+            </dependency>
+
+            <!-- Amazon AWS SDK -->
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${version.amazon.awssdk}</version>
+            </dependency>
+
+            <!-- Spring Content Store: REST -->
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>spring-content-rest-boot-starter</artifactId>
+                <version>${version.spring.content}</version>
+            </dependency>
+
+            <!-- Spring Content Store: File System -->
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>spring-content-fs-boot-starter</artifactId>
+                <version>${version.spring.content}</version>
+            </dependency>
+
+            <!-- Spring Content Store: Amazon S3 -->
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>content-s3-spring-boot-starter</artifactId>
+                <version>${version.spring.content}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>spring-content-s3</artifactId>
+                <version>${version.spring.content}</version>
+            </dependency>
+
+            <!-- Automate generation of API documentation using Spring -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${version.springdoc.openapi}</version>
+            </dependency>
+
+            <!-- Bean mapper: MapStruct -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${version.lombok.mapstruct}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+
+            <!-- Apache Commons Lang: https://commons.apache.org/proper/commons-lang/ -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.apache.commons.lang.3}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.apache.commons.io}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${version.apache.commons.validator}</version>
+            </dependency>
+
+            <!-- JavaFaker: https://github.com/DiUS/java-faker ... Is this one necessary? -->
+            <dependency>
+                <groupId>com.github.javafaker</groupId>
+                <artifactId>javafaker</artifactId>
+                <version>${version.javafaker}</version>
+            </dependency>
+
+            <!-- Google Guava: https://github.com/google/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.google.guava}</version>
+            </dependency>
+
+            <!-- Flyway: https://flywaydb.org/documentation/usage/api/ -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${version.flyway}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.db.postgresql}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${version.db.h2}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javers</groupId>
+                <artifactId>javers-core</artifactId>
+                <version>${version.javers}</version>
+            </dependency>
+
+            <!-- Apache Tika: https://tika.apache.org -->
+            <dependency>
+                <groupId>com.github.lafa.tikaNoExternal</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${version.apache.tika}</version>
+            </dependency>
+
+            <!-- Avocado: https://github.com/ressec/Avocado -->
+            <dependency>
+                <groupId>org.ressec.avocado</groupId>
+                <artifactId>avocado-core</artifactId>
+                <version>${version.ressec.avocado}</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring.boot}</version>
+            </plugin>
+
+            <!-- JAR: Compile the sources. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven.plugin.compiler}</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${version.mapstruct}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${version.lombok}</version>
+                        </path>
+                        <!-- This is needed when using Lombok 1.8.16 and above -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${version.lombok.mapstruct}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- JAR: Create a jar of the test classes. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${version.maven.plugin.jar}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JAVADOC: Used to generate the Javadoc JAR file. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven.plugin.javadoc}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <docencoding>${project.build.sourceEncoding}</docencoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                    <sourceFileExcludes>
+                        <exclude>**/*Impl.java</exclude>
+                    </sourceFileExcludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SOURCE: Used to generate the sources JAR file. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${version.maven.plugin.source}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SCM: Used to perform Source Control Management actions with Maven. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>${version.maven.plugin.scm}</version>
+            </plugin>
+
+            <!-- RELEASE: Used to release a project with Maven. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${version.maven.plugin.release}</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                </configuration>
+            </plugin>
+
+            <!-- SITE: The Site Plugin is used to generate a site for the project. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${version.maven.plugin.site}</version>
+            </plugin>
+
+            <!-- INFO REPORTS: The Maven Project Info Reports plugin is used to generate reports information about the project. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.maven.plugin.project.info.reports}</version>
+            </plugin>
+
+            <!-- JACOCO: Java Code Coverage. -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${version.plugin.maven.jacoco}</version>
+                <executions>
+                    <execution>
+                        <id>prepare</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SONAR: The Maven Project Sonar plugin is used to execute static analysis on the code. -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${version.plugin.maven.sonarscource.scanner}</version>
+            </plugin>
+
+            <!-- SUREFIRE: The Maven Project Surefire plugin is used to execute the tests. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven.plugin.surefire}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*UnitTest.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- FAILSAFE: For integration tests. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${version.maven.plugin.failsafe}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*IntegrationTest.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*UnitTest.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+
+            <!-- Allow resource filtering for variable substitution -->
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+
+    <profiles>
+
+        <profile>
+            <!-- Note: This profile is used for the development of the solution using a H2 database -->
+            <id>cherry.h2.dev</id>
+            <properties>
+                <server.port>8084</server.port>
+                <database.port>9092</database.port>
+                <database.name>HEMAJOO</database.name>
+                <database.schema>DEV</database.schema>
+                <spring.datasource.url>jdbc:h2:tcp://localhost:${database.port}/${database.name};DB_CLOSE_ON_EXIT=TRUE</spring.datasource.url>
+                <spring.datasource.username>sa</spring.datasource.username>
+                <spring.datasource.password>password</spring.datasource.password>
+                <spring.jpa.hibernate.database-platform>org.hibernate.dialect.PostgresPlusDialect</spring.jpa.hibernate.database-platform>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>${version.db.h2}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the development of the solution using a PostgreSQL database -->
+            <id>cherry.postgres.dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <server.port>8094</server.port>
+                <database.port>5432</database.port>
+                <database.name>cherry</database.name>
+                <database.schema>dev</database.schema>
+                <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
+                <spring.datasource.username>postgres</spring.datasource.username>
+                <spring.datasource.password>postgres</spring.datasource.password>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${version.db.postgresql}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+                        <!--                        <executions>-->
+                        <!--                            <execution>-->
+                        <!--                                <id>flyway-check-db</id>-->
+                        <!--                                <phase>compile</phase>-->
+                        <!--                                <goals>-->
+                        <!--                                    <goal>info</goal>-->
+                        <!--                                </goals>-->
+                        <!--                            </execution>-->
+                        <!--                        </executions>-->
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the user acceptance tests of the cherry solution using a PostgreSQL database -->
+            <id>cherry.postgres.uat</id>
+            <properties>
+                <database.port>5432</database.port>
+                <database.name>cherry</database.name>
+                <database.schema>uat</database.schema>
+                <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
+                <spring.datasource.username>postgres</spring.datasource.username>
+                <spring.datasource.password>postgres</spring.datasource.password>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${version.db.postgresql}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the production of the cherry solution using a PostgreSQL database -->
+            <id>cherry.postgres.prod</id>
+            <properties>
+                <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
+                <database.port>5432</database.port>
+                <spring.datasource.username>postgres</spring.datasource.username>
+                <spring.datasource.password>postgres</spring.datasource.password>
+                <database.name>cherry</database.name>
+                <database.schema>prod</database.schema>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${version.db.postgresql}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>java.8</id>
+            <properties>
+                <maven.compiler.release>8</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.9</id>
+            <properties>
+                <maven.compiler.release>9</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.11</id>
+            <properties>
+                <maven.compiler.release>11</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.13</id>
+            <properties>
+                <maven.compiler.release>13</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.15</id>
+            <properties>
+                <maven.compiler.release>15</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.16</id>
+            <properties>
+                <maven.compiler.release>16</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>java.17</id>
+            <properties>
+                <maven.compiler.release>17</maven.compiler.release>
+            </properties>
+        </profile>
+
+    </profiles>
+
+</project>

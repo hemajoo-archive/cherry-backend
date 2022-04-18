@@ -15,12 +15,11 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.mapper;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
-import com.hemajoo.commerce.cherry.backend.shared.person.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -32,7 +31,7 @@ import javax.persistence.EntityManager;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Mapper(uses = { AbstractBaseEntityMapper.class })
+@Mapper(uses = { AbstractEntityMapper.class })
 public abstract class AbstractPersonMapper
 {
     /**
@@ -46,7 +45,7 @@ public abstract class AbstractPersonMapper
      * @param context Context object.
      * @return Entity identity.
      */
-    public abstract EntityIdentity fromServerToIdentity(ServerPersonEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract EntityIdentity fromServerToIdentity(PersonServer entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a server person entity to a client person entity.
@@ -54,9 +53,9 @@ public abstract class AbstractPersonMapper
      * @param context Context object.
      * @param entityManager Entity manager.
      * @return Client person entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws EntityException Thrown to indicate an error occurred while trying to convert an entity.
      */
-    public abstract ServerPersonEntity fromClientToServer(ClientPersonEntity entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
+    public abstract PersonServer fromClientToServer(PersonClient entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
 
     /**
      * Maps from a server person entity to a client person entity.
@@ -64,22 +63,23 @@ public abstract class AbstractPersonMapper
      * @param context Context object.
      * @return Client person entity.
      */
-    public abstract ClientPersonEntity fromServerToClient(ServerPersonEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract PersonClient fromServerToClient(PersonServer entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a server person entity.
      * @param entity Server person entity.
      * @param context Context object.
      * @return Copy of the server person entity.
-     * @throws DocumentException Thrown to indicate an error occurred while trying to copy the server document entity!
+     * @throws EntityException Thrown to indicate an error occurred while trying to copy a person entity.
      */
-    public abstract ServerPersonEntity copy(ServerPersonEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
+    public abstract PersonServer copy(PersonServer entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 
     /**
      * Copy a client person entity.
      * @param entity Client person entity.
      * @param context Context object.
      * @return Copy of the client person entity.
+     * @throws EntityException Thrown to indicate an error occurred while trying to copy a person entity.
      */
-    public abstract ClientPersonEntity copy(ClientPersonEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract PersonClient copy(PersonClient entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 }

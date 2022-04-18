@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.repository;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonType;
 import lombok.NonNull;
@@ -34,7 +34,7 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID>, JpaSpecificationExecutor<ServerPersonEntity>
+public interface PersonRepository extends JpaRepository<PersonServer, UUID>, JpaSpecificationExecutor<PersonServer>
 {
     /**
      * Returns a person matching the given identifier.
@@ -43,7 +43,7 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
      */
     @NotNull
     @EntityGraph(attributePaths = "documents")
-    Optional<ServerPersonEntity> findById(final @NonNull UUID id);
+    Optional<PersonServer> findById(final @NonNull UUID id);
 
     /**
      * Returns a list of persons matching the given status.
@@ -51,7 +51,7 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
      * @return List of persons.
      * @see StatusType
      */
-    List<ServerPersonEntity> findByStatusType(StatusType statusType);
+    List<PersonServer> findByStatusType(StatusType statusType);
 
     /**
      * Returns the list of persons matching the given person type.
@@ -59,7 +59,7 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
      * @return List of persons.
      * @see PersonType
      */
-    List<ServerPersonEntity> findByPersonType(PersonType personType);
+    List<PersonServer> findByPersonType(PersonType personType);
 
     /**
      * Returns the list of persons matching the given gender type.
@@ -67,21 +67,21 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
      * @return List of persons.
      * @see GenderType
      */
-    List<ServerPersonEntity> findByGenderType(GenderType gender);
+    List<PersonServer> findByGenderType(GenderType gender);
 
     /**
      * Returns the list of persons matching the given last name.
      * @param lastName Last name (strict).
      * @return List of persons.
      */
-    List<ServerPersonEntity> findByLastName(String lastName);
+    List<PersonServer> findByLastName(String lastName);
 
     /**
      * Returns the list of persons matching the given first name.
      * @param firstName First name (strict).
      * @return List of persons.
      */
-    List<ServerPersonEntity> findByFirstName(String firstName);
+    List<PersonServer> findByFirstName(String firstName);
 
     /**
      * Returns the list of persons matching the given specification.
@@ -89,5 +89,5 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
      * @return List of persons.
      */
     @NotNull
-    List<ServerPersonEntity> findAll(final Specification<ServerPersonEntity> specification);
+    List<PersonServer> findAll(final Specification<PersonServer> specification);
 }

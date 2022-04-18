@@ -14,14 +14,15 @@
  */
 package com.hemajoo.commerce.cherry.backend.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractBaseEntityRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.randomizer.AbstractEntityRandomizer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.ClientDocumentEntity;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
+import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressClient;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -33,7 +34,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
+public final class EmailAddressRandomizer extends AbstractEntityRandomizer
 {
     /**
      * Address type enumeration generator.
@@ -46,10 +47,10 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} in unit tests.
      * @return Email address.
      */
-    public static ServerEmailAddressEntity generateServerEntity(final boolean withRandomId)
+    public static EmailAddressServer generateServerEntity(final boolean withRandomId)
     {
-        var entity = new ServerEmailAddressEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new EmailAddressServer();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -71,11 +72,11 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerEmailAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static EmailAddressServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
-        var entity = new ServerEmailAddressEntity();
-        ServerDocumentEntity document;
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new EmailAddressServer();
+        DocumentServer document;
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -101,10 +102,10 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static ClientEmailAddressEntity generateClientEntity(final boolean withRandomId)
+    public static EmailAddressClient generateClientEntity(final boolean withRandomId)
     {
-        var entity = new ClientEmailAddressEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        var entity = new EmailAddressClient();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -126,11 +127,11 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientEmailAddressEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static EmailAddressClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        ClientDocumentEntity document;
-        ClientEmailAddressEntity entity = new ClientEmailAddressEntity();
-        AbstractBaseEntityRandomizer.populateBaseFields(entity);
+        DocumentClient document;
+        EmailAddressClient entity = new EmailAddressClient();
+        AbstractEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

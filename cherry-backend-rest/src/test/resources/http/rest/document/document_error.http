@@ -1,0 +1,17 @@
+
+
+###
+// 404: Cannot find a document!
+GET http://{{host}}/api/v1/document/get/82813177-2a59-0000-b581-9b4d16753f66
+
+###
+// 400: Cannot create a random document with an invalid parent type!
+POST http://{{host}}/api/v1/document/random?parentType=ACCOUNT&parentId=b15cd068-ef4a-4037-a903-42087bc1d052
+
+###
+// 404: Cannot create a random document with an invalid parent id!
+POST http://{{host}}/api/v1/document/random?parentType=PERSON&parentId=c00cd068-ef4a-4037-a903-42087bc1d052
+
+###
+// 404: Cannot delete a document
+DELETE http://{{host}}/api/v1/document/delete/096b0444-a7e1-4f57-a3a0-6d7d451fc0ad

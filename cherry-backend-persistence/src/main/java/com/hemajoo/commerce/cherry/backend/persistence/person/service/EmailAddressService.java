@@ -15,107 +15,255 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.EntityComparator;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
+import com.hemajoo.commerce.cherry.backend.persistence.document.repository.IDocumentService;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.EmailAddressServer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAddressRepository;
-import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.document.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
+import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.address.AddressType;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.EmailAddressException;
-import com.hemajoo.commerce.cherry.backend.shared.person.address.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressException;
+import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddressQuery;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
+import org.javers.core.diff.Diff;
+import org.javers.core.diff.changetype.ReferenceChange;
+import org.javers.core.diff.changetype.ValueChange;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Email address persistence service behavior.
+ * Implementation of the email address persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface EmailAddressService
+@Validated
+@Service
+@Log4j2
+public class EmailAddressService implements IEmailAddressService
 {
-    EmailAddressRepository getRepository();
+    /**
+     * Email address repository.
+     */
+    @Autowired
+    @Getter
+    private EmailAddressRepository emailAddressRepository;
 
     /**
-     * Returns the total number of email addresses.
-     * @return Total number of email addresses.
+     * Person service.
      */
-    Long count();
+    @Autowired
+    private IPersonService personService;
 
     /**
-     * Returns the email address matching the given identifier.
-     * @param id Email address identifier.
-     * @return Email address.
+     * Document (content store) service.
      */
-    ServerEmailAddressEntity findById(UUID id);
+    @Autowired
+    private IDocumentService documentService;
+
+    @Override
+    public EmailAddressRepository getRepository()
+    {
+        return emailAddressRepository;
+    }
+
+    @Override
+    public Long count()
+    {
+        return emailAddressRepository.count();
+    }
+
+    @Override
+    public EmailAddressServer findById(UUID id) throws DocumentException
+    {
+        EmailAddressServer emailAddress = emailAddressRepository.findById(id).orElse(null);
+        if (emailAddress != null)
+        {
+            for (DocumentServer document : findDocuments(id))
+            {
+                emailAddress.addDocument(document);
+            }
+        }
+
+        return emailAddress;
+    }
+
+    @Override
+    public EmailAddressServer update(EmailAddressServer emailAddress) throws EmailAddressException, DocumentException
+    {
+        EmailAddressServer original = findById(emailAddress.getId());
+        return save(merge(emailAddress, original));
+    }
+
+    //@Transactional
+    @Override
+    public EmailAddressServer save(final @NonNull EmailAddressServer emailAddress) throws EmailAddressException
+    {
+        emailAddressRepository.save(emailAddress);
+
+        // Save the documents attached to the email address.
+        if (emailAddress.getDocuments() != null)
+        {
+            for (DocumentServer document : emailAddress.getDocuments())
+            {
+                try
+                {
+                    saveDocumentContent(document);
+                }
+                catch (DocumentException e)
+                {
+                    throw new EmailAddressException(e);
+                }
+            }
+        }
+
+        return emailAddress;
+    }
+
+    @Override
+    public EmailAddressServer saveAndFlush(EmailAddressServer emailAddress) throws EmailAddressException
+    {
+        emailAddress = save(emailAddress);
+
+        emailAddressRepository.flush();
+
+        return emailAddress;
+    }
+
+    @Override
+    public void deleteById(UUID id)
+    {
+        emailAddressRepository.deleteById(id);
+    }
+
+    @Override
+    public List<EmailAddressServer> findAll()
+    {
+        return emailAddressRepository.findAll();
+    }
+
+    @Override
+    public List<EmailAddressServer> findByAddressType(final AddressType type)
+    {
+        return emailAddressRepository.findByAddressType(type);
+    }
+
+    @Override
+    public List<EmailAddressServer> findByStatus(final StatusType status)
+    {
+        return emailAddressRepository.findByStatusType(status);
+    }
+
+    @Override
+    public List<EmailAddressServer> findByIsDefaultEmail(final Boolean isDefaultEmail)
+    {
+        return emailAddressRepository.findByIsDefaultEmail(isDefaultEmail);
+    }
+
+    @Override
+    public List<EmailAddressServer> findByParentId(final UUID parentId)
+    {
+        return emailAddressRepository.findByParentId(parentId);
+    }
+
+    @Override
+    public List<DocumentServer> findDocuments(final @NonNull UUID emailAddressId)
+    {
+        return documentService.findByParentId(emailAddressId);
+    }
+
+    @Override
+    public List<EmailAddressServer> search(final @NonNull EmailAddressQuery search) throws QueryConditionException
+    {
+        return emailAddressRepository.findAll((Specification<EmailAddressServer>) search.getSpecification());
+    }
 
     /**
-     * Updates the given server email address entity.
-     * @param emailAddress Server email address entity to update.
-     * @return Updated server email address entity.
-     * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
+     * Save the document content to the content store.
+     * @param document Document.
+     * @throws DocumentException Thrown if an error occurred while trying to save the document content to the content store.
      */
-    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException, EmailAddressException;
+    private void saveDocumentContent(final @NonNull DocumentServer document) throws DocumentException
+    {
+        try
+        {
+            if (document.getContentId() == null) // Not stored in the content store.
+            {
+                documentService.save(document);
+            }
+        }
+        catch (Exception e)
+        {
+            LOGGER.info(String.format("Cannot save document content id: %s for owner of type: %s, identifier: %s due to: %s",
+                    document.getContentId(),
+                    document.getParent().getEntityType(),
+                    document.getParent().getId(),
+                    e.getMessage()), e);
+            throw new DocumentException(e.getMessage());
+        }
+    }
 
-    /**
-     * Saves the given email address.
-     * @param emailAddress Email address.
-     * @return Saved email address.
-     * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
-     */
-    ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
+    private EmailAddressServer merge(final EmailAddressServer source, final EmailAddressServer target) throws EmailAddressException
+    {
+        Diff diff = EntityComparator.getJavers().compare(source, target);
 
-    /**
-     * Saves and flush a email address.
-     * @param emailAddress Email address.
-     * @return Email address.
-     */
-    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
+        // Check if some object fields have changed.
+        for (ValueChange change : diff.getChangesByType(ValueChange.class))
+        {
+            switch (change.getPropertyName())
+            {
+                case EmailAddressQuery.EMAIL_ADDRESS_EMAIL:
+                    target.setEmail(source.getEmail());
+                    break;
 
-    /**
-     * Deletes the email address matching the given identifier.
-     * @param id Email address identifier.
-     */
-    void deleteById(UUID id);
+                case EmailAddressQuery.EMAIL_ADDRESS_TYPE:
+                    target.setAddressType(source.getAddressType());
+                    break;
 
-    /**
-     * Returns all email addresses.
-     * @return List of email addresses.
-     */
-    List<ServerEmailAddressEntity> findAll();
+//                case EmailAddressServer.FIELD_DESCRIPTION:
+//                    target.setDescription(source.getDescription());
+//                    break;
+//
+//                case EmailAddressServer.FIELD_STATUS_TYPE:
+//                    target.setStatusType(source.getStatusType());
+//                    break;
+//
+//                case EmailAddressServer.FIELD_REFERENCE:
+//                    target.setReference(source.getReference());
+//                    break;
 
-    /**
-     * Returns the list of email addresses matching the given address type.
-     * @param type Address type.
-     * @return List of email addresses.
-     */
-    List<ServerEmailAddressEntity> findByAddressType(AddressType type);
+                case EmailAddressQuery.EMAIL_ADDRESS_IS_DEFAULT:
+                    target.setIsDefaultEmail(source.getIsDefaultEmail());
+                    break;
 
-    /**
-     * Returns the list of email addresses matching the given status type.
-     * @param status Status type.
-     * @return List of email addresses.
-     */
-    List<ServerEmailAddressEntity> findByStatus(StatusType status);
+                default:
+                    LOGGER.warn(String.format("Property name: %s not handled!", change.getPropertyName()));
+                    break;
+            }
+        }
 
-    /**
-     * Returns the list of default or not default email addresses.
-     * @param isDefaultEmail Is it the default email address?
-     * @return List of matching email addresses.
-     */
-    List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
+        // Check if some object references have changed.
+        for (ReferenceChange change : diff.getChangesByType(ReferenceChange.class))
+        {
+            switch (change.getPropertyName())
+            {
+//                case ServerEmailAddressEntity.FIELD_PERSON:
+//                    target.setPerson(source.getPerson());
+//                    break;
 
-    /**
-     * Returns the list of email addresses belonging to a person.
-     * @param personId Person identifier.
-     * @return List of matching email addresses.
-     */
-    List<ServerEmailAddressEntity> findByPersonId(UUID personId);
+                default:
+                    LOGGER.warn(String.format("Property name: %s not handled!", change.getPropertyName()));
+                    break;
+            }
+        }
 
-    /**
-     * Returns the email addresses matching the given set of predicates.
-     * @param emailAddress Email address search object containing the predicates.
-     * @return List of email addresses matching the given predicates.
-     */
-    List<ServerEmailAddressEntity> search(final @NonNull SearchEmailAddress emailAddress);
+        return target;
+    }
 }

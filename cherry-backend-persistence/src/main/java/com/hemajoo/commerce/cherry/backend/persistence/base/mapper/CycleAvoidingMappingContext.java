@@ -39,12 +39,24 @@ public class CycleAvoidingMappingContext
      */
     private final Map<Object, Object> knownInstances = new IdentityHashMap<>();
 
+    /**
+     * Finds the mapped instance.
+     * @param source Source object.
+     * @param targetType Target type.
+     * @param <T> Object type.
+     * @return Mapped instance.
+     */
     @BeforeMapping
     public <T> T getMappedInstance(Object source, @TargetType Class<T> targetType)
     {
         return (T) knownInstances.get(source);
     }
 
+    /**
+     * Stores a mapped instance.
+     * @param source Source object.
+     * @param target Target object.
+     */
     @BeforeMapping
     public void storeMappedInstance(Object source, @MappingTarget Object target)
     {

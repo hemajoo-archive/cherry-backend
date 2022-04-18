@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.backend.persistence.configuration;
 
 import com.hemajoo.commerce.cherry.backend.commons.exception.ContentStoreException;
-import com.hemajoo.commerce.cherry.backend.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentServer;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,10 +84,10 @@ public class PersistenceConfiguration
     @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "filesystem")
     public FilesystemStoreConfigurer configureFileSystemContent()
     {
-        return registry -> registry.addConverter(new Converter<ServerDocumentEntity, String>()
+        return registry -> registry.addConverter(new Converter<DocumentServer, String>()
         {
             @Override
-            public String convert(final @NonNull ServerDocumentEntity document)
+            public String convert(final @NonNull DocumentServer document)
             {
                 return File.separator + document.getContentId();
             }
@@ -102,10 +102,10 @@ public class PersistenceConfiguration
     @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "s3")
     public S3StoreConfigurer configureS3Content()
     {
-        return registry -> registry.addConverter(new Converter<ServerDocumentEntity, S3ObjectId>()
+        return registry -> registry.addConverter(new Converter<DocumentServer, S3ObjectId>()
         {
             @Override
-            public S3ObjectId convert(ServerDocumentEntity source)
+            public S3ObjectId convert(DocumentServer source)
             {
                 return new S3ObjectId("hemajoo.commerce.cherry", "dev/internal/" + source.getContentId());
                 //                        return new S3ObjectId(entity.getCustomBucketField(), entity.getCustomContentIdField());

@@ -15,100 +15,104 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.backend.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
+import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PhoneNumberRepository;
+import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberQuery;
 import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberType;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.SearchPhoneNumber;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Phone number persistence service behavior.
+ * Phone number persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PhoneNumberService
+@Service
+public class PhoneNumberService implements IPhoneNumberService
 {
     /**
-     * Returns the number of phone numbers.
-     * @return Number of phone numbers.
+     * Repository for the phone numbers.
      */
-    Long count();
+    @Autowired
+    private PhoneNumberRepository phoneNumberRepository;
 
-    /**
-     * Finds a phone number given its identifier.
-     * @param id Phone number identifier.
-     * @return Phone number if found, null otherwise.
-     */
-    ServerPhoneNumberEntity findById(UUID id);
 
-    /**
-     * Saves a phone number.
-     * @param phoneNumber Phone number.
-     * @return Saved phone number.
-     */
-    ServerPhoneNumberEntity save(ServerPhoneNumberEntity phoneNumber);
+    @Override
+    public Long count()
+    {
+        return phoneNumberRepository.count();
+    }
 
-    /**
-     * Saves and flush a phone number.
-     * @param phoneNumber Phone number.
-     * @return Saved phone number.
-     */
-    ServerPhoneNumberEntity saveAndFlush(ServerPhoneNumberEntity phoneNumber);
+    @Override
+    public PhoneNumberServer findById(UUID id)
+    {
+        return phoneNumberRepository.findById(id).orElse(null);
+    }
 
-    /**
-     * Deletes a phone number given its identifier.
-     * @param id Phone number identifier.
-     */
-    void deleteById(UUID id);
+    @Override
+    public PhoneNumberServer save(PhoneNumberServer phoneNumber)
+    {
+        return phoneNumberRepository.save(phoneNumber);
+    }
 
-    /**
-     * Returns the phone numbers.
-     * @return List of phone numbers.
-     */
-    List<ServerPhoneNumberEntity> findAll();
+    @Override
+    public PhoneNumberServer saveAndFlush(PhoneNumberServer phoneNumber)
+    {
+        return phoneNumberRepository.saveAndFlush(phoneNumber);
+    }
 
-    /**
-     * Returns a list of phone numbers given a phone number type.
-     * @param type Phone number type.
-     * @return List of matching phone numbers.
-     */
-    List<ServerPhoneNumberEntity> findByPhoneType(PhoneNumberType type);
+    @Override
+    public void deleteById(UUID id)
+    {
+        phoneNumberRepository.deleteById(id);
+    }
 
-    /**
-     * Returns a list of phone numbers given a phone number category type.
-     * @param category Phone number category type.
-     * @return List of matching phone numbers.
-     */
-    List<ServerPhoneNumberEntity> findByCategoryType(PhoneNumberCategoryType category);
+    @Override
+    public List<PhoneNumberServer> findAll()
+    {
+        return phoneNumberRepository.findAll();
+    }
 
-    /**
-     * Returns a list of phone numbers given a status type.
-     * @param status Status type.
-     * @return List of matching phone numbers.
-     */
-    List<ServerPhoneNumberEntity> findByStatus(StatusType status);
+    @Override
+    public List<PhoneNumberServer> findByPhoneType(PhoneNumberType type)
+    {
+        return phoneNumberRepository.findByPhoneType(type);
+    }
 
-    /**
-     * Returns a list of default or not default phone numbers.
-     * @param isDefault Is it a default phone number?
-     * @return List of matching phone numbers.
-     */
-    List<ServerPhoneNumberEntity> findByIsDefault(boolean isDefault);
+    @Override
+    public List<PhoneNumberServer> findByCategoryType(PhoneNumberCategoryType category)
+    {
+        return phoneNumberRepository.findByCategoryType(category);
+    }
 
-    /**
-     * Returns a list of phone numbers belonging to a person.
-     * @param personId Person identifier.
-     * @return List of matching phone numbers.
-     */
-    List<ServerPhoneNumberEntity> findByPersonId(long personId);
+    @Override
+    public List<PhoneNumberServer> findByStatus(StatusType status)
+    {
+        return phoneNumberRepository.findByStatusType(status);
+    }
 
-    /**
-     * Returns the phone numbers matching the given set of predicates.
-     * @param phoneNumber Phone number search object containing the predicates.
-     * @return List of phone numbers matching the given predicates.
-     */
-    List<ServerPhoneNumberEntity> search(final @NonNull SearchPhoneNumber phoneNumber);
+    @Override
+    public List<PhoneNumberServer> findByIsDefault(boolean isDefault)
+    {
+        return phoneNumberRepository.findByIsDefault(isDefault);
+    }
+
+    @Override
+    public List<PhoneNumberServer> findByPersonId(long personId)
+    {
+        return phoneNumberRepository.findByPersonId(personId);
+    }
+
+    @Override
+    public List<PhoneNumberServer> search(@NonNull PhoneNumberQuery search) throws QueryConditionException
+    {
+        return phoneNumberRepository.findAll((Specification<PhoneNumberServer>) search.getSpecification());
+    }
 }

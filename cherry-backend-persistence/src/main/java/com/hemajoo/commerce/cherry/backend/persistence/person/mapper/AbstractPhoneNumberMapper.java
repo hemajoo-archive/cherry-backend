@@ -15,11 +15,11 @@
 package com.hemajoo.commerce.cherry.backend.persistence.person.mapper;
 
 import com.hemajoo.commerce.cherry.backend.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractBaseEntityMapper;
+import com.hemajoo.commerce.cherry.backend.persistence.base.entity.AbstractEntityMapper;
 import com.hemajoo.commerce.cherry.backend.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.backend.persistence.person.entity.ServerPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumberServer;
 import com.hemajoo.commerce.cherry.backend.shared.base.entity.EntityException;
-import com.hemajoo.commerce.cherry.backend.shared.person.phone.ClientPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.backend.shared.person.phone.PhoneNumberClient;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -31,7 +31,7 @@ import javax.persistence.EntityManager;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Mapper(uses = { AbstractBaseEntityMapper.class })
+@Mapper(uses = { AbstractEntityMapper.class })
 public abstract class AbstractPhoneNumberMapper
 {
     /**
@@ -45,7 +45,7 @@ public abstract class AbstractPhoneNumberMapper
      * @param context Context object.
      * @return Entity identity.
      */
-    public abstract EntityIdentity fromServerToIdentity(ServerPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract EntityIdentity fromServerToIdentity(PhoneNumberServer entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a server phone number entity to a client phone number entity.
@@ -53,9 +53,9 @@ public abstract class AbstractPhoneNumberMapper
      * @param context Context object.
      * @param entityManager Entity manager.
      * @return Client phone number entity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
+     * @throws EntityException Thrown to indicate an error occurred while trying to convert a phone number entity.
      */
-    public abstract ServerPhoneNumberEntity fromClientToServer(ClientPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
+    public abstract PhoneNumberServer fromClientToServer(PhoneNumberClient entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
 
     /**
      * Maps from a server phone number entity to a client phone number entity.
@@ -63,21 +63,23 @@ public abstract class AbstractPhoneNumberMapper
      * @param context Context object.
      * @return Client phone number entity.
      */
-    public abstract ClientPhoneNumberEntity fromServerToClient(ServerPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract PhoneNumberClient fromServerToClient(PhoneNumberServer entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a server phone number entity.
      * @param entity Server phone number entity.
      * @param context Context object.
      * @return Copy of the server phone number entity.
+     * @throws EntityException Thrown to indicate an error occurred while trying to copy a phone number entity.
      */
-    public abstract ServerPhoneNumberEntity copy(ServerPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract PhoneNumberServer copy(PhoneNumberServer entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 
     /**
      * Copy a client phone number entity.
      * @param entity Client phone number entity.
      * @param context Context object.
      * @return Copy of the client phone number entity.
+     * @throws EntityException Thrown to indicate an error occurred while trying to copy a phone number entity.
      */
-    public abstract ClientPhoneNumberEntity copy(ClientPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract PhoneNumberClient copy(PhoneNumberClient entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 }
