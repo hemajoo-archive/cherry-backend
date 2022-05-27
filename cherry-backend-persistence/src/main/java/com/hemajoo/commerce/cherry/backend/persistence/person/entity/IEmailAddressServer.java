@@ -25,15 +25,5 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.email.IEmailAdd
  */
 public interface IEmailAddressServer extends IEmailAddress, IServerEntity
 {
-//    /**
-//     * Returns the person owning this email address.
-//     * @return Person.
-//     */
-//    ServerPerson getPerson();
-//
-//    /**
-//     * Sets the person owning this email address.
-//     * @param owner Person.
-//     */
-//    void setPerson(final ServerPerson owner);
+    // Marker interface
 }

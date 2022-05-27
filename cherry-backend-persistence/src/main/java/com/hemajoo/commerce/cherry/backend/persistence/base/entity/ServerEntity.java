@@ -48,16 +48,6 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ServerEntity extends AbstractServerStatusEntity implements IServerEntity
 {
-//    /**
-//     * Entity identifier.
-//     */
-//    @Getter
-//    @Setter
-//    @Id
-//    @Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
-//    @GeneratedValue
-//    private UUID id;
-
     /**
      * Entity identifier.
      */
