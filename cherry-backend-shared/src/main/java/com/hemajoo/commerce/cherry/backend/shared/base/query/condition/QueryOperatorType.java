@@ -57,19 +57,24 @@ public enum QueryOperatorType
     MATCH,
 
     /**
-     * Operator is <b>Match Between</b>.
+     * Operator is <b>Contains</b>.
      */
-    MATCH_BETWEEN,
+    CONTAINS,
+
+//    /**
+//     * Operator is <b>Match Between</b>.
+//     */
+//    MATCH_BETWEEN, //TODO Should be replaced by CONTAINS
 
     /**
      * Operator is <b>Match Before</b>.
      */
-    MATCH_BEFORE,
+    MATCH_BEFORE, //TODO Should be replaced by STARTS_WITH
 
     /**
      * Operator is <b>Match End</b>.
      */
-    MATCH_END,
+    MATCH_END, //TODO Should be replaced by ENDS_WITH
 
     /**
      * Operator is <b>Equal Object UUID</b>.

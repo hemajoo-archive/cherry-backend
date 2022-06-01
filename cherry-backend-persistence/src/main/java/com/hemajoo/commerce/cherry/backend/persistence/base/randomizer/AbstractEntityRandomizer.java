@@ -80,6 +80,7 @@ public abstract class AbstractEntityRandomizer
         }
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
+        parent.setTags(FAKER.animal().name() + ", " + FAKER.animal().name());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
         if (parent.getStatusType() == StatusType.INACTIVE)
         {

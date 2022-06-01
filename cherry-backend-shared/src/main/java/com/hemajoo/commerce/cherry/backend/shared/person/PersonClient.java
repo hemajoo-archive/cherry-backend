@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Represents a <b>client person entity</b>.
@@ -191,7 +190,7 @@ public class PersonClient extends EntityClient implements IPersonClient
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getAddressType() == type)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -203,7 +202,7 @@ public class PersonClient extends EntityClient implements IPersonClient
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getStatusType() == status)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -215,7 +214,7 @@ public class PersonClient extends EntityClient implements IPersonClient
     {
         return postalAddresses.stream()
                 .filter(postalAddress -> postalAddress.getAddressType() == type)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -227,6 +226,6 @@ public class PersonClient extends EntityClient implements IPersonClient
     {
         return postalAddresses.stream()
                 .filter(postalAddress -> postalAddress.getStatusType() == status)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

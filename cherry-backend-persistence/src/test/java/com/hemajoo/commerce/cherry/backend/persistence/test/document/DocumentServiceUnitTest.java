@@ -326,7 +326,7 @@ class DocumentServiceUnitTest extends AbstractPostgresUnitTest
                 .addCondition(QueryCondition.builder()
                         .withField(DocumentQuery.DOCUMENT_FILENAME)
                         .withValue(FILENAME_PATTERN)
-                        .withOperator(QueryOperatorType.MATCH_BETWEEN)
+                        .withOperator(QueryOperatorType.CONTAINS)
                         .build());
 
         List<DocumentServer> documents = servicePerson.getDocumentService().search(search);

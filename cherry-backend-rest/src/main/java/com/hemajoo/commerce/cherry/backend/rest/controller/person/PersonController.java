@@ -22,6 +22,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.validation.constra
 import com.hemajoo.commerce.cherry.backend.persistence.person.validation.engine.EmailAddressValidationEngine;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -112,11 +113,11 @@ public class PersonController
     /**
      * Service to create a random person.
      * @return Randomly generated person.
-     * @throws DocumentException Thrown to indicate an error occurred with a document while trying to create a random email address.
+     * @throws PersonException Thrown to indicate an error occurred with a person.
      */
     @Operation(summary = "Create a new random person")
     @PostMapping("/random")
-    public ResponseEntity<PersonClient> random() throws DocumentException
+    public ResponseEntity<PersonClient> random() throws PersonException
     {
         PersonServer person = PersonRandomizer.generateServerEntity(false);
         person = servicePerson.getPersonService().save(person);

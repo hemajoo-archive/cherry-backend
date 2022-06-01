@@ -37,7 +37,7 @@ public abstract class AbstractPostgresUnitTest
     protected static final PostgreSQLContainer<?> POSTGRES_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:latest")
             .withUsername("postgres")
             .withPassword("postgres")
-            .withDatabaseName("test")
+            .withDatabaseName("unit-test")
             //.withEnv("AWS_REGION", "eu-west-3")
             .withReuse(true);
 

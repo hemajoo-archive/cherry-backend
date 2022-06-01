@@ -22,8 +22,8 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PhoneNumber
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.randomizer.PhoneNumberRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.test.base.AbstractPostgresUnitTest;
-import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +56,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a phone number")
-    void testCreatePhoneNumber() throws DocumentException
+    void testCreatePhoneNumber() throws PersonException
     {
         PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
@@ -77,7 +77,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a phone number with one document")
-    void testCreatePhoneNumberWithOneDocument() throws DocumentContentException, DocumentException
+    void testCreatePhoneNumberWithOneDocument() throws PersonException, DocumentException
     {
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
         PersonServer person = PersonRandomizer.generateServerEntity(false);
@@ -102,7 +102,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Create a phone number with several documents")
-    void testCreatePhoneNumberWithSeveralDocument() throws DocumentException
+    void testCreatePhoneNumberWithSeveralDocument() throws PersonException, DocumentException
     {
         List<DocumentServer> documents = new ArrayList<>();
         for (int i = 0; i < 5; i++)
@@ -137,7 +137,7 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Update a phone number")
-    void testUpdatePhoneNumber() throws DocumentException
+    void testUpdatePhoneNumber() throws PersonException
     {
         PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
@@ -171,14 +171,13 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Delete a phone number")
-    void testDeletePhoneNumber() throws DocumentException
+    void testDeletePhoneNumber() throws PersonException
     {
         PersonServer person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         PhoneNumberServer phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
         person.addPhoneNumber(phoneNumber);
         phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
-//        person = entityFactory.getPersonService().save(person);
 
         assertThat(phoneNumber)
                 .as("Phone number should not be null!")
