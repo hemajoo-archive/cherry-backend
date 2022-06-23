@@ -76,7 +76,7 @@ public final class GenericSpecification<T> implements Specification<T>
                             builder.lessThan(root.get(criteria.getField()), criteria.getValues().get(0).toString())
                     );
                     break;
-                case MATCH_END:
+                case END_WITH:
                     predicates.add(
                             builder.like(builder.lower(root.get(criteria.getField())),criteria.getValues().get(0).toString().toLowerCase() + "%")
                     );
@@ -91,7 +91,7 @@ public final class GenericSpecification<T> implements Specification<T>
                             builder.greaterThan(root.get(criteria.getField()), criteria.getValues().get(0).toString())
                     );
                     break;
-                case MATCH_BEFORE:
+                case START_WITH:
                     predicates.add(
                             builder.like(builder.lower(root.get(criteria.getField())),"%" + criteria.getValues().get(0).toString().toLowerCase())
                     );
