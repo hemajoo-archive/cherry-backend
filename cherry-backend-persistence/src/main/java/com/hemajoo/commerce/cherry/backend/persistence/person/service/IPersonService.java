@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServe
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonQuery;
 import lombok.NonNull;
 
@@ -64,9 +65,9 @@ public interface IPersonService
      * Saves the person.
      * @param person Person.
      * @return Saved person.
-     * @throws DocumentException Thrown in case an error occurred with one of the document when trying to save the person!
+     * @throws PersonException Thrown in case an error occurred when trying to save a person.
      */
-    PersonServer save(PersonServer person) throws DocumentException;
+    PersonServer save(PersonServer person) throws PersonException;
 
     /**
      * Saves the person and flush.

@@ -77,6 +77,12 @@ public class BaseEntityQuery extends AbstractStatusQuery
     public static final String BASE_PARENT_TYPE = "parentType";
 
     /**
+     * Field: <b>tags</b> of an entity.
+     */
+    @JsonIgnore
+    public static final String BASE_TAGS = "tags";
+
+    /**
      * Creates a new base entity query instance.
      * @param entityType Entity type.
      */
@@ -98,6 +104,10 @@ public class BaseEntityQuery extends AbstractStatusQuery
                 .build());
         fields.add(QueryField.builder()
                 .withFieldName(BASE_REFERENCE)
+                .withFieldType(DataType.STRING)
+                .build());
+        fields.add(QueryField.builder()
+                .withFieldName(BASE_TAGS)
                 .withFieldType(DataType.STRING)
                 .build());
         fields.add(QueryField.builder()
@@ -134,6 +144,10 @@ public class BaseEntityQuery extends AbstractStatusQuery
                 .build());
         fields.add(QueryField.builder()
                 .withFieldName(BASE_REFERENCE)
+                .withFieldType(DataType.STRING)
+                .build());
+        fields.add(QueryField.builder()
+                .withFieldName(BASE_TAGS)
                 .withFieldType(DataType.STRING)
                 .build());
         fields.add(QueryField.builder()

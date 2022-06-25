@@ -23,6 +23,7 @@ import com.hemajoo.commerce.cherry.backend.persistence.person.repository.EmailAd
 import com.hemajoo.commerce.cherry.backend.persistence.person.repository.PersonRepository;
 import com.hemajoo.commerce.cherry.backend.shared.base.query.condition.QueryConditionException;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.backend.shared.person.PersonException;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonQuery;
 import lombok.Getter;
 import lombok.NonNull;
@@ -97,7 +98,7 @@ public class PersonService implements IPersonService
 
     @Override
     @Transactional(rollbackOn = DocumentException.class)
-    public PersonServer save(PersonServer person) throws DocumentException
+    public PersonServer save(PersonServer person) throws PersonException
     {
         if (person.getId() == null)
         {
@@ -116,7 +117,7 @@ public class PersonService implements IPersonService
                 }
                 catch (Exception e)
                 {
-                    throw new DocumentException(e.getMessage());
+                    throw new PersonException(e.getMessage());
                 }
             }
         }

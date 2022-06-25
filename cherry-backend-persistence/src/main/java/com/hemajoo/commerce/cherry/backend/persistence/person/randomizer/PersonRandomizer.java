@@ -19,7 +19,6 @@ import com.hemajoo.commerce.cherry.backend.persistence.document.entity.DocumentS
 import com.hemajoo.commerce.cherry.backend.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.backend.persistence.person.entity.PersonServer;
 import com.hemajoo.commerce.cherry.backend.shared.document.DocumentClient;
-import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.backend.shared.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.backend.shared.person.GenderType;
 import com.hemajoo.commerce.cherry.backend.shared.person.PersonClient;
@@ -28,6 +27,10 @@ import com.hemajoo.commerce.cherry.backend.shared.person.address.email.EmailAddr
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -47,6 +50,24 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
      * Gender type enumeration generator.
      */
     private static final EnumRandomGenerator GENDER_TYPE_GENERATOR = new EnumRandomGenerator(GenderType.class);
+
+    /**
+     * Generates a list of random server persons.
+     * @param withRandomId Do we need to generate a random identifier? False by default.
+     * @param count Number of persons to generate.
+     * @return List of random persons.
+     */
+    public static List<PersonServer> generateServerEntities(final boolean withRandomId, final int count)
+    {
+        List<PersonServer> persons = new ArrayList<>();
+
+        for (int i = 0; i < count; i++)
+        {
+            persons.add(generateServerEntity(withRandomId));
+        }
+
+        return persons;
+    }
 
     /**
      * Generates a new random server person.
@@ -73,12 +94,32 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
     }
 
     /**
+     * Generates a list of random server persons each holding multiple documents.
+     * @param withRandomId Do we need to generate a random identifier? False by default.
+     * @param count Number of persons to generate.
+     * @return List of random persons.
+     * @throws NoSuchAlgorithmException Thrown in case an error occurred while getting a random number.
+     * @throws DocumentException Thrown in case an error occurred while trying to generate a document.
+     */
+    public static List<PersonServer> generateServerEntitiesWithDocuments(final boolean withRandomId, final int count) throws DocumentException, NoSuchAlgorithmException
+    {
+        List<PersonServer> persons = new ArrayList<>();
+
+        for (int i = 0; i < count; i++)
+        {
+            persons.add(generateServerEntityWithDocument(withRandomId, SecureRandom.getInstanceStrong().nextInt(10)));
+        }
+
+        return persons;
+    }
+
+    /**
      * Generates a new random server person with associated documents.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
      * @param count Number of random documents to generate.
      * @return Person.
-     * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
+     * @throws DocumentException Thrown in case an error occurred while trying to generate a document.
      */
     public static PersonServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
@@ -107,6 +148,24 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
     }
 
     /**
+     * Generates a list of random client persons.
+     * @param withRandomId Do we need to generate a random identifier? False by default.
+     * @param count Number of persons to generate.
+     * @return List of random persons.
+     */
+    public static List<PersonClient> generateClientEntities(final boolean withRandomId, final int count)
+    {
+        List<PersonClient> persons = new ArrayList<>();
+
+        for (int i = 0; i < count; i++)
+        {
+            persons.add(generateClientEntity(withRandomId));
+        }
+
+        return persons;
+    }
+
+    /**
      * Generates a new random client person.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
@@ -132,14 +191,34 @@ public final class PersonRandomizer extends AbstractEntityRandomizer
     }
 
     /**
+     * Generates a list of random client persons each holding a random number of documents (between 0 and 10).
+     * @param withRandomId Do we need to generate a random identifier? False by default.
+     * @param count Number of persons to generate.
+     * @return List of random persons.
+     * @throws NoSuchAlgorithmException Thrown in case an error occurred while getting a random number.
+     * @throws DocumentException Thrown in case an error occurred while trying to generate a document.
+     */
+    public static List<PersonClient> generateClientEntitiesWithDocuments(final boolean withRandomId, final int count) throws NoSuchAlgorithmException, DocumentException
+    {
+        List<PersonClient> persons = new ArrayList<>();
+
+        for (int i = 0; i < count; i++)
+        {
+            persons.add(generateClientEntityWithDocument(withRandomId, SecureRandom.getInstanceStrong().nextInt(10)));
+        }
+
+        return persons;
+    }
+
+    /**
      * Generates a new random client person with associated documents.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
      * @param count Number of documents to generate.
      * @return Person.
-     * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
+     * @throws DocumentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static PersonClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static PersonClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
         DocumentClient document;
         PersonClient entity = new PersonClient();

@@ -25,6 +25,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.Serial;
 import java.util.*;
 
 /**
@@ -39,6 +40,7 @@ public final class GenericSpecification<T> implements Specification<T>
     /**
      * Serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1900581010229669687L;
 
     /**
@@ -74,7 +76,7 @@ public final class GenericSpecification<T> implements Specification<T>
                             builder.lessThan(root.get(criteria.getField()), criteria.getValues().get(0).toString())
                     );
                     break;
-                case MATCH_END:
+                case END_WITH:
                     predicates.add(
                             builder.like(builder.lower(root.get(criteria.getField())),criteria.getValues().get(0).toString().toLowerCase() + "%")
                     );
@@ -89,12 +91,12 @@ public final class GenericSpecification<T> implements Specification<T>
                             builder.greaterThan(root.get(criteria.getField()), criteria.getValues().get(0).toString())
                     );
                     break;
-                case MATCH_BEFORE:
+                case START_WITH:
                     predicates.add(
                             builder.like(builder.lower(root.get(criteria.getField())),"%" + criteria.getValues().get(0).toString().toLowerCase())
                     );
                     break;
-                case MATCH_BETWEEN:
+                case CONTAINS:
                     predicates.add(
                             builder.like(builder.lower(root.get(criteria.getField())),"%" + criteria.getValues().get(0).toString().toLowerCase() + "%")
                     );
