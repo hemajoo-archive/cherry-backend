@@ -17,6 +17,8 @@ package com.hemajoo.commerce.cherry.backend.shared.base.entity;
 import com.hemajoo.commerce.cherry.backend.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.backend.commons.entity.IdentityAware;
 
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Defines the behavior of an <b>entity</b>.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
@@ -60,4 +62,35 @@ public interface IEntity extends IEntityStatus, Identity, IdentityAware
      * @param reference Entity reference.
      */
     void setReference(final String reference);
+
+    /**
+     * Adds a tag.
+     * @param tag Tag.
+     */
+    void addTag(final String tag);
+
+    /**
+     * Removes a tag.
+     * @param tag Tag to remove.
+     */
+    void removeTag(final String tag);
+
+    /**
+     * Returns a random tag.
+     * @return Tag.
+     */
+    String getRandomTag() throws NoSuchAlgorithmException;
+
+    /**
+     * Checks if the given tag exist.
+     * @param tag Tag.
+     * @return {@code True} if the tag exist, {@code false} otherwise.
+     */
+    boolean existTag(final String tag);
+
+    /**
+     * Returns the number of tags.
+     * @return Number of tags.
+     */
+    int getTagCount();
 }

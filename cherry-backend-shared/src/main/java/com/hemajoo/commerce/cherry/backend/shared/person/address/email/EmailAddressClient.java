@@ -61,16 +61,6 @@ public class EmailAddressClient extends EntityClient implements IEmailAddressCli
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
-//    /**
-//     * The person identifier this email address belongs to.
-//     */
-//    @JsonProperty("person")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    //@JsonIgnoreProperties("emailAddresses")
-//    @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
-//    private EntityIdentity person; // TODO Could it be moved to base entity?
-
     /**
      * Creates a new client email address entity.
      */

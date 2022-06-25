@@ -74,24 +74,14 @@ public final class EmailAddressRandomizer extends AbstractEntityRandomizer
      */
     public static EmailAddressServer generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentException
     {
-        var entity = new EmailAddressServer();
         DocumentServer document;
-        AbstractEntityRandomizer.populateBaseFields(entity);
-
-        if (withRandomId)
-        {
-            entity.setId(UUID.randomUUID());
-        }
+        var entity = generateServerEntity(withRandomId);
 
         for (int i = 0; i < count; i++)
         {
             document = DocumentRandomizer.generateServerEntity(true);
             entity.addDocument(document);
         }
-
-        entity.setEmail(FAKER.internet().emailAddress());
-        entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -130,23 +120,13 @@ public final class EmailAddressRandomizer extends AbstractEntityRandomizer
     public static EmailAddressClient generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         DocumentClient document;
-        EmailAddressClient entity = new EmailAddressClient();
-        AbstractEntityRandomizer.populateBaseFields(entity);
-
-        if (withRandomId)
-        {
-            entity.setId(UUID.randomUUID());
-        }
+        EmailAddressClient entity = generateClientEntity(withRandomId);
 
         for (int i = 0; i < count; i++)
         {
             document = DocumentRandomizer.generateClientEntity(true);
             entity.addDocument(document.getIdentity());
         }
-
-        entity.setEmail(FAKER.internet().emailAddress());
-        entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
