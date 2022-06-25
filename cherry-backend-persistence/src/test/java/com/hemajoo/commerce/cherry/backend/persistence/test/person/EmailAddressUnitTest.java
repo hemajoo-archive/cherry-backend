@@ -138,9 +138,9 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
                 .as("Email address identifier should not be null!")
                 .isNotNull();
 
-        assertThat(emailAddress.getDocuments().size())
+        assertThat(emailAddress.getDocuments())
                 .as("Email address document list should not be empty!")
-                .isEqualTo(5);
+                .hasSize(5);
     }
 
     @Test
@@ -203,7 +203,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Delete email address. Orphan document is to be deleted")
-    final void testValidateEmailAddressDocumentOrphanRemove() throws EntityException
+    final void testOrphanDocumentRemovedWhenEmailAddressIsDeleted() throws EntityException
     {
         EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
         DocumentServer document = DocumentRandomizer.generateServerEntity(false);
@@ -330,9 +330,7 @@ class EmailAddressUnitTest extends AbstractPostgresUnitTest
     {
         final EmailAddressServer email = EmailAddressRandomizer.generateServerEntity(false);
 
-        assertThrows(EntityException.class, () -> {
-            email.setParent(email);
-        });
+        assertThrows(EntityException.class, () -> email.setParent(email));
     }
 
     @Test

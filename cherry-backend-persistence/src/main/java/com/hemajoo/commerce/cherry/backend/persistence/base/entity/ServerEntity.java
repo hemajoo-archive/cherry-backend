@@ -29,10 +29,9 @@ import org.hibernate.annotations.Type;
 import org.javers.core.metamodel.annotation.DiffIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.*;
 
 /**
  * Represents a server base entity.
@@ -48,16 +47,6 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ServerEntity extends AbstractServerStatusEntity implements IServerEntity
 {
-//    /**
-//     * Entity identifier.
-//     */
-//    @Getter
-//    @Setter
-//    @Id
-//    @Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
-//    @GeneratedValue
-//    private UUID id;
-
     /**
      * Entity identifier.
      */
@@ -242,5 +231,103 @@ public class ServerEntity extends AbstractServerStatusEntity implements IServerE
     public final void removeDocument(@NonNull UUID documentId)
     {
         documents.removeIf(doc -> doc.getId().equals(documentId));
+    }
+
+    @Override
+    public final void addTag(String tag)
+    {
+        if (convertTagAsList().stream().noneMatch(element -> element.equals(tag)))
+        {
+            tags = tags.isEmpty() ? tag : tags + ", " + tag;
+        }
+    }
+
+    @Override
+    public final void removeTag(String tag)
+    {
+        List<String> sourceTags = convertTagAsList();
+        List<String> targetTags = new ArrayList<>();
+
+        for (String element : sourceTags)
+        {
+            if (!element.equals(tag))
+            {
+                targetTags.add(element);
+            }
+        }
+
+        setTags(convertTagAsString(targetTags));
+    }
+
+    @Override
+    public final String getRandomTag() throws NoSuchAlgorithmException
+    {
+        List<String> tagList = convertTagAsList();
+
+        if (tagList.isEmpty())
+        {
+            return null;
+        }
+
+        int index = SecureRandom.getInstanceStrong().nextInt(tagList.size());
+
+        return tagList.get(index).trim();
+    }
+
+    @Override
+    public final boolean existTag(String tag)
+    {
+        return convertTagAsList().stream().anyMatch(element -> element.equals(tag));
+    }
+
+    @Override
+    public final int getTagCount()
+    {
+        return convertTagAsList().size();
+    }
+
+    /**
+     * Converts a string of tags (separated by comma) to a list of tags.
+     * @return List of tags.
+     */
+    private List<String> convertTagAsList()
+    {
+        List<String> values;
+
+        if (tags.isEmpty())
+        {
+            return new ArrayList<>();
+        }
+
+        values = Arrays.asList(tags.split(",", -1));
+        for (String tag : values)
+        {
+            tag = tag.trim();
+        }
+
+        return values;
+    }
+
+    /**
+     * Converts a list of tags to a string of tags (separated by comma).
+     * @return String of tags.
+     */
+    private String convertTagAsString(final List<String> tagList)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        for (String tag : tagList)
+        {
+            if (builder.length() == 0)
+            {
+                builder.append(tag);
+            }
+            else
+            {
+                builder.append(", ").append(tag);
+            }
+        }
+
+        return builder.toString();
     }
 }

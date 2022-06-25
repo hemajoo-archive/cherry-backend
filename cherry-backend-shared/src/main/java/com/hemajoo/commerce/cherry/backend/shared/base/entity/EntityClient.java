@@ -20,10 +20,9 @@ import com.hemajoo.commerce.cherry.backend.commons.type.EntityType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.*;
 
 /**
  * Represents a <b>base client entity</b>.
@@ -78,6 +77,14 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
     //@JsonProperty("reference")
     @Schema(name = "reference", description = "Entity reference.")
     private String reference;
+
+    /**5
+     * Tags.
+     */
+    @Getter
+    @Setter
+    @Schema(name = "tags", description = "Entity tags.")
+    private String tags;
 
     /**
      * Entity documents.
@@ -141,5 +148,95 @@ public class EntityClient extends AbstractEntityStatusClient implements IEntityC
         }
 
         return Collections.unmodifiableList(documents);
+    }
+
+    @Override
+    public final void addTag(final @NonNull String tag)
+    {
+        if (convertTagAsList().stream().noneMatch(element -> element.equals(tag)))
+        {
+            tags = tags.isEmpty() ? tag : tags + ", " + tag;
+        }
+    }
+
+    @Override
+    public final void removeTag(final @NonNull String tag)
+    {
+        List<String> sourceTags = convertTagAsList();
+        List<String> targetTags = new ArrayList<>();
+
+        for (String element : sourceTags)
+        {
+            if (!element.equals(tag))
+            {
+                targetTags.add(element);
+            }
+        }
+
+        setTags(convertTagAsString(targetTags));
+    }
+
+    @Override
+    public final String getRandomTag() throws NoSuchAlgorithmException
+    {
+        List<String> tagList = convertTagAsList();
+
+        if (tagList.isEmpty())
+        {
+            return null;
+        }
+
+        int index = SecureRandom.getInstanceStrong().nextInt(tagList.size() + 1);
+
+        return tagList.get(index);
+    }
+
+    @Override
+    public final boolean existTag(final @NonNull String tag)
+    {
+        return convertTagAsList().stream().anyMatch(element -> element.equals(tag));
+    }
+
+    @Override
+    public final int getTagCount()
+    {
+        return convertTagAsList().size();
+    }
+
+    /**
+     * Converts a string of tags (separated by comma) to a list of tags.
+     * @return List of tags.
+     */
+    private List<String> convertTagAsList()
+    {
+        if (tags.isEmpty())
+        {
+            return new ArrayList<>();
+        }
+
+        return Arrays.asList(tags.split(",", -1));
+    }
+
+    /**
+     * Converts a list of tags to a string of tags (separated by comma).
+     * @return String of tags.
+     */
+    private String convertTagAsString(final List<String> tagList)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        for (String tag : tagList)
+        {
+            if (builder.length() == 0)
+            {
+                builder.append(tag);
+            }
+            else
+            {
+                builder.append(", ").append(tag);
+            }
+        }
+
+        return builder.toString();
     }
 }
