@@ -80,7 +80,7 @@
         <!-- Dependencies version properties -->
         <version.ressec.avocado>0.1.0</version.ressec.avocado>
         <version.springdoc.openapi>1.6.6</version.springdoc.openapi>
-        <version.google.guava>31.1-jre</version.google.guava>
+        <version.google.guava>32.0.0-jre</version.google.guava>
         <version.junit.jupiter>5.8.2</version.junit.jupiter>
         <version.junit.platform.launcher>1.6.2</version.junit.platform.launcher>
         <version.javafaker>1.0.1</version.javafaker>
